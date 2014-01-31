@@ -1,0 +1,10 @@
+General Requirements:
+Create, Edit, Delete and Mark as complete Tasks
+Sort items by: Date, Category or Priority
+Display reminder messages
+Display pending tasks/meetings
+Display overdue tasks/meetings
+Save and restore state from local file
+Display current time
+
+
