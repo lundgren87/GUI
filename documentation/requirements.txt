@@ -7,4 +7,27 @@ Display overdue tasks/meetings
 Save and restore state from local file
 Display current time
 
+Phase 1:
+List of tasks
+Window to enter new tasks
+
+Phase 2:
+Support two different languages (eng, swe)
+Progress meter that is possible to manipulate
+Application state memory on startup (theme, window position, tasks etc)
+
+Phase 3:
+Popup menu on right-click
+Make our own swing component
+
+Our own Requirements:
+Calendar View
+Category View
+Settings menu
+Change theme, font etc
+Auto progress
+Task type (meeting etc)?
+Use of daily languages for dates (today, tomorrow)
+Add new categories
+
 
