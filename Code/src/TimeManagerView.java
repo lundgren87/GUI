@@ -32,20 +32,14 @@ public class TimeManagerView {
 		titelPanel.add(new JLabel("Titel"));
 		titelPanel.add(logoutButton);
 		
+		categotoryTab = MakeMainPanel(categotoryTab);
 		//Content tab
 		//mainPanel.setBackground(Color.blue);
-		categotoryTab.addTab("Work", null, new JPanel(), "Show work related tasks");
-		categotoryTab.addTab("School", null, new JPanel(), "Show school related tasks");
-		categotoryTab.addTab("House", null, new JPanel(), "Show house related tasks");
-		categotoryTab.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
+		;
 		
-		//Content addPanel
-		JTextArea nameActivity = new JTextArea("Name activity"); 
-		
-		//addPanel.setBackground(Color.yellow);
-		addPanel.add(nameActivity);
-		addPanel.add(addButton);
-		//String input = nameActivity.getText();
+
+		addPanel = MakeAddPanel(addPanel);
+
 		
 		mainFrame.getContentPane().add(BorderLayout.NORTH, titelPanel);
 		mainFrame.getContentPane().add(BorderLayout.CENTER, categotoryTab);
@@ -54,6 +48,21 @@ public class TimeManagerView {
 		mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		//mainFrame.setSize( JFrame.MAXIMIZED_VERT, JFrame.MAXIMIZED_HORIZ);
 		mainFrame.setVisible(true);
+	}
+
+	private JTabbedPane MakeMainPanel(JTabbedPane categotoryTab2) {
+		categotoryTab2.addTab("Work",  null, new JPanel(), "Show work related tasks");
+		categotoryTab2.addTab("School", null, new JPanel(), "Show school related tasks");
+		categotoryTab2.addTab("House", null, new JPanel(), "Show house related tasks");
+		categotoryTab2.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
+		return categotoryTab2;
+	}
+
+	private JPanel MakeAddPanel(JPanel addPanel2) {
+		JTextArea nameActivity = new JTextArea("Name activity"); 
+		addPanel2.add(nameActivity);
+		addPanel2.add(addButton);
+		return addPanel;
 	}
 
 }
