@@ -60,7 +60,7 @@ public class TimeManagerView {
 	}
 
 	private JPanel MakeAddPanel(JPanel addPanel2) {
-		JTextArea nameActivity = new JTextArea("Name activity"); 
+		JTextArea nameActivity = new JTextArea("Name activity ARIES CHANGES THIS"); 
 		addPanel2.add(nameActivity);
 		addPanel2.add(addButton);
 		return addPanel;
