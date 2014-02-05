@@ -1,3 +1,4 @@
+package TimeManager;
 
 public class TimeManagerModel {
 	//performs all calculations
