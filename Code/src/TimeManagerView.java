@@ -32,10 +32,6 @@ public class TimeManagerView {
 		titelPanel.add(new JLabel("Titel"));
 		titelPanel.add(logoutButton);
 		
-		//Content addPanel
-		addPanel.setBackground(Color.yellow);
-		addPanel.add(addButton);
-		
 		//Content tab
 		//mainPanel.setBackground(Color.blue);
 		categotoryTab.addTab("Work", null, new JPanel(), "Show work related tasks");
@@ -45,8 +41,11 @@ public class TimeManagerView {
 		
 		//Content addPanel
 		JTextArea nameActivity = new JTextArea("Name activity"); 
-		String input = nameActivity.getText();
-		//addPanel.add(new )
+		
+		//addPanel.setBackground(Color.yellow);
+		addPanel.add(nameActivity);
+		addPanel.add(addButton);
+		//String input = nameActivity.getText();
 		
 		mainFrame.getContentPane().add(BorderLayout.NORTH, titelPanel);
 		mainFrame.getContentPane().add(BorderLayout.CENTER, categotoryTab);
