@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 public class TimeManagerView {
 	
 	private JFrame mainFrame = new JFrame("Time Manager");
-	private JPanel titelPanel = new JPanel(); 	//The panel which shows the titel of the current tab
+	private JPanel titelPanel = new JPanel(); 	//The panel which shows the title of the current tab
 	private JPanel addPanel = new JPanel();		//The panel where one can add a new task
 	
 	private JTabbedPane categotoryTab = new JTabbedPane(JTabbedPane.LEFT); //The tabPanel
@@ -60,7 +60,7 @@ public class TimeManagerView {
 	}
 
 	private JPanel MakeAddPanel(JPanel addPanel2) {
-		JTextArea nameActivity = new JTextArea("Name activity ARIES CHANGES THIS, Pontus too"); 
+		JTextArea nameActivity = new JTextArea("Name activity"); 
 		addPanel2.add(nameActivity);
 		addPanel2.add(addButton);
 		return addPanel;
