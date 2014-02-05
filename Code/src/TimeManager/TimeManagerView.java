@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 
 public class TimeManagerView {
@@ -60,9 +62,24 @@ public class TimeManagerView {
 	}
 
 	private JPanel MakeAddPanel(JPanel addPanel2) {
-		JTextArea nameActivity = new JTextArea("Name activity"); 
+		//addPanel2.setPreferredSize(addPanel.getWidth(), 200);
+		JTextField nameActivity = new JTextField("Name activity"); 	//texfield to insert the name of the activity
+		JComboBox dropdownCategory = new JComboBox();				//dropdown menu
+		
+		//textbox
+		//nameActivity.setLineWrap(false);
+		//nameActivity.setSize(addPanel2.getSize().width-30, 10);
+		//nameActivity.setSize(200, 10);
+		nameActivity.setSize(200, 100);
+		
+		//Dropdownmenu
+		//dropdownCategory.addItem();
+		
+		addPanel2.setLayout(new GridLayout(2, 2));
+		
 		addPanel2.add(nameActivity);
-		addPanel2.add(addButton);
+		addPanel2.add(BorderLayout.CENTER, dropdownCategory);
+		addPanel2.add(BorderLayout.SOUTH, addButton);
 		return addPanel;
 	}
 
