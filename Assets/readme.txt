@@ -1,0 +1,1 @@
+Put images folder to your bin\
