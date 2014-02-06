@@ -37,8 +37,8 @@ public class TimeManagerView implements Observer {
 		
 		//Content titlePanel 
 		titelPanel.setBackground(Color.red);
-		titelPanel.setLayout(new GridLayout(1, 2));
-		titelPanel.add(new JLabel("Titel"));
+		titelPanel.setLayout(new GridLayout(1, 5));
+		titelPanel.add(new JLabel("Title"));
 		titelPanel.add(logoutButton);
 
 		//Content tab
@@ -55,8 +55,6 @@ public class TimeManagerView implements Observer {
 		
 		mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		//mainFrame.setSize( JFrame.MAXIMIZED_VERT, JFrame.MAXIMIZED_HORIZ);
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setVisible(true);
 		
 	}
 
