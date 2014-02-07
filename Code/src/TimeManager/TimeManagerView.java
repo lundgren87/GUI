@@ -1,19 +1,23 @@
 package TimeManager;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
@@ -26,6 +30,7 @@ public class TimeManagerView implements Observer {
 	private JPanel addPanel = new JPanel();		//The panel where one can add a new task
 	
 	private JTabbedPane tabPanel; //The tabPanel
+	GridBagConstraints gridBagConstraint;
 	
 	private JButton addButton =  new JButton("Add");	//The button to add a new task
 	private JButton logoutButton = new JButton("Log Out");	//The  button to log out
@@ -44,6 +49,12 @@ public class TimeManagerView implements Observer {
 		//Content tab
 		tabPanel = makeTabPanel();
 		mainPanel.add(tabPanel);
+		
+		gridBagConstraint = new GridBagConstraints();
+		gridBagConstraint.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraint.weightx = 1;
+		gridBagConstraint.gridwidth = GridBagConstraints.REMAINDER;
+		//gridBagConstraint.anchor = GridBagConstraints.PAGE_START;
 
 		//mainPanel.setBackground(Color.blue);
 		
@@ -53,6 +64,7 @@ public class TimeManagerView implements Observer {
 		mainFrame.getContentPane().add(BorderLayout.CENTER, tabPanel);
 		mainFrame.getContentPane().add(BorderLayout.SOUTH, addPanel);
 		
+		mainFrame.setPreferredSize(new Dimension(1024, 768));
 		mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		//mainFrame.setSize( JFrame.MAXIMIZED_VERT, JFrame.MAXIMIZED_HORIZ);
 		
@@ -70,7 +82,7 @@ public class TimeManagerView implements Observer {
 		
 		for(TaskCategory category : taskCategories) {
 			JPanel taskPanel = new JPanel();
-			taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.PAGE_AXIS));
+			taskPanel.setLayout(new GridBagLayout());
 			tabPanel.addTab(category.categoryName, category.icon, taskPanel, category.categoryDescription);
 		}
 	
@@ -83,9 +95,10 @@ public class TimeManagerView implements Observer {
 		for(TaskItem item : taskItems) {
 			//TODO: Add priority, date, etc as arguments
 			int tabIndex = tabPanel.indexOfTab(item.taskCategory);
-			JPanel taskPanel = (JPanel) tabPanel.getComponent(tabIndex);
+			JComponent taskPanel = (JPanel) tabPanel.getComponent(tabIndex);
+			
 			JComponent task = new JButton(item.taskDescripton + " priority : " + item.taskPriority);
-			taskPanel.add(task);
+			taskPanel.add(task, gridBagConstraint);
 		}
 	}
 	
@@ -93,7 +106,7 @@ public class TimeManagerView implements Observer {
 		// remove all existing task from all tabs
 		int numberOfTabs = tabPanel.getTabCount();
 		for(int i=0;i<numberOfTabs;i++) {
-			JPanel panelToClear = (JPanel) tabPanel.getComponent(i);
+			JComponent panelToClear = (JPanel) tabPanel.getComponent(i);
 			panelToClear.removeAll();
 		}
 	}
