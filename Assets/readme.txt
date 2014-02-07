@@ -1,1 +1,1 @@
-Put images folder to your bin\
+Put images folder to your bin\TimeManager
