@@ -4,26 +4,24 @@ import java.awt.*;
 
 import javax.swing.*;
 
-class mainPanel extends 	JFrame
+class mainPanel extends JFrame
 {
-	private		JTabbedPane tabbedPane;
+	private JTabbedPane tabbedPane;
 	//pages for different categories
-	private		JPanel		panel1;
-	private		JPanel		panel2;
-	private		JPanel		panel3;
+	private JPanel panel1;
+	private JPanel panel2;
+	private JPanel panel3;
 	
 	//tasks
-	public 		JLabel		task1 = new JLabel ("Sketch your design for user interface programming");
-	public		JLabel 		task2 = new JLabel( "Read Chapter 3 in Agile Methods Book" );	
-	public		JLabel 		task3 = new JLabel( "Help your moving friend to cary the furniture" );
-	public		JLabel 		task4 = new JLabel( "Attend your friends birthday party" );
+	public JLabel task1 = new JLabel ("Sketch your design for user interface programming");
+	public JLabel task2 = new JLabel( "Read Chapter 3 in Agile Methods Book" );	
+	public JLabel task3 = new JLabel( "Help your moving friend to cary the furniture" );
+	public JLabel task4 = new JLabel( "Attend your friends birthday party" );
 	
 	Font rank1 = new Font("Courier", Font.BOLD,20);
 	Font rank2 = new Font("Courier", Font.BOLD,15);	
 	Font rank3 = new Font("Courier", Font.BOLD,12);
-	
 
-	
 	public mainPanel()
 	{
 		// NOTE: to reduce the amount of code in this example, it uses
@@ -44,15 +42,7 @@ class mainPanel extends 	JFrame
 		createCategory2();
 		createCategory3();
 	
-		/*ImageIcon image1 = new ImageIcon(
-	            this.getClass().getResource("/images/school.gif"));
-	    ImageIcon image2 = new ImageIcon(
-	            this.getClass().getResource("/images/work.gif"));
-	    ImageIcon image3 = new ImageIcon(
-	            this.getClass().getResource("/images/school.gif"));
-	    ImageIcon image4 = new ImageIcon(
-	            this.getClass().getResource("/images/add_new.gif"));
-	    */
+
 		// Create a tabbed pane
 		tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 		tabbedPane.addTab( "All Categories", panel1 );
@@ -60,14 +50,11 @@ class mainPanel extends 	JFrame
 		tabbedPane.addTab( "School", panel3 );
 		getContentPane().add(tabbedPane);
 		//topPanel.add( tabbedPane, BorderLayout.CENTER );
-		
 
-		
 		task1.setFont(rank1);
 		task2.setFont(rank3);
 		task3.setFont(rank2);
 		task4.setFont(rank3);
-		
 	}
 
 	public void createCategory1()
@@ -106,10 +93,12 @@ class mainPanel extends 	JFrame
 	}
 
     // Main method to get things started
+	/*
 	public static void main( String args[] )
 	{
 		// Create an instance of the test application
 		mainPanel mainFrame	= new mainPanel();
 		mainFrame.setVisible( true );
 	}
+	*/
 }

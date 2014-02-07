@@ -1,5 +1,7 @@
 package TimeManager;
 
+import java.util.Observer;
+
 public class TimeManagerController {
 
 	private TimeManagerView theView;
@@ -8,6 +10,7 @@ public class TimeManagerController {
 	public TimeManagerController(TimeManagerView view, TimeManagerModel model) {
 		this.theView = view;    //Sets the view
 		this.theModel = model;  //Sets the model		
+		theModel.addObserver((Observer) theView);
 	}
 	
 	//add a listener to the view
