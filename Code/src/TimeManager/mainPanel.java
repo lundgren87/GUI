@@ -4,6 +4,11 @@ import java.awt.*;
 
 import javax.swing.*;
 
+/**
+ * Contanis dumydata. 
+ * @author Aries, Sercan
+ *
+ */
 class mainPanel extends JFrame
 {
 	private JTabbedPane tabbedPane;

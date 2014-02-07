@@ -9,57 +9,50 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 
+/**
+ * The view of the timemanager. The main frame and all panels are made here. 
+ * @author Kim, Pontus, Aries, Sercan
+ *
+ */
 public class TimeManagerView implements Observer {
 	
-	public JFrame mainFrame = new JFrame("Time Manager");
+	public JFrame mainFrame = new JFrame("Time Manager");	//The main frame. 
 	private JPanel titelPanel = new JPanel(); 	//The panel which shows the title of the current tab
-	private JPanel mainPanel = new JPanel();
 	private JPanel addPanel = new JPanel();		//The panel where one can add a new task
 	
-	private JTabbedPane tabPanel; //The tabPanel
+	private JTabbedPane tabPanel; 		//The tabPanel
 	GridBagConstraints gridBagConstraint;
 	
 	private JButton addButton =  new JButton("Add");	//The button to add a new task
 	private JButton logoutButton = new JButton("Log Out");	//The  button to log out
 	
-	TimeManagerView(){	
+	
+	public TimeManagerView(){	
 		
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.pack();
 		
 		//Content titlePanel 
-		titelPanel.setBackground(Color.red);
+		titelPanel.setBackground(Color.red);		//this is a temporary backgroundcolor
 		titelPanel.setLayout(new GridLayout(1, 5));
 		titelPanel.add(new JLabel("Title"));
-		titelPanel.add(logoutButton);
+		titelPanel.add(logoutButton);				//The logout button should not be that big (or here at all)
 
-		//Content tab
 		tabPanel = makeTabPanel();
-		mainPanel.add(tabPanel);
 		
+		//Set gridBagContraint
 		gridBagConstraint = new GridBagConstraints();
 		gridBagConstraint.fill = GridBagConstraints.HORIZONTAL;
 		gridBagConstraint.weightx = 1;
 		gridBagConstraint.gridwidth = GridBagConstraints.REMAINDER;
 		//gridBagConstraint.anchor = GridBagConstraints.PAGE_START;
-
-		//mainPanel.setBackground(Color.blue);
 		
 		addPanel = MakeAddPanel(addPanel);
 		
+		//Layout of the titelpanel, tabpannel and addpanel. 
 		mainFrame.getContentPane().add(BorderLayout.NORTH, titelPanel);
 		mainFrame.getContentPane().add(BorderLayout.CENTER, tabPanel);
 		mainFrame.getContentPane().add(BorderLayout.SOUTH, addPanel);
@@ -70,12 +63,20 @@ public class TimeManagerView implements Observer {
 		
 	}
 
+	/**
+	 * makes a tabnedpane
+	 * @return tabpane
+	 */
 	private JTabbedPane makeTabPanel() {
 		JTabbedPane tab = new JTabbedPane(JTabbedPane.LEFT);
 		tab.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
 		return tab;
 	}
 	
+	/**
+	 * loads categories
+	 * @param taskCategories list of categories
+	 */
 	public void loadCategories(List<TaskCategory> taskCategories) {
 		// remove all existing tabs, then load everything
 		tabPanel.removeAll();
@@ -88,6 +89,10 @@ public class TimeManagerView implements Observer {
 	
 	}
 	
+	/**
+	 * load tasks
+	 * @param taskItems list of taskItems
+	 */
 	public void loadTasks(List<TaskItem> taskItems) {
 		// remove all existing tasks, then load everything
 		removeAllTasks();
@@ -102,8 +107,10 @@ public class TimeManagerView implements Observer {
 		}
 	}
 	
+	/**
+	 * remove all existing task from all tabs
+	 */
 	public void removeAllTasks() {
-		// remove all existing task from all tabs
 		int numberOfTabs = tabPanel.getTabCount();
 		for(int i=0;i<numberOfTabs;i++) {
 			JComponent panelToClear = (JPanel) tabPanel.getComponent(i);
@@ -122,19 +129,16 @@ public class TimeManagerView implements Observer {
 		}
 	}
 
+	/**
+	 * fills the addpanel with a button, textarea and combobox
+	 * @param addPanel2, the JPannel addPanel
+	 * @return addPanel2
+	 */
 	private JPanel MakeAddPanel(JPanel addPanel2) {
-		//addPanel2.setPreferredSize(addPanel.getWidth(), 200);
 		JTextField nameActivity = new JTextField("Name activity"); 	//texfield to insert the name of the activity
 		JComboBox dropdownCategory = new JComboBox();				//dropdown menu
 		
-		//textbox
-		//nameActivity.setLineWrap(false);
-		//nameActivity.setSize(addPanel2.getSize().width-30, 10);
-		//nameActivity.setSize(200, 10);
 		nameActivity.setSize(200, 100);
-		
-		//Dropdownmenu
-		//dropdownCategory.addItem();
 		
 		addPanel2.setLayout(new GridLayout(2, 2));
 		
