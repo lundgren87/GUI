@@ -1,6 +1,7 @@
 package TimeManager;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -85,6 +86,7 @@ public class TimeManagerView implements Observer {
 			JPanel taskPanel = new JPanel();
 			taskPanel.setLayout(new GridBagLayout());
 			tabPanel.addTab(category.categoryName, category.icon, taskPanel, category.categoryDescription);
+			tabPanel.setAlignmentY(Component.LEFT_ALIGNMENT);
 		}
 	
 	}

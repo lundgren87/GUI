@@ -12,7 +12,7 @@ public class TaskCategory {
 	public String categoryName;
 	public String categoryDescription;
 	public ImageIcon icon;
-	public final String iconLocation = "images/";
+	public final String iconLocation = "/images/";
 	public final String iconExtension = ".gif";
 	
 	/**
