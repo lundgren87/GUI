@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DB>
+	<categories>
+		<category>
+			<categoryName>Home</categoryName>
+			<categoryDescription>stuff at home</categoryDescription>
+		</category>
+		<category>
+			<categoryName>Work</categoryName>
+			<categoryDescription>stuff at work</categoryDescription>
+		</category>
+		<category>
+			<categoryName>Boring</categoryName>
+			<categoryDescription>stuff that is boring</categoryDescription>
+		</category>
+	</categories>
+	<tasks>
+	</tasks>
+</DB>

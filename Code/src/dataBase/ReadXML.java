@@ -1,4 +1,4 @@
-package TimeManager;
+package dataBase;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,7 +20,7 @@ public class ReadXML {
 			SAXBuilder builder = new SAXBuilder();
 			Document doc = builder.build(file);
 			Element root = doc.getRootElement();
-			System.out.println("Root" + root);
+			System.out.println("Root" + root +"\n");
 			
 			/* This is the XML file
 			  	<?xml version="1.0" encoding="UTF-8"?>
@@ -41,6 +41,7 @@ public class ReadXML {
 			//Add new age element
 			Element age = new Element("age").setText("28");
 			staff.addContent(age);
+			staff.removeChild("age");
 			
 			//Update Salary Value
 			staff.getChild("salary").setText("7000");
