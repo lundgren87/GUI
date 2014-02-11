@@ -7,11 +7,14 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -20,7 +23,9 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -166,27 +171,120 @@ public class TimeManagerView implements Observer {
 	}
 
 	private JPanel MakeAddPanel(JPanel addPanel2) {
-		//addPanel2.setPreferredSize(addPanel.getWidth(), 200);
-		JTextField nameActivity = new JTextField("Name activity"); 	//texfield to insert the name of the activity
-		JComboBox dropdownCategory = new JComboBox();				//dropdown menu
+		addPanel2.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		
-		//textbox
-		//nameActivity.setLineWrap(false);
-		//nameActivity.setSize(addPanel2.getSize().width-30, 10);
-		//nameActivity.setSize(200, 10);
-		nameActivity.setSize(200, 100);
+		//Make and add NameActivity
+		final JTextField nameActivity = new HintTextField("Name activity"); 		//texfield to insert the name of the activity
 		
-		//Dropdownmenu
-		//dropdownCategory.addItem();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		addPanel2.add(nameActivity,c);
 		
-		addPanel2.setLayout(new GridLayout(2, 2));
+		//Make and add starting date. This is now a temporary button
+		JButton button2 = new JButton("date 1");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipadx = 0;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 1;		
+		c.weightx = 0.5;
+		addPanel2.add(button2,c);
 		
-		addPanel2.add(nameActivity);
-		addPanel2.add(BorderLayout.CENTER, dropdownCategory);
-		addPanel2.add(BorderLayout.SOUTH, addButton);
+		//make and add ending date. This is now a temporary button
+		JButton button3 = new JButton ("Date 2");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+		c.weightx = 0.5;
+		addPanel2.add(button3,c);
+		
+		//Make and add dropdown menu to choose category		
+		String[] categoryStrings= {"Home", "School", "Work", "All"};			//This should request the list of the category's. 
+		final JComboBox dropdownCategory = new JComboBox(categoryStrings);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		c.weightx = 0.0;
+		addPanel2.add(dropdownCategory,c);
+		
+		//Make and add priorityPanel.
+		JPanel priorityPanel = new JPanel();
+		JRadioButton highPriority = new JRadioButton("High");
+		JRadioButton mediumPriority = new JRadioButton("Medium");
+		JRadioButton lowPriority = new JRadioButton("Low");
+			
+		ButtonGroup bg = new ButtonGroup();			//Group the buttons
+		bg.add(highPriority);
+		bg.add(mediumPriority);
+		bg.add(lowPriority);
+		
+		mediumPriority.setSelected(true);			//Default is medium
+		
+		priorityPanel.add(highPriority);
+		priorityPanel.add(mediumPriority);
+		priorityPanel.add(lowPriority);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 2;
+		addPanel2.add(priorityPanel,c);
+		
+		//add the addButton 
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipady = 50;
+		c.ipadx = 100;
+		c.gridx = 3;
+		c.gridy = 0;
+		c.gridheight = 3;
+		addPanel2.add(addButton,c);
+		
+		//Get the name of the activity (should also get the date, category, and priority)
+		addButton.addActionListener(new ActionListener() {
+		      @Override
+		      public void actionPerformed(ActionEvent e) {
+		        String message = String.format("textFieldA='%s'",
+		        		nameActivity.getText());
+		        System.out.println(message);
+		      }
+		    });
 		return addPanel;
 	}
 
-	
+	class HintTextField extends JTextField implements FocusListener {
 
+	  private final String hint;
+	  private boolean showingHint;
+
+	  public HintTextField(final String hint) {
+	    super(hint);
+	    this.hint = hint;
+	    this.showingHint = true;
+	    super.addFocusListener(this);
+	  }
+
+	  @Override
+	  public void focusGained(FocusEvent e) {
+	    if(this.getText().isEmpty()) {
+	      super.setText("");
+	      showingHint = false;
+	    }
+	  }
+	  @Override
+	  public void focusLost(FocusEvent e) {
+	    if(this.getText().isEmpty()) {
+	      super.setText(hint);
+	      showingHint = true;
+	    }
+	  }
+
+	  @Override
+	  public String getText() {
+	    return showingHint ? "" : super.getText();
+	  }
+
+	}
 }
+
