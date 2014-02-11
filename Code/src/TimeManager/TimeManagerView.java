@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -15,6 +17,9 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -39,6 +44,7 @@ public class TimeManagerView implements Observer {
 		
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.pack();
+		addMenuBar(mainFrame); 
 		
 		//Content titlePanel 
 		titelPanel.setBackground(Color.red);
@@ -69,6 +75,43 @@ public class TimeManagerView implements Observer {
 		//mainFrame.setSize( JFrame.MAXIMIZED_VERT, JFrame.MAXIMIZED_HORIZ);
 		
 	}
+	
+	private static void addMenuBar(JFrame mainFrame) {
+		// Make a menu bar
+		JMenuBar menuBar = new JMenuBar();
+		// Make menus
+		JMenu fileMenu = new JMenu("File");
+		JMenu editMenu = new JMenu ("Edit");
+		JMenu helpMenu = new JMenu ("Help");
+		// Add menus to the menuBar
+		menuBar.add(fileMenu);
+		menuBar.add(editMenu);
+		menuBar.add(helpMenu);
+		// Make subMenus
+		JMenuItem newAction = new JMenuItem("New");
+		JMenuItem exitAction = new JMenuItem("Exit");
+		JMenuItem cutAction = new JMenuItem("Cut");
+		JMenuItem copyAction = new JMenuItem("Copy");
+		JMenuItem pasteAction = new JMenuItem("Paste");
+		JMenuItem helpAction = new JMenuItem("Help");
+		// Add action to newAction
+		newAction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent h){
+				System.out.println("You have clicked new action");
+				}
+			}
+		);
+		
+		// Add actions to the menus
+		fileMenu.add(newAction);
+		fileMenu.add(exitAction);
+		editMenu.add(cutAction);
+		editMenu.add(copyAction);
+		editMenu.add(pasteAction);
+		helpMenu.add(helpAction);
+		
+		mainFrame.setJMenuBar(menuBar);	
+		}
 
 	private JTabbedPane makeTabPanel() {
 		JTabbedPane tab = new JTabbedPane(JTabbedPane.LEFT);
