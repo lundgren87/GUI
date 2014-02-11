@@ -2,6 +2,7 @@ package TimeManager;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -15,6 +16,7 @@ import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -175,8 +177,9 @@ public class TimeManagerView implements Observer {
 		GridBagConstraints c = new GridBagConstraints();
 		
 		//Make and add NameActivity
-		final JTextField nameActivity = new HintTextField("Name activity"); 		//texfield to insert the name of the activity
-		
+		final JTextField nameActivity = new JTextField("Name activity"); 		//texfield to insert the name of the activity
+		Font font = new Font(null, Font.BOLD, 16);								//makes the font of the activity big and bold
+		nameActivity.setFont(font);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -213,11 +216,11 @@ public class TimeManagerView implements Observer {
 		
 		//Make and add priorityPanel.
 		JPanel priorityPanel = new JPanel();
-		JRadioButton highPriority = new JRadioButton("High");
-		JRadioButton mediumPriority = new JRadioButton("Medium");
-		JRadioButton lowPriority = new JRadioButton("Low");
+		final JRadioButton highPriority = new JRadioButton("High");
+		final JRadioButton mediumPriority = new JRadioButton("Medium");
+		final JRadioButton lowPriority = new JRadioButton("Low");
 			
-		ButtonGroup bg = new ButtonGroup();			//Group the buttons
+		final ButtonGroup bg = new ButtonGroup();			//Group the buttons
 		bg.add(highPriority);
 		bg.add(mediumPriority);
 		bg.add(lowPriority);
@@ -245,46 +248,32 @@ public class TimeManagerView implements Observer {
 		addButton.addActionListener(new ActionListener() {
 		      @Override
 		      public void actionPerformed(ActionEvent e) {
-		        String message = String.format("textFieldA='%s'",
-		        		nameActivity.getText());
-		        System.out.println(message);
-		      }
+		       String message;
+		       String priority;
+		    	 if(nameActivity.getText().length()>4){
+		    		if(highPriority.isSelected()){
+		        			priority = "***";
+		        			}
+		    		else if(lowPriority.isSelected()){
+		    			 priority = "*";
+		    			 }
+		        	else
+		        			priority = "**";
+		    		 
+		    		 message = String.format(
+		    			"Activity name = " + nameActivity.getText() + 
+		        		"\nCategory = " + dropdownCategory.getSelectedItem().toString() +
+		        		"\nPriority = " + priority + '\n'		        		
+		    			);   	 
+		    	 }
+		    	 else 
+		    		 message = "Give a valid name to the task. \nIt should include at least 5 characters"; //one should actually give a popup	  
+		    	 
+		    	 System.out.println(message);}
+		    	 
+		      
 		    });
 		return addPanel;
-	}
-
-	class HintTextField extends JTextField implements FocusListener {
-
-	  private final String hint;
-	  private boolean showingHint;
-
-	  public HintTextField(final String hint) {
-	    super(hint);
-	    this.hint = hint;
-	    this.showingHint = true;
-	    super.addFocusListener(this);
-	  }
-
-	  @Override
-	  public void focusGained(FocusEvent e) {
-	    if(this.getText().isEmpty()) {
-	      super.setText("");
-	      showingHint = false;
-	    }
-	  }
-	  @Override
-	  public void focusLost(FocusEvent e) {
-	    if(this.getText().isEmpty()) {
-	      super.setText(hint);
-	      showingHint = true;
-	    }
-	  }
-
-	  @Override
-	  public String getText() {
-	    return showingHint ? "" : super.getText();
-	  }
-
 	}
 }
 
