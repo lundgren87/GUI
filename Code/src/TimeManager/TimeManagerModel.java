@@ -44,5 +44,20 @@ public class TimeManagerModel extends Observable {
 		setChanged();
 		notifyObservers(taskCategories);
 	}
+	
+	/**
+	 * Get list of tasks
+	 */
+	public List<TaskItem> getTasks() {
+		return taskItems;
+	}
+	
+	/**
+	 * Get list of categories
+	 */
+	public List<TaskCategory> getCategories() {
+		return taskCategories;
+	}
+	
 		
 }

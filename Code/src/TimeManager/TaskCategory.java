@@ -20,7 +20,7 @@ public class TaskCategory {
 	 * @param catName name of the category
 	 * @param catDesc desciption of the category
 	 */
-	TaskCategory(String catName, String catDesc) {
+	public TaskCategory(String catName, String catDesc) {
 		categoryName = catName;
 		categoryDescription = catDesc;
 		try {
