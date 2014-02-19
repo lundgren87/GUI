@@ -14,9 +14,12 @@ import java.util.Properties;
  *
  */
 public class Config {
+	static String configFile = "config.properties";
+	
 	public static String DBFile;
 	public static String Images;
 	public static String startupLanguage;
+	
 	
 	/**
 	 * Loads general properties from config file.
@@ -25,8 +28,10 @@ public class Config {
 		Properties prop = new Properties();
 		InputStream input = null;
 		try {
-			input = new FileInputStream("config.properties");
+			//specify file to use
+			input = new FileInputStream(configFile);
 			
+			//get local property values from the file
 			DBFile 			= prop.getProperty("DBFile",          "assets/DBFile" );
 			Images 			= prop.getProperty("Images",          "/images/"      );
 			startupLanguage = prop.getProperty("startupLanguage", "English"       );
@@ -55,11 +60,14 @@ public class Config {
 		Properties prop = new Properties();
 		OutputStream output = null;
 		try {
-			output = new FileOutputStream("config.properties");
+			//specify file to use
+			output = new FileOutputStream(configFile);
 			
-			prop.setProperty("DBFile",DBFile);
-			prop.setProperty("startupLanguage",startupLanguage);
+			//save local properties to the file
+			prop.setProperty("DBFile", DBFile);
+			prop.setProperty("startupLanguage", startupLanguage);
 			
+			//apply changes to file
 			prop.store(output, null);
 		}
 		catch (IOException e){
@@ -87,8 +95,10 @@ public class Config {
 		Properties prop = new Properties();
 		InputStream input = null;
 		try {
-			input = new FileInputStream("config.properties");
+			//specify file to use
+			input = new FileInputStream(configFile);
 			
+			//get the specified property value corresponding to key and return it
 			return prop.getProperty(key, defaultValue);
 		}
 		catch (IOException e){
@@ -116,10 +126,13 @@ public class Config {
 		Properties prop = new Properties();
 		OutputStream output = null;
 		try {
-			output = new FileOutputStream("config.properties");
+			//specify file to use
+			output = new FileOutputStream(configFile);
 			
+			//store the property
 			prop.setProperty(key, value);
 			
+			//apply changes
 			prop.store(output, null);
 		}
 		catch (IOException e){
