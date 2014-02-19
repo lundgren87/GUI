@@ -15,7 +15,7 @@ public class TimeManagerController {
 	
 	//add a listener to the view
 		//actionperformed
-			//do something in the model
+			//do something in the model ->observable
 			//set the new value in the view
 
 }

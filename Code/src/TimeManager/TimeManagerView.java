@@ -76,7 +76,7 @@ public class TimeManagerView implements Observer {
 		gridBagConstraint.weightx = 1;
 		gridBagConstraint.gridwidth = GridBagConstraints.REMAINDER;
 		//gridBagConstraint.anchor = GridBagConstraints.PAGE_START;		
-		addPanel = MakeAddPanel(addPanel);
+		MakeAddPanel(addPanel);
 		
 		mainFrame.getContentPane().add(BorderLayout.NORTH, titelPanel);
 		mainFrame.getContentPane().add(BorderLayout.CENTER, tabPanel);
@@ -181,8 +181,9 @@ public class TimeManagerView implements Observer {
 		}
 	}
 
-	private JPanel MakeAddPanel(JPanel addPanel2) {
-		addPanel2.setLayout(new GridBagLayout());
+	private void MakeAddPanel(JPanel addPanel) {
+		this.addPanel = addPanel;
+		addPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
 		//Make and add NameActivity
@@ -193,7 +194,7 @@ public class TimeManagerView implements Observer {
 		c.gridwidth = 2;
 		nameActivity.setBorder(BorderFactory.createTitledBorder
 	            ("Description of activity"));
-		addPanel2.add(nameActivity,c);
+		addPanel.add(nameActivity,c);
 		
 		//Make a datepanel
 		JPanel datePanel = new JPanel();
@@ -202,12 +203,14 @@ public class TimeManagerView implements Observer {
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 1;	
-		datePanel.setBorder(BorderFactory.createTitledBorder("Starting Date"));
-		addPanel2.add(datePanel,c);
+		datePanel.setBorder(BorderFactory.createTitledBorder("Due Date"));
+		addPanel.add(datePanel,c);
 
 		datePanel.setLayout(new GridLayout(0,4));
 				//Make an date chooser, add this to the datePanel
-				JComboBox startYear, startMonth, startDay;
+				final JComboBox startYear;
+				final JComboBox startMonth;
+				final JComboBox startDay;
 		       	startYear = new JComboBox();
 		        buildYearsList(startYear);
 		        startYear.setSelectedIndex(5);
@@ -217,17 +220,13 @@ public class TimeManagerView implements Observer {
 		        startDay = new JComboBox();
 		        buildDaysList(startDate, startDay, startMonth);
 		        startDay.setSelectedItem(Integer.toString(startDate.get(Calendar.DATE)));
-		        //startYear.addItemListener(this);
-		        //startMonth.addItemListener(this);
-		        //startDay.addItemListener(this);
-		        //datePanel.add(startDateLabel);
 		        datePanel.add(startDay);
 		        datePanel.add(startMonth);
 		        datePanel.add(startYear);
 			
 				//make an time spinner, add this to the datePanel
-				JSpinner timeSpinner = new JSpinner( new SpinnerDateModel() );
-				JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
+				final JSpinner timeSpinner = new JSpinner( new SpinnerDateModel() );
+				final JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
 				timeSpinner.setEditor(timeEditor);
 				timeSpinner.setValue(new Date()); 
 				datePanel.add(timeSpinner);
@@ -241,7 +240,7 @@ public class TimeManagerView implements Observer {
 		c.gridwidth = 1;
 		c.weightx = 0.45;
 		dropdownCategory.setBorder(BorderFactory.createTitledBorder("Category"));
-		addPanel2.add(dropdownCategory,c);
+		addPanel.add(dropdownCategory,c);
 		
 		//Make and add priorityPanel.
 		JPanel priorityPanel = new JPanel();
@@ -264,7 +263,7 @@ public class TimeManagerView implements Observer {
 		c.gridy = 2;
 		c.weightx = 0.45;
 		priorityPanel.setBorder(BorderFactory.createTitledBorder("Priority"));
-		addPanel2.add(priorityPanel,c);
+		addPanel.add(priorityPanel,c);
 		
 		//add the addButton 
 		Font font = new Font(null, Font.BOLD, 20);				//makes the font of the activity big and bold
@@ -276,7 +275,7 @@ public class TimeManagerView implements Observer {
 		c.gridy = 0;
 		c.gridheight = 3;
 		c.weightx = 0.1;
-		addPanel2.add(addButton,c);
+		addPanel.add(addButton,c);
 		
 		//Get the name of the activity (should also get the date, category, and priority)
 		addButton.addActionListener(new ActionListener() {
@@ -284,6 +283,8 @@ public class TimeManagerView implements Observer {
 		      public void actionPerformed(ActionEvent e) {
 		       String message;
 		       String priority;
+		       String date;
+		       String time;
 		    	 if(nameActivity.getText().length()>4){
 		    		if(highPriority.isSelected()){
 		        			priority = "***";
@@ -293,11 +294,20 @@ public class TimeManagerView implements Observer {
 		    			 }
 		        	else
 		        			priority = "**";
+		    		
+		    		date = startDay.getSelectedItem().toString() + " " +  
+		    				startMonth.getSelectedItem().toString() + " " +
+		    				startYear.getSelectedItem().toString();
+		    		
+		    		time = timeEditor.getFormat().format(timeSpinner.getValue());
+		    		
 		    		 
 		    		 message = String.format(
 		    			"Activity name = " + nameActivity.getText() + 
 		        		"\nCategory = " + dropdownCategory.getSelectedItem().toString() +
-		        		"\nPriority = " + priority + '\n'		        		
+		        		"\nPriority = " + priority +
+		        		"\nDate = " + date + 
+		        		"\nTime = "+ time + '\n'
 		    			);   	 
 		    	 }
 		    	 else 
@@ -307,7 +317,6 @@ public class TimeManagerView implements Observer {
 		    	 
 		      
 		    });
-		return addPanel;
 	}
 	
 	/**
