@@ -18,6 +18,11 @@ public class TimeManagerModel extends Observable {
 	 * Makes a new list of taskItems and Categories
 	 */
 	public TimeManagerModel() {
+
+	}
+	
+	
+	public TimeManagerModel(TimeManagerController controller) {
 		taskItems = new ArrayList<TaskItem>();
 		taskCategories = new ArrayList<TaskCategory>();
 	}
