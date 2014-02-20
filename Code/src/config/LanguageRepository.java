@@ -2,6 +2,8 @@ package config;
 
 import java.util.HashMap;
 
+import javax.swing.JMenuItem;
+
 
 /**
  * @author Sven, Pontus
@@ -20,7 +22,7 @@ public class LanguageRepository {
 	 * If newLanguage is different from currentLanguage,
 	 * sets newLanguage to currentLanguage and runs init
 	 */
-	static void setCurrentLanguage(String newLanguage) {
+	public static void setCurrentLanguage(String newLanguage) {
 		if(currentLanguage != newLanguage) {
 			currentLanguage = newLanguage;
 			init();
@@ -47,12 +49,71 @@ public class LanguageRepository {
 			// Insert text mappings for English here
 			case "English":
 				languageMap.put("EXAMPLE_LABLE","Example_text");
+				languageMap.put("TIME_MANAGER", "Time Manager");
+				languageMap.put("ADD", "Add");
+				languageMap.put("TITEL", "titel");
+				languageMap.put("FILE", "File");
+				languageMap.put("EDIT", "Edit");
+				languageMap.put("HELP", "Help");
+				languageMap.put("SAVE", "Save");
+				languageMap.put("LOAD", "Load");
+				languageMap.put("EXIT", "Exit");
+				languageMap.put("LANGUAGE", "Language");
+				languageMap.put("DESC_ACTIV", "Description of activity");
+				languageMap.put("DUEDATE", "Due Date");
+				languageMap.put("CATEGORY", "Category");
+				languageMap.put("HIGH", "High");
+				languageMap.put("MEDIUM", "Medium");
+				languageMap.put("LOW", "Low");
+				languageMap.put("PRIORITY", "Priority");
+				languageMap.put("JAN","January");
+				languageMap.put("FEB","February");
+				languageMap.put("MAR","March");
+				languageMap.put("APR","April");
+				languageMap.put("MAY","May");
+				languageMap.put("JUN","June");
+				languageMap.put("JUL","July");
+				languageMap.put("AUG","August");
+				languageMap.put("SEP","September");
+				languageMap.put("OCT","October");
+				languageMap.put("NOV","November");
+				languageMap.put("DEC","December");
+
 				isInitialized = true;
 				break;
 			
 			// Insert text mappings for Swedish here
 			case "Swedish":
 				languageMap.put("EXAMPLE_LABLE","Exempel_text");
+				languageMap.put("TIME_MANAGER","Time Manager");
+				languageMap.put("ADD","Lägg till");
+				languageMap.put("TITLE","Titel");
+				languageMap.put("FILE","Arkiv");
+				languageMap.put("EDIT","Redigera");
+				languageMap.put("HELP","Hjälp");
+				languageMap.put("SAVE","Spara");
+				languageMap.put("LOAD","Ladda");
+				languageMap.put("EXIT","Avsluta");
+				languageMap.put("LANGUAGE","Språk");
+				languageMap.put("DESC_ACTIV","Aktivitetsbeskrivning");
+				languageMap.put("DUEDATE","Slutdatum");
+				languageMap.put("CATEGORY","Kategori");
+				languageMap.put("HIGH","Hög");
+				languageMap.put("MEDIUM","Medel");
+				languageMap.put("LOW","Låg");
+				languageMap.put("PRIORITY","Prioritet");
+				languageMap.put("JAN","Januari");
+				languageMap.put("FEB","Februari");
+				languageMap.put("MAR","Mars");
+				languageMap.put("APR","April");
+				languageMap.put("MAY","Maj");
+				languageMap.put("JUN","Juni");
+				languageMap.put("JUL","Juli");
+				languageMap.put("AUG","Augusti");
+				languageMap.put("SEP","September");
+				languageMap.put("OCT","October");
+				languageMap.put("NOV","November");
+				languageMap.put("DEC","December");
 				isInitialized = true;
 				break;
 				
@@ -69,7 +130,7 @@ public class LanguageRepository {
 	 * Returns the value matching the key stringName in languageMap
 	 * Initializes languageMap if it is not initialized already
 	 */
-	static String getString(String stringName) {
+	public static String getString(String stringName) {
 		if (!isInitialized) init();
 		return languageMap.get(stringName);
 	}

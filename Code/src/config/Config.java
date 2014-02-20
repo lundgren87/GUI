@@ -14,7 +14,7 @@ import java.util.Properties;
  *
  */
 public class Config {
-	static String configFile = "config.properties";
+	static String configFile = "assets/config.properties";
 	
 	public static String DBFile;
 	public static String Images;
@@ -30,6 +30,7 @@ public class Config {
 		try {
 			//specify file to use
 			input = new FileInputStream(configFile);
+			prop.load(input);
 			
 			//get local property values from the file
 			DBFile 			= prop.getProperty("DBFile",          "assets/DBFile" );
@@ -50,6 +51,7 @@ public class Config {
 				}
 			} 
 		}
+		System.out.println(DBFile + Images + startupLanguage);
 	}
 	
 
@@ -128,7 +130,7 @@ public class Config {
 		try {
 			//specify file to use
 			output = new FileOutputStream(configFile);
-			
+		
 			//store the property
 			prop.setProperty(key, value);
 			

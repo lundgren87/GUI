@@ -56,7 +56,7 @@ import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
  */
 public class TimeManagerView implements Observer {
 	
-	public JFrame mainFrame = new JFrame("Time Manager");	//The main frame. 
+	public JFrame mainFrame = new JFrame(config.LanguageRepository.getString("TIME_MANAGER"));	//The main frame. 
 	private JPanel titelPanel = new JPanel(); 	//The panel which shows the title of the current tab
 	private JPanel addPanel = new JPanel();		//The panel where one can add a new task
 	private JPanel centerPanel;
@@ -64,27 +64,21 @@ public class TimeManagerView implements Observer {
 	private TaskPanel taskPanel;	// Right part of the rightPanel
 	private List<TaskPanel> taskPanels;			// One TaskPanel for each category
 	
-	private JButton addButton =  new JButton("Add");		//The button to add a new task
-	private JButton logoutButton = new JButton("Log Out");	//The  button to log out
+	private JButton addButton =  new JButton(config.LanguageRepository.getString("ADD"));		//The button to add a new task
 	private Calendar startDate = Calendar.getInstance();	//Selects today's date.
-	/*
-<<<<<<< HEAD
-	public TimeManagerView(){	
-		
-=======
-	 
-	*/
+	
 	TimeManagerView(TimeManagerController controller){	
 		
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		mainFrame.setDefaultCloseOperation(closeOperation());
 		mainFrame.pack();
 		addMenuBar(mainFrame); 
 		
 		//Content titlePanel 
 		titelPanel.setBackground(Color.red);		//this is a temporary backgroundcolor
 		titelPanel.setLayout(new GridLayout(1, 5));
-		titelPanel.add(new JLabel("Title"));
-		titelPanel.add(logoutButton);				//The logout button should not be that big (or here at all)
+		titelPanel.add(new JLabel(config.LanguageRepository.getString("TITEL")));
+		
 		
 		makeCenterPanel();
 		
@@ -104,10 +98,17 @@ public class TimeManagerView implements Observer {
 		mainFrame.getContentPane().add(BorderLayout.CENTER, centerPanel);
 		mainFrame.getContentPane().add(BorderLayout.SOUTH, addPanel);
 		
-		mainFrame.setPreferredSize(new Dimension(1024, 768));
-		mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		//mainFrame.setSize( JFrame.MAXIMIZED_VERT, JFrame.MAXIMIZED_HORIZ);
+		//mainFrame.setPreferredSize(new Dimension(1024, 768));
+		//mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		mainFrame.setSize( Integer.parseInt(config.Config.loadProperty("WindowWidth", "800")),
+				Integer.parseInt(config.Config.loadProperty("WindowHeight", "500"))	);
 		
+	}
+	
+	private int closeOperation(){
+		config.Config.saveProperty("WindowHeight", Integer.toString(mainFrame.getHeight()));
+		config.Config.saveProperty("WindowWidth", Integer.toString(mainFrame.getWidth()));
+		return JFrame.EXIT_ON_CLOSE;
 	}
 	
 	private static void addMenuBar(JFrame mainFrame) {
@@ -115,9 +116,9 @@ public class TimeManagerView implements Observer {
 		JMenuBar menuBar = new JMenuBar();
 		
 		// Make menus
-		JMenu fileMenu = new JMenu("File");
-		JMenu editMenu = new JMenu ("Edit");
-		JMenu helpMenu = new JMenu ("Help");
+		JMenu fileMenu = new JMenu(config.LanguageRepository.getString("FILE"));
+		JMenu editMenu = new JMenu (config.LanguageRepository.getString("EDIT"));
+		JMenu helpMenu = new JMenu (config.LanguageRepository.getString("HELP"));
 		
 		// Add menus to the menuBar
 		menuBar.add(fileMenu);
@@ -125,12 +126,11 @@ public class TimeManagerView implements Observer {
 		menuBar.add(helpMenu);
 		
 		// Make subMenus
-		JMenuItem newAction = new JMenuItem("New");
-		JMenuItem exitAction = new JMenuItem("Exit");
-		JMenuItem cutAction = new JMenuItem("Cut");
-		JMenuItem copyAction = new JMenuItem("Copy");
-		JMenuItem pasteAction = new JMenuItem("Paste");
-		JMenuItem helpAction = new JMenuItem("Help");
+		JMenuItem newAction = new JMenuItem(config.LanguageRepository.getString("SAVE"));
+		JMenuItem loadAction = new JMenuItem(config.LanguageRepository.getString("LOAD"));
+		JMenuItem exitAction = new JMenuItem(config.LanguageRepository.getString("EXIT"));
+		JMenuItem languageAction = new JMenuItem(config.LanguageRepository.getString("LANGUAGE"));
+		JMenuItem helpAction = new JMenuItem(config.LanguageRepository.getString("HELP"));
 		
 		// Add action to newAction
 		newAction.addActionListener(new ActionListener() {
@@ -142,10 +142,10 @@ public class TimeManagerView implements Observer {
 		
 		//Add actions to the menus
 		fileMenu.add(newAction);
+		fileMenu.add(loadAction);
 		fileMenu.add(exitAction);
-		editMenu.add(cutAction);
-		editMenu.add(copyAction);
-		editMenu.add(pasteAction);
+		editMenu.add(languageAction);
+		
 		helpMenu.add(helpAction);
 		
 		mainFrame.setJMenuBar(menuBar);	
@@ -287,7 +287,7 @@ public class TimeManagerView implements Observer {
 		c.gridy = 0;
 		c.gridwidth = 2;
 		nameActivity.setBorder(BorderFactory.createTitledBorder
-	            ("Description of activity"));
+	            (config.LanguageRepository.getString("DESC_ACTIV")));
 		addPanel.add(nameActivity,c);
 		
 		//Make a datepanel
@@ -297,7 +297,7 @@ public class TimeManagerView implements Observer {
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 1;	
-		datePanel.setBorder(BorderFactory.createTitledBorder("Due Date"));
+		datePanel.setBorder(BorderFactory.createTitledBorder(config.LanguageRepository.getString("DUEDATE")));
 		addPanel.add(datePanel,c);
 
 		datePanel.setLayout(new GridLayout(0,4));
@@ -333,14 +333,14 @@ public class TimeManagerView implements Observer {
 		c.gridy = 2;
 		c.gridwidth = 1;
 		c.weightx = 0.45;
-		dropdownCategory.setBorder(BorderFactory.createTitledBorder("Category"));
+		dropdownCategory.setBorder(BorderFactory.createTitledBorder(config.LanguageRepository.getString("CATEGORY")));
 		addPanel.add(dropdownCategory,c);
 		
 		//Make and add priorityPanel.
 		JPanel priorityPanel = new JPanel();
-			final JRadioButton highPriority = new JRadioButton("High");
-			final JRadioButton mediumPriority = new JRadioButton("Medium");
-			final JRadioButton lowPriority = new JRadioButton("Low");
+			final JRadioButton highPriority = new JRadioButton(config.LanguageRepository.getString("HIGH"));
+			final JRadioButton mediumPriority = new JRadioButton(config.LanguageRepository.getString("MEDIUM"));
+			final JRadioButton lowPriority = new JRadioButton(config.LanguageRepository.getString("LOW"));
 				
 			final ButtonGroup bg = new ButtonGroup();			//Group the buttons
 			bg.add(highPriority);
@@ -356,7 +356,7 @@ public class TimeManagerView implements Observer {
 		c.gridx = 1;
 		c.gridy = 2;
 		c.weightx = 0.45;
-		priorityPanel.setBorder(BorderFactory.createTitledBorder("Priority"));
+		priorityPanel.setBorder(BorderFactory.createTitledBorder(config.LanguageRepository.getString("PRIORITY")));
 		addPanel.add(priorityPanel,c);
 		
 		//add the addButton 
@@ -431,7 +431,18 @@ public class TimeManagerView implements Observer {
 	 */
 	 private void buildMonthsList(JComboBox monthsList) {
 	        monthsList.removeAllItems();
-	        String[] monthStrings= {"January", "February", "March", "April", "May", "June" , "July", "August", "September", "October", "November","December"};			//This should request the list of the category's. 
+	        String[] monthStrings= {config.LanguageRepository.getString("JAN"),
+	        		config.LanguageRepository.getString("FEB"),
+	        		config.LanguageRepository.getString("MAR"),
+	        		config.LanguageRepository.getString("APR"),
+	        		config.LanguageRepository.getString("MAY"),
+	        		config.LanguageRepository.getString("JUN"),
+	        		config.LanguageRepository.getString("JUL"),
+	        		config.LanguageRepository.getString("AUG"),
+	        		config.LanguageRepository.getString("SEP"),
+	        		config.LanguageRepository.getString("OCT"),
+	        		config.LanguageRepository.getString("NOV"),
+	        		config.LanguageRepository.getString("DEC")};	//This should request the list of the category's. 
 	        for (int monthCount = 0; monthCount < 12; monthCount++)
 	            monthsList.addItem(monthStrings[monthCount]);
 	    }
