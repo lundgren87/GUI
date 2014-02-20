@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
@@ -67,11 +71,14 @@ public class TimeManagerView implements Observer {
 	private JButton addButton =  new JButton(config.LanguageRepository.getString("ADD"));		//The button to add a new task
 	private Calendar startDate = Calendar.getInstance();	//Selects today's date.
 	
+	private static String currentLanguage;
+	
 	TimeManagerView(TimeManagerController controller){	
 		
-		
+		currentLanguage = config.LanguageRepository.getCurrentLanguage();
 		mainFrame.setDefaultCloseOperation(closeOperation());
 		mainFrame.pack();
+		
 		addMenuBar(mainFrame); 
 		
 		//Content titlePanel 
@@ -111,7 +118,7 @@ public class TimeManagerView implements Observer {
 		return JFrame.EXIT_ON_CLOSE;
 	}
 	
-	private static void addMenuBar(JFrame mainFrame) {
+	private static void addMenuBar(final JFrame mainFrame) {
 		// Make a menu bar
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -129,8 +136,49 @@ public class TimeManagerView implements Observer {
 		JMenuItem newAction = new JMenuItem(config.LanguageRepository.getString("SAVE"));
 		JMenuItem loadAction = new JMenuItem(config.LanguageRepository.getString("LOAD"));
 		JMenuItem exitAction = new JMenuItem(config.LanguageRepository.getString("EXIT"));
-		JMenuItem languageAction = new JMenuItem(config.LanguageRepository.getString("LANGUAGE"));
+		JMenu languageAction = new JMenu(config.LanguageRepository.getString("LANGUAGE"));
 		JMenuItem helpAction = new JMenuItem(config.LanguageRepository.getString("HELP"));
+		
+		ButtonGroup rbgroup = new ButtonGroup();
+		final JRadioButtonMenuItem swedish = new JRadioButtonMenuItem(config.LanguageRepository.getString("SWEDISH"));
+		final JRadioButtonMenuItem english = new JRadioButtonMenuItem(config.LanguageRepository.getString("ENGLISH"));
+		if(currentLanguage == "English")
+			english.setSelected(true);
+		else
+			swedish.setSelected(true);
+		
+		rbgroup.add(swedish);
+		
+		swedish.addActionListener((new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent s) {
+				if(swedish.isSelected()){
+					config.LanguageRepository.setCurrentLanguage("Swedish");
+					System.out.println("You choose Swedish");
+				}
+				mainFrame.revalidate();
+				mainFrame.repaint();
+			}
+		}));
+		
+		english.addActionListener((new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(english.isSelected()){
+					config.LanguageRepository.setCurrentLanguage("English");
+					System.out.println("you choose English");
+				}	
+				mainFrame.revalidate();
+				mainFrame.repaint();			
+			}
+		}));
+		
+		
+		rbgroup.add(english);
+		
+		languageAction.add(english);
+		languageAction.add(swedish);
+
 		
 		// Add action to newAction
 		newAction.addActionListener(new ActionListener() {

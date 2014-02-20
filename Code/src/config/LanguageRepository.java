@@ -34,7 +34,7 @@ public class LanguageRepository {
 	 * @return currentLanguage
 	 * Gets the current language
 	 */
-	static String getCurrentLanguage() {
+	public static String getCurrentLanguage() {
 		return currentLanguage;
 	}
 	
@@ -78,6 +78,8 @@ public class LanguageRepository {
 				languageMap.put("OCT","October");
 				languageMap.put("NOV","November");
 				languageMap.put("DEC","December");
+				languageMap.put("SWEDISH", "Swedish");
+				languageMap.put("ENGLISH", "English");
 
 				isInitialized = true;
 				break;
@@ -114,6 +116,8 @@ public class LanguageRepository {
 				languageMap.put("OCT","October");
 				languageMap.put("NOV","November");
 				languageMap.put("DEC","December");
+				languageMap.put("SWEDISH","Svenska");
+				languageMap.put("ENNGLISH","Engelska");
 				isInitialized = true;
 				break;
 				
