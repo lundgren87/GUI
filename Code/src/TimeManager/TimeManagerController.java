@@ -13,6 +13,7 @@ public class TimeManagerController {
 		theModel.addObserver((Observer) theView);
 		
 		// dummy data
+		/*
 		theModel.addNewCategory("all_categories","all_categories");
 		theModel.addNewCategory("house","house");
 		theModel.addNewCategory("school","school");
@@ -27,6 +28,7 @@ public class TimeManagerController {
 			theModel.addNewTask("Task " + i, theModel.taskCategories.get(randomCategory).categoryName, randomPriority);
 			//theModel.addNewTask("Task " + i, "all_categories", randomPriority);
 		}
+		*/
 		
 		theView.mainFrame.setVisible(true);
 				

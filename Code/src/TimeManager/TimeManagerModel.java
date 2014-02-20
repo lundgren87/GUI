@@ -25,6 +25,8 @@ public class TimeManagerModel extends Observable {
 		taskCategories = new ArrayList<TaskCategory>();
 		dataBase = new DBHandler(this);
 		dataBase.init();
+		dataBase.readCategories();
+		dataBase.readTasks();
 	}
 	
 	/**

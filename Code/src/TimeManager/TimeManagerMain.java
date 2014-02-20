@@ -33,6 +33,7 @@ public class TimeManagerMain {
 
 =======
 */
+		config.Config.loadConfig();
 		TimeManagerController controller = new TimeManagerController(); 
 
 	}

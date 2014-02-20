@@ -260,6 +260,7 @@ public class TimeManagerView implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		List list = (List) arg;
+		System.out.println("Updating");
 		if(list.get(0) instanceof TaskCategory) {
 			loadCategories(list);
 		}
