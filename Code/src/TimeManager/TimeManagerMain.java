@@ -6,6 +6,8 @@ public class TimeManagerMain {
 
 	
 	public static void main(String[] args) {
+		/*
+<<<<<<< HEAD
 
 		TimeManagerModel model = new TimeManagerModel();
 		TimeManagerView view = new TimeManagerView();
@@ -28,6 +30,10 @@ public class TimeManagerMain {
 		}
 		
 		view.mainFrame.setVisible(true);
+
+=======
+*/
+		TimeManagerController controller = new TimeManagerController(); 
 
 	}
 	
