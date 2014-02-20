@@ -4,28 +4,19 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -34,19 +25,11 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
-
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 
 /**
@@ -54,7 +37,7 @@ import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
  * @author Kim, Pontus, Aries, Sercan
  *
  */
-public class TimeManagerView implements Observer {
+public class TimeManagerView {
 	
 	public JFrame mainFrame = new JFrame("Time Manager");	//The main frame. 
 	private JPanel titelPanel = new JPanel(); 	//The panel which shows the title of the current tab
@@ -67,14 +50,8 @@ public class TimeManagerView implements Observer {
 	private JButton addButton =  new JButton("Add");		//The button to add a new task
 	private JButton logoutButton = new JButton("Log Out");	//The  button to log out
 	private Calendar startDate = Calendar.getInstance();	//Selects today's date.
-	/*
-<<<<<<< HEAD
-	public TimeManagerView(){	
-		
-=======
-	 
-	*/
-	TimeManagerView(TimeManagerController controller){	
+
+	TimeManagerView(){	
 		
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.pack();
@@ -87,18 +64,8 @@ public class TimeManagerView implements Observer {
 		titelPanel.add(logoutButton);				//The logout button should not be that big (or here at all)
 		
 		makeCenterPanel();
-		
 		MakeAddPanel(addPanel);
-		/*
-		gridBagConstraint = new GridBagConstraints();
-		gridBagConstraint.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraint.weightx = 1;
-		gridBagConstraint.gridwidth = GridBagConstraints.REMAINDER;
-		//gridBagConstraint.anchor = GridBagConstraints.PAGE_START;		
-		*/
 
-//>>>>>>> refs/heads/Vera
-		
 		//Layout of the titelpanel, tabpannel and addpanel. 
 		mainFrame.getContentPane().add(BorderLayout.NORTH, titelPanel);
 		mainFrame.getContentPane().add(BorderLayout.CENTER, centerPanel);
@@ -207,7 +174,7 @@ public class TimeManagerView implements Observer {
 		}
 		// when categories changed, switch back to all category
 		// TODO: switch to the new category or last active category instead
-		switchTab("house");
+		switchTab("all_categories");
 	}
 	
 	public void switchTab(String selectedCategory) {
@@ -215,7 +182,7 @@ public class TimeManagerView implements Observer {
 			centerPanel.remove(taskPanel);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		// TODO: use hashmap?
 		for(TaskPanel tp : taskPanels) {
@@ -228,10 +195,10 @@ public class TimeManagerView implements Observer {
 		centerPanel.repaint();
 		
 		try {
-			System.out.println("Switching to " + taskPanel.taskCategory.categoryName);
+			//System.out.println("Switching to " + taskPanel.taskCategory.categoryName);
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -248,32 +215,15 @@ public class TimeManagerView implements Observer {
 		for(TaskItem item : taskItems) {
 			// TODO: use hashmap?
 			for(TaskPanel tp : taskPanels) {
-				if(tp.taskCategory.categoryName.equalsIgnoreCase(item.taskCategory) || 
-					tp.taskCategory.categoryName.equalsIgnoreCase("all_categories")
-				) {
+				if(tp.taskCategory.categoryName.equalsIgnoreCase(item.taskCategory)) {
+					tp.addTask(item); 
+				}
+				if(tp.taskCategory.categoryName.equalsIgnoreCase("all_categories")) {
 					tp.addTask(item);
 				}
 			}
 		}
 	}
-	
-	@Override
-	public void update(Observable o, Object arg) {
-		List list = (List) arg;
-		System.out.println("Updating");
-		if(list.get(0) instanceof TaskCategory) {
-			loadCategories(list);
-		}
-		else {
-			loadTasks(list);
-		}
-	}
-
-	/**
-	 * fills the addpanel with a button, textarea and combobox
-	 * @param addPanel2, the JPannel addPanel
-	 * @return addPanel2
-	 */
 
 	private void MakeAddPanel(JPanel addPanel) {
 		this.addPanel = addPanel;

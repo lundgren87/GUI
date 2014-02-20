@@ -1,16 +1,19 @@
 package TimeManager;
 
+import java.util.List;
+import java.util.Observable;
 import java.util.Observer;
 
-public class TimeManagerController {
+public class TimeManagerController implements Observer {
 
 	private TimeManagerView theView;
 	private TimeManagerModel theModel;
 	
 	public TimeManagerController() {		
-		theModel = new TimeManagerModel(this);
-		theView = new TimeManagerView(this);
-		theModel.addObserver((Observer) theView);
+		theView = new TimeManagerView();
+		theModel = new TimeManagerModel();
+		theModel.addObserver(this);
+		theModel.initDatabase();
 		
 		// dummy data
 		/*
@@ -31,8 +34,17 @@ public class TimeManagerController {
 		*/
 		
 		theView.mainFrame.setVisible(true);
-				
-		//theModel.addObserver((Observer) theView);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		List list = (List) arg;
+		if(list.get(0) instanceof TaskCategory) {
+			theView.loadCategories(list);
+		}
+		else {
+			theView.loadTasks(list);
+		}
 	}
 	
 	//add a listener to the view
