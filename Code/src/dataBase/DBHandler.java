@@ -26,9 +26,11 @@ import TimeManager.TimeManagerModel;
 public class DBHandler {
 	static String DBFile;
 	static Document doc;   //Referred to as "the Document"
+	TimeManagerModel model;
 	
-	public DBHandler() {
+	public DBHandler(TimeManagerModel m) {
 		DBFile = config.Config.DBFile + ".xml";
+		model = m;
 	}
 	
 	
@@ -88,11 +90,11 @@ public class DBHandler {
 	 * Stores all tasks present in the model to the Document.
 	 * pre: init() has to be called prior to storeTasks()
 	 */
-	public static void storeTasks() {
+	public void storeTasks() {
 		
 		//Get all tasks present in the model
-//		List<TaskItem> taskList = TimeManagerModel.getTasks();
-		List<TaskItem> taskList = dummyItem();
+		List<TaskItem> taskList = model.getTasks();
+		//List<TaskItem> taskList = dummyItem();
 		
 		//To access the correct part of the document, get root element and desired child
 		Element root = doc.getRootElement();
@@ -121,11 +123,11 @@ public class DBHandler {
 	 * Stores all categories present in the model to the Document.
 	 * pre: init() has to be called prior to storeCategories()
 	 */
-	public static void storeCategories() {
+	public void storeCategories() {
 		
 		//Get all categories present in the model
-		//List<TaskCategory> categoryList = TimeManagerModel.getCategories();
-		List<TaskCategory> categoryList = dummyCategory();
+		List<TaskCategory> categoryList = model.getCategories();
+		//List<TaskCategory> categoryList = dummyCategory();
 		
 		//To access the correct part of the document, get root element and desired child
 		Element root = doc.getRootElement();
@@ -157,9 +159,6 @@ public class DBHandler {
 		//To access the correct part of the document, get root element and desired child
 		Element root = doc.getRootElement();
 		Element categories = root.getChild("categories");
-		
-//		System.out.println("Root: " + root);
-//		System.out.println("Categories: " + categories);
 
 		// Loop over all categories in the Document
 		for(Iterator it = categories.getChildren().iterator(); it.hasNext();) {
@@ -169,11 +168,8 @@ public class DBHandler {
 			String categoryName = category.getChild("categoryName").getText();
 			String categoryDescription = category.getChild("categoryDescription").getText();
 			
-//			System.out.println("CategoryName: " + categoryName);
-//			System.out.println("CategoryDescription: " + categoryDescription);
-			
 			//Add a new category to the model with the retrieved text fields as parameters
-			//TimeManagerModel.addNewCategory(categoryName, categoryDescription);
+			model.addNewCategory(categoryName, categoryDescription);
 		}
 	}
 	
@@ -188,8 +184,6 @@ public class DBHandler {
 		//To access the correct part of the document, get root element and desired child
 		Element root = doc.getRootElement();
 		Element tasks = root.getChild("tasks");
-//		System.out.println("Root: " + root);
-//		System.out.println("Tasks: " + tasks);
 		
 		// Loop over all tasks in the Document
 		for(Iterator it = tasks.getChildren().iterator(); it.hasNext();) {
@@ -200,16 +194,12 @@ public class DBHandler {
 			String taskDescription = task.getChild("taskDescription").getText();
 			String taskPriority = task.getChild("taskPriority").getText();
 			
-//			System.out.println("taskCategory: " + taskCategory);
-//			System.out.println("taskDescription: " + taskDescription);
-//			System.out.println("taskPriority: " + taskPriority);
-			
 			//Add a new task to the model with the retrieved text fields as parameters
-			//TimeManagerModel.addNewTask(taskCategory, taskDescription, Integer.parseInt(taskPriority));
+			model.addNewTask(taskCategory, taskDescription, Integer.parseInt(taskPriority));
 		}
 	}
 	
-	
+	/*
 	// DUMMY SHIT
 	public static List<TaskItem> dummyItem(){
 		TaskItem t1 = new TaskItem( "Do stuff at home", "Home", 3);
@@ -250,4 +240,5 @@ public class DBHandler {
 			e.printStackTrace();
 		}
 	}
+	*/
 }
