@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import dataBase.DBHandler;
+
 /**
  * Model contains all the information about taskitems and taskcategory
  * @author Aries, Sercan
@@ -13,18 +15,16 @@ public class TimeManagerModel extends Observable {
 	
 	public List<TaskItem> taskItems;			//List of task's
 	public List<TaskCategory> taskCategories;	//list of catogories
+	DBHandler dataBase;
 	
 	/**
 	 * Makes a new list of taskItems and Categories
 	 */
-	public TimeManagerModel() {
-
-	}
-	
-	
 	public TimeManagerModel(TimeManagerController controller) {
 		taskItems = new ArrayList<TaskItem>();
 		taskCategories = new ArrayList<TaskCategory>();
+		dataBase = new DBHandler(this);
+		dataBase.init();
 	}
 	
 	/**
