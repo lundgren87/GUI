@@ -56,7 +56,7 @@ public class TimeManagerView implements Observer {
 	
 	private Calendar startDate = Calendar.getInstance();	//Selects today's date. 
 	
-	TimeManagerView(){	
+	TimeManagerView(TimeManagerController controller){	
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.pack();
 		addMenuBar(mainFrame); 

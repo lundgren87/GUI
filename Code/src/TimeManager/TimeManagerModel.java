@@ -9,7 +9,7 @@ public class TimeManagerModel extends Observable {
 	public List<TaskItem> taskItems;
 	public List<TaskCategory> taskCategories;
 	
-	public TimeManagerModel() {
+	public TimeManagerModel(TimeManagerController controller) {
 		taskItems = new ArrayList<TaskItem>();
 		taskCategories = new ArrayList<TaskCategory>();
 	}
