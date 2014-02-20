@@ -3,14 +3,25 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 
 /**
@@ -23,13 +34,13 @@ public class TimeManagerView implements Observer {
 	public JFrame mainFrame = new JFrame("Time Manager");	//The main frame. 
 	private JPanel titelPanel = new JPanel(); 	//The panel which shows the title of the current tab
 	private JPanel addPanel = new JPanel();		//The panel where one can add a new task
-	
-	private JTabbedPane tabPanel; 		//The tabPanel
-	GridBagConstraints gridBagConstraint;
+	private JPanel centerPanel;
+	private JPanel tabPanel; 		// Left part of the centerPanel
+	private TaskPanel taskPanel;	// Right part of the rightPanel
+	private List<TaskPanel> taskPanels;			// One TaskPanel for each category
 	
 	private JButton addButton =  new JButton("Add");	//The button to add a new task
 	private JButton logoutButton = new JButton("Log Out");	//The  button to log out
-	
 	
 	public TimeManagerView(){	
 		
@@ -41,21 +52,14 @@ public class TimeManagerView implements Observer {
 		titelPanel.setLayout(new GridLayout(1, 5));
 		titelPanel.add(new JLabel("Title"));
 		titelPanel.add(logoutButton);				//The logout button should not be that big (or here at all)
-
-		tabPanel = makeTabPanel();
 		
-		//Set gridBagContraint
-		gridBagConstraint = new GridBagConstraints();
-		gridBagConstraint.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraint.weightx = 1;
-		gridBagConstraint.gridwidth = GridBagConstraints.REMAINDER;
-		//gridBagConstraint.anchor = GridBagConstraints.PAGE_START;
+		makeCenterPanel();
 		
 		addPanel = MakeAddPanel(addPanel);
 		
 		//Layout of the titelpanel, tabpannel and addpanel. 
 		mainFrame.getContentPane().add(BorderLayout.NORTH, titelPanel);
-		mainFrame.getContentPane().add(BorderLayout.CENTER, tabPanel);
+		mainFrame.getContentPane().add(BorderLayout.CENTER, centerPanel);
 		mainFrame.getContentPane().add(BorderLayout.SOUTH, addPanel);
 		
 		mainFrame.setPreferredSize(new Dimension(1024, 768));
@@ -68,10 +72,20 @@ public class TimeManagerView implements Observer {
 	 * makes a tabnedpane
 	 * @return tabpane
 	 */
-	private JTabbedPane makeTabPanel() {
-		JTabbedPane tab = new JTabbedPane(JTabbedPane.LEFT);
-		tab.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
-		return tab;
+	private void makeCenterPanel() {
+		// Create empty tabPanel
+		tabPanel = new JPanel();
+		tabPanel.setLayout(new BoxLayout(tabPanel, BoxLayout.Y_AXIS));
+		tabPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		tabPanel.setPreferredSize(new Dimension(88,500));
+		
+		// Create empty taskPanel and its list
+		taskPanels = new ArrayList<TaskPanel>();
+		taskPanel = new TaskPanel();
+		
+		centerPanel = new JPanel();
+		centerPanel.add(BorderLayout.WEST, tabPanel);
+		centerPanel.add(BorderLayout.EAST, taskPanel);
 	}
 	
 	/**
@@ -81,14 +95,61 @@ public class TimeManagerView implements Observer {
 	public void loadCategories(List<TaskCategory> taskCategories) {
 		// remove all existing tabs, then load everything
 		tabPanel.removeAll();
-		
 		for(TaskCategory category : taskCategories) {
-			JPanel taskPanel = new JPanel();
-			taskPanel.setLayout(new GridBagLayout());
-			tabPanel.addTab(category.categoryName, category.icon, taskPanel, category.categoryDescription);
-			tabPanel.setAlignmentY(Component.LEFT_ALIGNMENT);
+			// Generate icons for each category and add it to the tab panel (left side)
+			JButton btn = new JButton(category.icon);
+			btn.setName(category.categoryName);
+			btn.setToolTipText(category.categoryDescription);
+			btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+			// make the button look like icon
+			btn.setContentAreaFilled(false);
+			btn.setFocusPainted(false);
+			//btn.setMargin(new Insets(0, 0, 0, 0));
+			//btn.setOpaque(false);
+			//btn.setBorderPainted(false);
+			//btn.setBackground(null);
+			
+			//TODO: Move actionlistener code to somewhere else
+			btn.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			    	JComponent b = (JComponent) e.getSource();
+			    	switchTab(b.getName());
+			    }
+			});   
+			tabPanel.add(btn);
+		
+			// Generate panel to contain tasks for each category (right side)
+			TaskPanel tp = new TaskPanel(category);
+			taskPanels.add(tp);
 		}
+		// when categories changed, switch back to all category
+		// TODO: switch to the new category or last active category instead
+		switchTab("house");
+	}
 	
+	public void switchTab(String selectedCategory) {
+		try {
+			centerPanel.remove(taskPanel);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		// TODO: use hashmap?
+		for(TaskPanel tp : taskPanels) {
+			if(tp.taskCategory.categoryName.equalsIgnoreCase(selectedCategory)) {
+				taskPanel = tp;
+			}
+		}
+		centerPanel.add(BorderLayout.EAST, taskPanel);
+		centerPanel.validate();
+		centerPanel.repaint();
+		
+		try {
+			System.out.println("Switching to " + taskPanel.taskCategory.categoryName);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -97,26 +158,19 @@ public class TimeManagerView implements Observer {
 	 */
 	public void loadTasks(List<TaskItem> taskItems) {
 		// remove all existing tasks, then load everything
-		removeAllTasks();
-
-		for(TaskItem item : taskItems) {
-			//TODO: Add priority, date, etc as arguments
-			int tabIndex = tabPanel.indexOfTab(item.taskCategory);
-			JComponent taskPanel = (JPanel) tabPanel.getComponent(tabIndex);
-			
-			JComponent task = new JButton(item.taskDescripton + " priority : " + item.taskPriority);
-			taskPanel.add(task, gridBagConstraint);
+		for(TaskPanel tp : taskPanels) {
+			tp.removeAllTasks();
 		}
-	}
-	
-	/**
-	 * remove all existing task from all tabs
-	 */
-	public void removeAllTasks() {
-		int numberOfTabs = tabPanel.getTabCount();
-		for(int i=0;i<numberOfTabs;i++) {
-			JComponent panelToClear = (JPanel) tabPanel.getComponent(i);
-			panelToClear.removeAll();
+		
+		for(TaskItem item : taskItems) {
+			// TODO: use hashmap?
+			for(TaskPanel tp : taskPanels) {
+				if(tp.taskCategory.categoryName.equalsIgnoreCase(item.taskCategory) || 
+					tp.taskCategory.categoryName.equalsIgnoreCase("all_categories")
+				) {
+					tp.addTask(item);
+				}
+			}
 		}
 	}
 	

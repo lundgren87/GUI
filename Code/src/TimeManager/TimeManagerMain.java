@@ -1,10 +1,12 @@
 package TimeManager;
 
+import javax.swing.JFrame;
+
 public class TimeManagerMain {
 
 	
 	public static void main(String[] args) {
-		
+
 		TimeManagerModel model = new TimeManagerModel();
 		TimeManagerView view = new TimeManagerView();
 		TimeManagerController controller = new TimeManagerController(view, model); 
@@ -18,14 +20,15 @@ public class TimeManagerMain {
 		
 		int randomPriority, randomCategory, noOfCategory;
 		noOfCategory = model.taskCategories.size()-1;
-		for(int i=0;i<20;i++) {
+		for(int i=0;i<15;i++) {
 			randomCategory = (int) Math.floor(100 * Math.random()) % (noOfCategory-1)+1;
-			randomPriority = (int) Math.floor(10 * Math.random());
+			randomPriority = (int) Math.floor(10 * Math.random()) % 3 + 1;
 			model.addNewTask("Task " + i, model.taskCategories.get(randomCategory).categoryName, randomPriority);
-			model.addNewTask("Task " + i, "all_categories", randomPriority);
+			//model.addNewTask("Task " + i, "all_categories", randomPriority);
 		}
 		
 		view.mainFrame.setVisible(true);
+
 	}
 	
 
