@@ -32,7 +32,7 @@ public class TaskItemView extends JPanel
 	public JProgressBar progressbarre;
 	public JButton editButton;
 	
-	private final String iconLocation = "bin/images/";
+	private final String iconLocation = config.Config.loadProperty("Images", "assets/images/");
 	private final String iconExtension = ".gif";
 	private final int MAXIMUM_PRIORITY = 3;
 	
@@ -56,7 +56,7 @@ public class TaskItemView extends JPanel
 		
 		// Priority
 		priorityLabels = new JLabel[MAXIMUM_PRIORITY];
-		ImageIcon priorityIcon = new ImageIcon("bin/images/exclamation2.png");
+		ImageIcon priorityIcon = new ImageIcon(iconLocation + "exclamation2.png");
 		for(int i=0;i<MAXIMUM_PRIORITY;i++) {
 			JLabel prio = new JLabel(priorityIcon);
 			gbc.gridx = i + 1;
@@ -94,7 +94,7 @@ public class TaskItemView extends JPanel
 		this.add(progressbarre, gbc);
 		
 		// TODO: No hardcode
-		ImageIcon editIcon = new ImageIcon("bin/images/edit1.png");
+		ImageIcon editIcon = new ImageIcon(iconLocation + "edit1.png");
 		editButton = new JButton("", editIcon);
 		gbc.gridx =  this.getWidth()-1;;
 		gbc.gridy = 2;
