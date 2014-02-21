@@ -50,8 +50,10 @@ public class TaskItemView extends JPanel
 		
 		// Category
 		categoryLabel = new JLabel();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		gbc.gridwidth = 1;
 		this.add(categoryLabel, gbc);
 		
 		// Priority
@@ -61,6 +63,7 @@ public class TaskItemView extends JPanel
 			JLabel prio = new JLabel(priorityIcon);
 			gbc.gridx = i + 1;
 			gbc.gridy = 0;
+			gbc.gridwidth = 1;
 			this.add(prio, gbc);
 			priorityLabels[i] = prio;
 		}
@@ -69,19 +72,21 @@ public class TaskItemView extends JPanel
 		dueDateLabel = new JLabel();
 		gbc.gridx = 4;
 		gbc.gridy = 0;
+		gbc.gridwidth = 1;
 		this.add(dueDateLabel, gbc);
 		
 		isDoneCheckBox = new JCheckBox();
-		gbc.gridx =  this.getWidth()-1;
+		gbc.gridx = 5;
 		gbc.gridy = 0;
+		gbc.gridwidth = 1;
 		this.add(isDoneCheckBox, gbc);
 		
 		taskLabel = new JLabel();
 		//task_label.setBorder(BorderFactory.createLineBorder(Color.gray));
-		taskLabel.setPreferredSize(new Dimension(this.getWidth(), 25)); 
+		//taskLabel.setPreferredSize(new Dimension(this.getWidth(), 25)); 
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		gbc.gridwidth = this.getWidth()-1;
+		gbc.gridwidth = 6;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(taskLabel, gbc);
 		
@@ -89,16 +94,16 @@ public class TaskItemView extends JPanel
 		progressbarre.setStringPainted(true);
 		gbc.gridx = 0;
 		gbc.gridy = 2;
-		gbc.gridwidth = this.getWidth()-1;
+		gbc.gridwidth = 5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(progressbarre, gbc);
 		
 		// TODO: No hardcode
 		ImageIcon editIcon = new ImageIcon("bin/images/edit1.png");
 		editButton = new JButton("", editIcon);
-		gbc.gridx =  this.getWidth()-1;;
+		gbc.gridx =  5;
 		gbc.gridy = 2;
-		//gbc.gridwidth = 1;
+		gbc.gridwidth = 1;
 		this.add(editButton, gbc);
 	}
 	

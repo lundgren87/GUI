@@ -30,18 +30,19 @@ public class TaskPanel extends JPanel{
 	}
     
 	private void init() {
-		this.setPreferredSize(new Dimension(800,500));
+		//this.setPreferredSize(new Dimension(800,500));
 		
 	    // TaskPanel arranges its panels in GridBagLayout
 	    c = new GridBagConstraints();
-		c.fill = GridBagConstraints.BOTH;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		this.setLayout(new GridBagLayout());
 		
 		// initialization of the 3 panels inside TaskPanel
 	    panelNorth = new JPanel();
 	    panelNorth.setLayout(new BoxLayout(panelNorth, BoxLayout.Y_AXIS));
 	    panelNorth.setBorder(BorderFactory.createLineBorder(Color.black));
-		c.gridwidth = 3;
+	   
+		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 0;
 		this.add(panelNorth, c);
