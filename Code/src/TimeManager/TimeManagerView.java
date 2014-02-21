@@ -293,6 +293,8 @@ public class TimeManagerView extends Observable implements ActionListener {
 				}
 			}
 		}
+		taskPanel.validate();
+		taskPanel.repaint();
 	}
 
 	private void MakeAddPanel(JPanel addPanel) {
