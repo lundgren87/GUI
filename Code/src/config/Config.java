@@ -15,6 +15,7 @@ import java.util.Properties;
  */
 public class Config {
 	static String configFile = "config.properties";
+	static Properties prop;
 	
 	public static String DBFile;
 	public static String Images;
@@ -25,7 +26,7 @@ public class Config {
 	 * Loads general properties from config file.
 	 */
 	public static void loadConfig() {
-		Properties prop = new Properties();
+		prop = new Properties();
 		InputStream input = null;
 		try {
 			//specify file to use
@@ -57,7 +58,6 @@ public class Config {
 	 * Saves general properties to config file.
 	 */
 	public static void saveConfig() {
-		Properties prop = new Properties();
 		OutputStream output = null;
 		try {
 			//specify file to use
@@ -86,13 +86,12 @@ public class Config {
 	}
 	
 	/**
-	 * Loads a the value of the property key from config file.
+	 * Loads a the value of the property key from config file corresponding to key
 	 * @param key
 	 * @param defaultValue
-	 * @return Value of key from config file
+	 * @return Value of key from config file or defaultValue if the key is not present
 	 */
 	public static String loadProperty(String key,String defaultValue) {
-		Properties prop = new Properties();
 		InputStream input = null;
 		try {
 			//specify file to use
@@ -118,12 +117,11 @@ public class Config {
 	}
 	
 	/**
-	 * Saves a property value to config file.
+	 * Saves a property value to config file corresponding to key
 	 * @param key
 	 * @param value
 	 */
 	public static void saveProperty(String key,String value) {
-		Properties prop = new Properties();
 		OutputStream output = null;
 		try {
 			//specify file to use
@@ -148,5 +146,24 @@ public class Config {
 				}
 			} 
 		}
+	}
+	
+	/**
+	 * Load an integer valued property corresponding to key
+	 * @param key
+	 * @param defaultValue
+	 * @return Value of key from config file or defaultValue if the key is not present
+	 */
+	public static int loadInt(String key,int defaultValue) {
+		return Integer.parseInt(loadProperty(key,Integer.toString(defaultValue)));
+	}
+	
+	/**
+	 * Save an integer valued property corresponding to key
+	 * @param key
+	 * @param value
+	 */
+	public static void saveInt(String key,int value) {
+		saveProperty(key,Integer.toString(value));
 	}
 }
