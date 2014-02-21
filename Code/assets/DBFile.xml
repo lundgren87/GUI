@@ -2,29 +2,126 @@
 <DB>
   <categories>
     <category>
-      <categoryName>Home</categoryName>
-      <categoryDescription>stuff at home</categoryDescription>
+      <categoryName>all_categories</categoryName>
+      <categoryDescription>All Categories</categoryDescription>
     </category>
     <category>
-      <categoryName>Work</categoryName>
-      <categoryDescription>stuff at work</categoryDescription>
+      <categoryName>house</categoryName>
+      <categoryDescription>House</categoryDescription>
+    </category>
+    <category>
+      <categoryName>work</categoryName>
+      <categoryDescription>Work</categoryDescription>
+    </category>
+    <category>
+      <categoryName>school</categoryName>
+      <categoryDescription>School</categoryDescription>
+    </category>
+    <category>
+      <categoryName>add_new</categoryName>
+      <categoryDescription>Add New Category</categoryDescription>
     </category>
   </categories>
   <tasks>
     <task>
-      <taskCategory>Home</taskCategory>
+      <taskCategory>house</taskCategory>
       <taskDescription>Do stuff at home</taskDescription>
       <taskPriority>3</taskPriority>
     </task>
     <task>
-      <taskCategory>Work</taskCategory>
+      <taskCategory>house</taskCategory>
+      <taskDescription>Do stuff at home</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>house</taskCategory>
+      <taskDescription>Do stuff at home</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>house</taskCategory>
+      <taskDescription>Do stuff at home</taskDescription>
+      <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>house</taskCategory>
+      <taskDescription>Do stuff at home</taskDescription>
+      <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
       <taskDescription>Do stuff at work</taskDescription>
       <taskPriority>2</taskPriority>
     </task>
     <task>
-      <taskCategory>Home</taskCategory>
-      <taskDescription>Do other stuff at home</taskDescription>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Do stuff at work</taskDescription>
       <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Do stuff at work</taskDescription>
+      <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Do stuff at work</taskDescription>
+      <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Do stuff at work</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Do stuff at work</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Do stuff at work</taskDescription>
+      <taskPriority>3</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Do stuff at work</taskDescription>
+      <taskPriority>3</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>Do stuff at school</taskDescription>
+      <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>Do stuff at school</taskDescription>
+      <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>Do stuff at school</taskDescription>
+      <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>Do stuff at school</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>Do stuff at school</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>Do stuff at school</taskDescription>
+      <taskPriority>3</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>Do stuff at school</taskDescription>
+      <taskPriority>3</taskPriority>
     </task>
   </tasks>
 </DB>
