@@ -33,6 +33,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -77,11 +78,13 @@ public class TimeManagerView {
 		
 		
 		makeCenterPanel();
+		JScrollPane centerScrollPanel = new JScrollPane();
+		centerScrollPanel.getViewport().add(centerPanel);
 		MakeAddPanel(addPanel);
-
+		
 		//Layout of the titelpanel, tabpannel and addpanel. 
 		mainFrame.getContentPane().add(BorderLayout.NORTH, titelPanel);
-		mainFrame.getContentPane().add(BorderLayout.CENTER, centerPanel);
+		mainFrame.getContentPane().add(BorderLayout.CENTER, centerScrollPanel);
 		mainFrame.getContentPane().add(BorderLayout.SOUTH, addPanel);
 		
 		//mainFrame.setPreferredSize(new Dimension(1024, 768));
