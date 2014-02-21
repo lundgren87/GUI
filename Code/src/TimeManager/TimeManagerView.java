@@ -33,6 +33,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -77,23 +79,27 @@ public class TimeManagerView {
 		
 		
 		makeCenterPanel();
+		JScrollPane centerScrollPanel = new JScrollPane();
+		centerScrollPanel.getViewport().add(centerPanel);
 		MakeAddPanel(addPanel);
-
+		
 		//Layout of the titelpanel, tabpannel and addpanel. 
 		mainFrame.getContentPane().add(BorderLayout.NORTH, titelPanel);
-		mainFrame.getContentPane().add(BorderLayout.CENTER, centerPanel);
+		mainFrame.getContentPane().add(BorderLayout.CENTER, centerScrollPanel);
 		mainFrame.getContentPane().add(BorderLayout.SOUTH, addPanel);
 		
-		//mainFrame.setPreferredSize(new Dimension(1024, 768));
+		int width = config.Config.loadInt("WindowWidth", 1024);
+		int height = config.Config.loadInt("WindowHeight", 600);
+		
+		mainFrame.setPreferredSize(new Dimension(width, height));
 		//mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		mainFrame.setSize( Integer.parseInt(config.Config.loadProperty("WindowWidth", "800")),
-				Integer.parseInt(config.Config.loadProperty("WindowHeight", "500"))	);
+		mainFrame.setSize(width,height);
 		
 	}
 	
 	private int closeOperation(){
-		config.Config.saveProperty("WindowHeight", Integer.toString(mainFrame.getHeight()));
-		config.Config.saveProperty("WindowWidth", Integer.toString(mainFrame.getWidth()));
+		//config.Config.saveInt("WindowHeight", mainFrame.getHeight());
+		//config.Config.saveInt("WindowWidth", mainFrame.getWidth());
 		return JFrame.EXIT_ON_CLOSE;
 	}
 	
@@ -121,7 +127,7 @@ public class TimeManagerView {
 		ButtonGroup rbgroup = new ButtonGroup();
 		final JRadioButtonMenuItem swedish = new JRadioButtonMenuItem(config.LanguageRepository.getString("SWEDISH"));
 		final JRadioButtonMenuItem english = new JRadioButtonMenuItem(config.LanguageRepository.getString("ENGLISH"));
-		if(currentLanguage == "English")
+		if(currentLanguage.equals("English"))
 			english.setSelected(true);
 		else
 			swedish.setSelected(true);
@@ -291,11 +297,11 @@ public class TimeManagerView {
 		GridBagConstraints c = new GridBagConstraints();
 		
 		//Make and add NameActivity
-		final JTextField nameActivity = new JTextField(); 		//texfield to insert the name of the activity
+		final JTextArea nameActivity = new JTextArea(3,1); 		//TextArea to insert the name of the activity
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.gridwidth = 2;
+		c.gridwidth = addPanel.getWidth()-1;
 		nameActivity.setBorder(BorderFactory.createTitledBorder
 	            (config.LanguageRepository.getString("DESC_ACTIV")));
 		addPanel.add(nameActivity,c);
@@ -304,9 +310,9 @@ public class TimeManagerView {
 		JPanel datePanel = new JPanel();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipadx = 0;
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 1;	
+		c.gridx = 3;
+		c.gridy = 2;
+		c.gridwidth = addPanel.getWidth()-4;	
 		datePanel.setBorder(BorderFactory.createTitledBorder(config.LanguageRepository.getString("DUEDATE")));
 		addPanel.add(datePanel,c);
 
@@ -336,7 +342,7 @@ public class TimeManagerView {
 				datePanel.add(timeSpinner);
 		
 		//Make and add dropdown menu to choose category		
-		String[] categoryStrings= {"Home", "School", "Work", "All"};			//This should request the list of the category's. 
+		String[] categoryStrings= {"Home", "School", "Work"};			//This should request the list of the category's. 
 		final JComboBox dropdownCategory = new JComboBox(categoryStrings);
 		c.fill = GridBagConstraints.BOTH;
 		c.gridx = 0;
@@ -375,7 +381,7 @@ public class TimeManagerView {
 		c.fill = GridBagConstraints.BOTH;
 		c.ipady = 50;
 		c.ipadx = 100;
-		c.gridx = 3;
+		c.gridx = 6;
 		c.gridy = 0;
 		c.gridheight = 3;
 		c.weightx = 0.1;

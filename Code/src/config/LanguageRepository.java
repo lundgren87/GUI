@@ -25,6 +25,7 @@ public class LanguageRepository {
 	public static void setCurrentLanguage(String newLanguage) {
 		if(currentLanguage != newLanguage) {
 			currentLanguage = newLanguage;
+			Config.saveProperty("startupLanguage", newLanguage);
 			init();
 		}
 	}
@@ -117,7 +118,7 @@ public class LanguageRepository {
 				languageMap.put("NOV","November");
 				languageMap.put("DEC","December");
 				languageMap.put("SWEDISH","Svenska");
-				languageMap.put("ENNGLISH","Engelska");
+				languageMap.put("ENGLISH","Engelska");
 				isInitialized = true;
 				break;
 				

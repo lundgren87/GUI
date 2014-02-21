@@ -40,13 +40,7 @@ public class TaskItemView extends JPanel
 	
 	public TaskItemView() {
 		initComponents();
-		
-		// TODO: pass argument to constructor and set variables accordingly
-		setDescription("I have to go to the toilet! Let me not forget it because it is very important and if I don't do it it will be too bad for me.");
-		setCategory("house_resized");
-		setPriority(2);
-		setDueDate("Tomorrow");
-		setProgress(32);
+		// TODO: pass argument to constructor? and set variables accordingly
 	}	
 
 	public void initComponents() {
@@ -127,7 +121,7 @@ public class TaskItemView extends JPanel
 	
 	public void setCategory(String categoryName) {
 		taskCategoryName = categoryName;
-		ImageIcon categoryIcon = new ImageIcon(iconLocation + taskCategoryName + iconExtension);
+		ImageIcon categoryIcon = new ImageIcon(iconLocation + taskCategoryName + "_s" + iconExtension);
 		categoryLabel.setIcon(categoryIcon);
 	}
 	

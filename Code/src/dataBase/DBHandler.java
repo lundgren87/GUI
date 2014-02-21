@@ -195,7 +195,7 @@ public class DBHandler {
 			String taskPriority = task.getChild("taskPriority").getText();
 			
 			//Add a new task to the model with the retrieved text fields as parameters
-			model.addNewTask(taskCategory, taskDescription, Integer.parseInt(taskPriority));
+			model.addNewTask(taskDescription, taskCategory, Integer.parseInt(taskPriority));
 		}
 	}
 	
