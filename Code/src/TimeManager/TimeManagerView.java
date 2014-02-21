@@ -13,6 +13,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -34,6 +36,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -67,8 +70,15 @@ public class TimeManagerView {
 	TimeManagerView(){	
 		
 		currentLanguage = config.LanguageRepository.getCurrentLanguage();
-		mainFrame.setDefaultCloseOperation(closeOperation());
+		mainFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		mainFrame.pack();
+		mainFrame.addComponentListener(new ComponentAdapter(){
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				close();
+				((JFrame)(e.getComponent())).dispose();
+			}
+		});
 		
 		addMenuBar(mainFrame); 
 		
@@ -79,24 +89,34 @@ public class TimeManagerView {
 		
 		
 		makeCenterPanel();
+		JScrollPane centerScrollPanel = new JScrollPane();
+		centerScrollPanel.getViewport().add(centerPanel);
 		MakeAddPanel(addPanel);
-
+		
 		//Layout of the titelpanel, tabpannel and addpanel. 
 		mainFrame.getContentPane().add(BorderLayout.NORTH, titelPanel);
-		mainFrame.getContentPane().add(BorderLayout.CENTER, centerPanel);
+		mainFrame.getContentPane().add(BorderLayout.CENTER, centerScrollPanel);
 		mainFrame.getContentPane().add(BorderLayout.SOUTH, addPanel);
 		
-		//mainFrame.setPreferredSize(new Dimension(1024, 768));
+		int width = config.Config.loadInt("WindowWidth", 1024);
+		int height = config.Config.loadInt("WindowHeight", 600);
+		
+		mainFrame.setPreferredSize(new Dimension(width, height));
 		//mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		mainFrame.setSize( Integer.parseInt(config.Config.loadProperty("WindowWidth", "800")),
-				Integer.parseInt(config.Config.loadProperty("WindowHeight", "500"))	);
+		mainFrame.setSize(width,height);
 		
 	}
 	
 	private int closeOperation(){
-		config.Config.saveProperty("WindowHeight", Integer.toString(mainFrame.getHeight()));
-		config.Config.saveProperty("WindowWidth", Integer.toString(mainFrame.getWidth()));
+		config.Config.saveInt("WindowHeight", mainFrame.getHeight());
+		config.Config.saveInt("WindowWidth", mainFrame.getWidth());
+		
 		return JFrame.EXIT_ON_CLOSE;
+	}
+	
+	private void close() {
+		closeOperation();
+		//TimeManagerModel.closeOperation();
 	}
 	
 	private static void addMenuBar(final JFrame mainFrame) {
@@ -123,7 +143,7 @@ public class TimeManagerView {
 		ButtonGroup rbgroup = new ButtonGroup();
 		final JRadioButtonMenuItem swedish = new JRadioButtonMenuItem(config.LanguageRepository.getString("SWEDISH"));
 		final JRadioButtonMenuItem english = new JRadioButtonMenuItem(config.LanguageRepository.getString("ENGLISH"));
-		if(currentLanguage == "English")
+		if(currentLanguage.equals("English"))
 			english.setSelected(true);
 		else
 			swedish.setSelected(true);

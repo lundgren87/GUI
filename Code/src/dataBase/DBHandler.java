@@ -67,6 +67,8 @@ public class DBHandler {
 			dB.addContent(categories);
 			dB.addContent(tasks);
 		}
+		readCategories();
+		readTasks();
 	}
 	
 	
@@ -75,6 +77,9 @@ public class DBHandler {
 	 * pre: init() has to be called prior to exit()
 	 */
 	public void exit() {
+		System.out.println("Saving DB state");
+		storeCategories();
+		storeTasks();
 		//Output with pretty formatting
 		XMLOutputter xmlOutput = new XMLOutputter();
 		xmlOutput.setFormat(Format.getPrettyFormat());
@@ -195,7 +200,7 @@ public class DBHandler {
 			String taskPriority = task.getChild("taskPriority").getText();
 			
 			//Add a new task to the model with the retrieved text fields as parameters
-			model.addNewTask(taskCategory, taskDescription, Integer.parseInt(taskPriority));
+			model.addNewTask(taskDescription, taskCategory, Integer.parseInt(taskPriority));
 		}
 	}
 	
