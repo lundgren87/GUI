@@ -14,7 +14,7 @@ import java.util.Properties;
  *
  */
 public class Config {
-	static String configFile = "config.properties";
+	static String configFile = "config.cfg";
 	static Properties prop;
 	
 	public static String DBFile;
