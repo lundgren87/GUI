@@ -62,7 +62,7 @@ public class TimeManagerView {
 	
 	private static String currentLanguage;
 	
-	TimeManagerView(TimeManagerController controller){	
+	TimeManagerView(){	
 		
 		currentLanguage = config.LanguageRepository.getCurrentLanguage();
 		mainFrame.setDefaultCloseOperation(closeOperation());
