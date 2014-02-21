@@ -88,16 +88,18 @@ public class TimeManagerView {
 		mainFrame.getContentPane().add(BorderLayout.CENTER, centerScrollPanel);
 		mainFrame.getContentPane().add(BorderLayout.SOUTH, addPanel);
 		
-		//mainFrame.setPreferredSize(new Dimension(1024, 768));
+		int width = config.Config.loadInt("WindowWidth", 1024);
+		int height = config.Config.loadInt("WindowHeight", 600);
+		
+		mainFrame.setPreferredSize(new Dimension(width, height));
 		//mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		mainFrame.setSize( Integer.parseInt(config.Config.loadProperty("WindowWidth", "800")),
-				Integer.parseInt(config.Config.loadProperty("WindowHeight", "500"))	);
+		mainFrame.setSize(width,height);
 		
 	}
 	
 	private int closeOperation(){
-		config.Config.saveProperty("WindowHeight", Integer.toString(mainFrame.getHeight()));
-		config.Config.saveProperty("WindowWidth", Integer.toString(mainFrame.getWidth()));
+		//config.Config.saveInt("WindowHeight", mainFrame.getHeight());
+		//config.Config.saveInt("WindowWidth", mainFrame.getWidth());
 		return JFrame.EXIT_ON_CLOSE;
 	}
 	
@@ -125,7 +127,7 @@ public class TimeManagerView {
 		ButtonGroup rbgroup = new ButtonGroup();
 		final JRadioButtonMenuItem swedish = new JRadioButtonMenuItem(config.LanguageRepository.getString("SWEDISH"));
 		final JRadioButtonMenuItem english = new JRadioButtonMenuItem(config.LanguageRepository.getString("ENGLISH"));
-		if(currentLanguage == "English")
+		if(currentLanguage.equals("English"))
 			english.setSelected(true);
 		else
 			swedish.setSelected(true);

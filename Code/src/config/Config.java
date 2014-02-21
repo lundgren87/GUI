@@ -35,7 +35,7 @@ public class Config {
 			
 			//get local property values from the file
 			DBFile 			= prop.getProperty("DBFile",          "assets/DBFile" );
-			Images 			= prop.getProperty("Images",          "/images/"      );
+			Images 			= prop.getProperty("Images",          "assets/images/");
 			startupLanguage = prop.getProperty("startupLanguage", "English"       );
 			
 		}
