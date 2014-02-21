@@ -485,8 +485,8 @@ public class TimeManagerView extends Observable implements ActionListener {
 		    		
 				time = timeEditor.getFormat().format(timeSpinner.getValue());
 				
-				if(highPriority.isSelected()) priority = 3;
-				else if(lowPriority.isSelected()) priority = 1;
+				if(highPriority.isSelected()) priority = 1;
+				else if(lowPriority.isSelected()) priority = 2;
 				else priority = 2;
 		    		
 				progress = 0;
