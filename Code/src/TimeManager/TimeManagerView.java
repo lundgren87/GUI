@@ -89,6 +89,7 @@ public class TimeManagerView {
 		
 		makeCenterPanel();
 		JScrollPane centerScrollPanel = new JScrollPane();
+		centerScrollPanel.getVerticalScrollBar().setUnitIncrement(16);
 		centerScrollPanel.getViewport().add(centerPanel);
 		MakeAddPanel(addPanel);
 		
