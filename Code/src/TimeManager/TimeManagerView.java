@@ -74,7 +74,7 @@ public class TimeManagerView {
 		mainFrame.addComponentListener(new ComponentAdapter(){
 			@Override
 			public void componentHidden(ComponentEvent e) {
-				closeOperation();
+				close();
 				((JFrame)(e.getComponent())).dispose();
 			}
 		});
@@ -109,7 +109,13 @@ public class TimeManagerView {
 	private int closeOperation(){
 		config.Config.saveInt("WindowHeight", mainFrame.getHeight());
 		config.Config.saveInt("WindowWidth", mainFrame.getWidth());
+		
 		return JFrame.EXIT_ON_CLOSE;
+	}
+	
+	private void close() {
+		closeOperation();
+		//TimeManagerModel.closeOperation();
 	}
 	
 	private static void addMenuBar(final JFrame mainFrame) {

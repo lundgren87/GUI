@@ -28,8 +28,8 @@ public class TimeManagerModel extends Observable {
 	public void initDatabase() {
 		dataBase = new DBHandler(this);
 		dataBase.init();
-		dataBase.readCategories();
-		dataBase.readTasks();
+		//dataBase.readCategories();
+		//dataBase.readTasks();
 	}
 	
 	/**
@@ -67,6 +67,10 @@ public class TimeManagerModel extends Observable {
 	 */
 	public List<TaskCategory> getCategories() {
 		return taskCategories;
+	}
+	
+	public void closeOperation() {
+		dataBase.exit();
 	}
 	
 		
