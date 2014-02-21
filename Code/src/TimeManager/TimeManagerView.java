@@ -294,11 +294,11 @@ public class TimeManagerView {
 		GridBagConstraints c = new GridBagConstraints();
 		
 		//Make and add NameActivity
-		final JTextField nameActivity = new JTextField(); 		//texfield to insert the name of the activity
+		final JTextArea nameActivity = new JTextArea(3,1); 		//TextArea to insert the name of the activity
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.gridwidth = 2;
+		c.gridwidth = addPanel.getWidth()-1;
 		nameActivity.setBorder(BorderFactory.createTitledBorder
 	            (config.LanguageRepository.getString("DESC_ACTIV")));
 		addPanel.add(nameActivity,c);
@@ -307,9 +307,9 @@ public class TimeManagerView {
 		JPanel datePanel = new JPanel();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipadx = 0;
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 1;	
+		c.gridx = 3;
+		c.gridy = 2;
+		c.gridwidth = addPanel.getWidth()-4;	
 		datePanel.setBorder(BorderFactory.createTitledBorder(config.LanguageRepository.getString("DUEDATE")));
 		addPanel.add(datePanel,c);
 
@@ -339,7 +339,7 @@ public class TimeManagerView {
 				datePanel.add(timeSpinner);
 		
 		//Make and add dropdown menu to choose category		
-		String[] categoryStrings= {"Home", "School", "Work", "All"};			//This should request the list of the category's. 
+		String[] categoryStrings= {"Home", "School", "Work"};			//This should request the list of the category's. 
 		final JComboBox dropdownCategory = new JComboBox(categoryStrings);
 		c.fill = GridBagConstraints.BOTH;
 		c.gridx = 0;
@@ -378,7 +378,7 @@ public class TimeManagerView {
 		c.fill = GridBagConstraints.BOTH;
 		c.ipady = 50;
 		c.ipadx = 100;
-		c.gridx = 3;
+		c.gridx = 6;
 		c.gridy = 0;
 		c.gridheight = 3;
 		c.weightx = 0.1;
