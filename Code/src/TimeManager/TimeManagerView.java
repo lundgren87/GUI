@@ -21,7 +21,7 @@ import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale.Category;
+import java.util.Observable;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -52,7 +52,7 @@ import javax.swing.SpinnerDateModel;
  * @author Kim, Pontus, Aries, Sercan
  *
  */
-public class TimeManagerView {
+public class TimeManagerView extends Observable {
 	
 	public JFrame mainFrame = new JFrame(config.LanguageRepository.getString("TIME_MANAGER"));	//The main frame. 
 	private JPanel titelPanel = new JPanel(); 	//The panel which shows the title of the current tab
@@ -84,7 +84,7 @@ public class TimeManagerView {
 		//Content titlePanel 
 		titelPanel.setBackground(Color.LIGHT_GRAY);		//this is a temporary backgroundcolor
 		titelPanel.setLayout(new GridLayout(2, 5));
-
+		titelPanel.add(new JLabel(config.LanguageRepository.getString("TITEL")));
 		
 		
 		makeCenterPanel();
