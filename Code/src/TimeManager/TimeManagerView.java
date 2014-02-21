@@ -73,7 +73,6 @@ public class TimeManagerView {
 		mainFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		mainFrame.pack();
 		mainFrame.addComponentListener(new ComponentAdapter(){
-			@Override
 			public void componentHidden(ComponentEvent e) {
 				close();
 				((JFrame)(e.getComponent())).dispose();
@@ -95,6 +94,7 @@ public class TimeManagerView {
 		
 		//Layout of the titelpanel, tabpannel and addpanel. 
 		mainFrame.getContentPane().add(BorderLayout.NORTH, titelPanel);
+		mainFrame.getContentPane().add(BorderLayout.WEST, tabPanel );
 		mainFrame.getContentPane().add(BorderLayout.CENTER, centerScrollPanel);
 		mainFrame.getContentPane().add(BorderLayout.SOUTH, addPanel);
 		
@@ -216,8 +216,8 @@ public class TimeManagerView {
 		taskPanel = new TaskPanel();
 		
 		centerPanel = new JPanel();
-		centerPanel.add(BorderLayout.WEST, tabPanel);
-		centerPanel.add(BorderLayout.EAST, taskPanel);
+		centerPanel.setBackground(Color.green);
+		centerPanel.add( taskPanel);
 	}
 	
 	/**
