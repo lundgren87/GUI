@@ -13,6 +13,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -67,8 +69,15 @@ public class TimeManagerView {
 	TimeManagerView(){	
 		
 		currentLanguage = config.LanguageRepository.getCurrentLanguage();
-		mainFrame.setDefaultCloseOperation(closeOperation());
+		mainFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		mainFrame.pack();
+		mainFrame.addComponentListener(new ComponentAdapter(){
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				closeOperation();
+				((JFrame)(e.getComponent())).dispose();
+			}
+		});
 		
 		addMenuBar(mainFrame); 
 		
@@ -98,8 +107,8 @@ public class TimeManagerView {
 	}
 	
 	private int closeOperation(){
-		//config.Config.saveInt("WindowHeight", mainFrame.getHeight());
-		//config.Config.saveInt("WindowWidth", mainFrame.getWidth());
+		config.Config.saveInt("WindowHeight", mainFrame.getHeight());
+		config.Config.saveInt("WindowWidth", mainFrame.getWidth());
 		return JFrame.EXIT_ON_CLOSE;
 	}
 	
