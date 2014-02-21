@@ -72,10 +72,10 @@ public class TaskPanel extends JPanel{
 	}
 	
 	void addTask(TaskItem item) {
-		JLabel taskDescription = new JLabel(item.taskDescripton + ". Priority : " + item.taskPriority);
-		JPanel customComponent = new Tasks();
+		JPanel customComponent = new TaskItemView();
 		customComponent.setBorder(BorderFactory.createLineBorder(Color.green));
-		customComponent.add(taskDescription);
+		//JLabel taskDescription = new JLabel(item.taskDescripton + ". Priority : " + item.taskPriority);
+		//customComponent.add(taskDescription);
 		switch(item.taskPriority) {
 			case 1:
 				panelNorth.add(customComponent);
