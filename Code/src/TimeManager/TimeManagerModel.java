@@ -20,9 +20,12 @@ public class TimeManagerModel extends Observable {
 	/**
 	 * Makes a new list of taskItems and Categories
 	 */
-	public TimeManagerModel(TimeManagerController controller) {
+	public TimeManagerModel() {
 		taskItems = new ArrayList<TaskItem>();
 		taskCategories = new ArrayList<TaskCategory>();
+	}
+	
+	public void initDatabase() {
 		dataBase = new DBHandler(this);
 		dataBase.init();
 		dataBase.readCategories();
