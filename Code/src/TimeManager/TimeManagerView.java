@@ -21,6 +21,7 @@ import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale.Category;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -73,7 +74,7 @@ public class TimeManagerView {
 		mainFrame.pack();
 		mainFrame.addComponentListener(new ComponentAdapter(){
 			public void componentHidden(ComponentEvent e) {
-				closeOperation();
+				close();
 				((JFrame)(e.getComponent())).dispose();
 			}
 		});
@@ -81,9 +82,9 @@ public class TimeManagerView {
 		addMenuBar(mainFrame); 
 		
 		//Content titlePanel 
-		titelPanel.setBackground(Color.red);		//this is a temporary backgroundcolor
-		titelPanel.setLayout(new GridLayout(1, 5));
-		titelPanel.add(new JLabel(config.LanguageRepository.getString("TITEL")));
+		titelPanel.setBackground(Color.LIGHT_GRAY);		//this is a temporary backgroundcolor
+		titelPanel.setLayout(new GridLayout(2, 5));
+
 		
 		
 		makeCenterPanel();
@@ -109,7 +110,13 @@ public class TimeManagerView {
 	private int closeOperation(){
 		config.Config.saveInt("WindowHeight", mainFrame.getHeight());
 		config.Config.saveInt("WindowWidth", mainFrame.getWidth());
+		
 		return JFrame.EXIT_ON_CLOSE;
+	}
+	
+	private void close() {
+		closeOperation();
+		//TimeManagerModel.closeOperation();
 	}
 	
 	private static void addMenuBar(final JFrame mainFrame) {
@@ -251,14 +258,21 @@ public class TimeManagerView {
 		// TODO: switch to the new category or last active category instead
 		switchTab("all_categories");
 	}
-	
+	JLabel CategoryAsTitle = new JLabel (" ",JLabel.CENTER);
 	public void switchTab(String selectedCategory) {
+		
+		CategoryAsTitle.setText(selectedCategory);
+		titelPanel.add(CategoryAsTitle);
+		
 		try {
 			centerPanel.remove(taskPanel);
+			
 		}
 		catch (Exception e) {
 			//e.printStackTrace();
 		}
+		
+		
 		// TODO: use hashmap?
 		for(TaskPanel tp : taskPanels) {
 			if(tp.taskCategory.categoryName.equalsIgnoreCase(selectedCategory)) {

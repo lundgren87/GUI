@@ -25,3 +25,5 @@
 *.zip
 
 Thumbs.db
+*.xml
+*.properties

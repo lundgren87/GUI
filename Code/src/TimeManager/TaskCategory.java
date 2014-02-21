@@ -19,7 +19,7 @@ public class TaskCategory {
 		categoryName = catName;
 		categoryDescription = catDesc;
 		try {
-			icon = new ImageIcon(this.getClass().getResource(iconLocation + categoryName + iconExtension));
+			icon = new ImageIcon(iconLocation + categoryName + iconExtension);
 		}
 		catch(Exception e) {
 			icon = null;
