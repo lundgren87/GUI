@@ -43,7 +43,16 @@ public class TimeManagerModel extends Observable {
 		setChanged();
 		notifyObservers(taskItems);
 	}
-	
+	public void addNewTask(TaskItem item) {
+		taskItems.add(item);
+		setChanged();
+		notifyObservers(taskItems);
+	}
+	public void addNewTask(String taskDesc, String taskCat, String dueDate, int progress, int taskPrio) {
+		taskItems.add(new TaskItem(taskDesc, taskCat, dueDate, progress, taskPrio));
+		setChanged();
+		notifyObservers(taskItems);
+	}
 	/**
 	 * Add new category to category list
 	 * @param categoryName Sting Name of category

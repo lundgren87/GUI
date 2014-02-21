@@ -9,6 +9,8 @@ public class TaskItem {
 
 	public String taskCategory;
 	public String taskDescripton;
+	public String taskDueDate;
+	public int taskProgress;
 	public int taskPriority;
 	
 	/**
@@ -21,6 +23,13 @@ public class TaskItem {
 		taskDescripton = description;
 		taskPriority = priority;
 		taskCategory = category;
+	}
+	public TaskItem(String description, String category, String dueDate, int progress, int priority) {
+		taskDescripton = description;
+		taskPriority = priority;
+		taskCategory = category;
+		taskDueDate = dueDate;
+		taskProgress = progress;
 	}
 
 }

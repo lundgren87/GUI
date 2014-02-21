@@ -11,8 +11,11 @@ public class TimeManagerController implements Observer {
 	
 	public TimeManagerController() {		
 		theView = new TimeManagerView();
+		theView.addObserver(this);
+		
 		theModel = new TimeManagerModel();
 		theModel.addObserver(this);
+		
 		theModel.initDatabase();
 		
 		// dummy data
@@ -38,12 +41,28 @@ public class TimeManagerController implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		List list = (List) arg;
-		if(list.get(0) instanceof TaskCategory) {
-			theView.loadCategories(list);
+		// TODO: should check to a more generic view object if there are multiple view
+		if(o instanceof TimeManagerView) {
+			// View passes 
+			TimeManagerView view = (TimeManagerView) o;
+			if(view.isShuttingDown) {
+				theModel.closeOperation();
+				view.closeOperation();
+			}
+			else if(arg instanceof TaskItem) {
+				TaskItem item = (TaskItem) arg;
+				theModel.addNewTask(item);
+			}
 		}
-		else {
-			theView.loadTasks(list);
+		else if(o instanceof TimeManagerModel) {
+			// Model passes either list of categories or list of tasks
+			List list = (List) arg;
+			if(list.get(0) instanceof TaskCategory) {
+				theView.loadCategories(list);
+			}
+			else {
+				theView.loadTasks(list);
+			}
 		}
 	}
 	
