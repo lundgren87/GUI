@@ -66,17 +66,14 @@ public class DBHandler {
 			try{
 				//build a new Document from the file
 				doc = builder.build(file);
+				
 			} catch (Exception e) {
 				System.out.println("Exception: " +e.getMessage());
 			}
-		}
-		else {
-			//No file exists, create a new Document and manually add skeleton structure
-			doc = skeletonDoc();
-		}
-		//Read contents of doc and send it to the model
-		readCategories();
-		readTasks();
+			//Read contents of doc and send it to the model
+			readCategories();
+			readTasks();
+		}	
 	}
 	
 	
