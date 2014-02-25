@@ -20,7 +20,7 @@ public class LanguageRepository {
 	/**
 	 * @param newLanguage
 	 * If newLanguage is different from currentLanguage,
-	 * sets newLanguage to currentLanguage and runs init
+	 * sets currentLanguage to newLanguage and runs init to load the strings for the new language
 	 */
 	public static void setCurrentLanguage(String newLanguage) {
 		if(currentLanguage != newLanguage) {
@@ -47,8 +47,8 @@ public class LanguageRepository {
 	static void init(){
 		switch (currentLanguage) {
 			
-			// Insert text mappings for English here
 			case "English":
+				// Insert text mappings for English here
 				languageMap.put("EXAMPLE_LABLE","Example_text");
 				languageMap.put("TIME_MANAGER", "Time Manager");
 				languageMap.put("ADD", "Add");
@@ -85,8 +85,8 @@ public class LanguageRepository {
 				isInitialized = true;
 				break;
 			
-			// Insert text mappings for Swedish here
 			case "Swedish":
+				// Insert text mappings for Swedish here
 				languageMap.put("EXAMPLE_LABLE","Exempel_text");
 				languageMap.put("TIME_MANAGER","Time Manager");
 				languageMap.put("ADD","Lägg till");

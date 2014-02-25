@@ -28,12 +28,14 @@ public class Config {
 	public static void loadConfig() {
 		prop = new Properties();
 		InputStream input = null;
-		//specify default values
+		
+		//set default values
 		DBFile = "assets/DBFile";
 		Images = "assets/images/";
 		startupLanguage = "English";
+		
 		try {
-			//specify file to use
+			//specify file to use and load its content to prop
 			input = new FileInputStream(configFile);
 			prop.load(input);
 			
@@ -45,7 +47,7 @@ public class Config {
 		}
 		catch (IOException e){
 			//File does not exist (or other error). Set default values to prop
-			System.out.println("Cannot access config.properties. Loading default values");
+			System.out.println("Cannot access config.properties, it might not exist. Loading default values");
 			prop.setProperty("DBFile", DBFile );
 			prop.setProperty("Images", Images);
 			prop.setProperty("startupLanguage", startupLanguage);
