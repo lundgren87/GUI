@@ -17,6 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+/**
+ * A JPanel view class to display a Task Item. It also serves as the custom component required by the project.
+ * @author Aries, Sercan
+ *
+ */
 public class TaskItemView extends JPanel
 {
 	String taskCategoryName;
@@ -38,12 +43,19 @@ public class TaskItemView extends JPanel
 	
 	GridBagConstraints gbc = new GridBagConstraints();
 	
+	/**
+	 * Creates a new Task Item View component to display a Task View
+	 */
 	public TaskItemView() {
+		// TODO: Consider to make a constructor with a TaskItem argument
+		// that sets variables accordingly
 		initComponents();
-		// TODO: pass argument to constructor? and set variables accordingly
 	}	
-
-	public void initComponents() {
+	
+	/**
+	 * Initialize all inner components. Executed once in initialization.
+	 */
+	private void initComponents() {
 
 		this.setLayout(new GridBagLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.blue));
@@ -107,14 +119,24 @@ public class TaskItemView extends JPanel
 		this.add(editButton, gbc);
 	}
 	
+	/**
+	 * Setter for displayed Task Description
+	 * @param desc
+	 */
 	public void setDescription(String desc) {
 		taskDescripton = desc;
 		taskLabel.setText(taskDescripton);
 		taskLabel.setToolTipText(taskDescripton);
 	}
 	
+	/**
+	 * Setter for displayed priority
+	 * @param desc
+	 */
 	public void setPriority(int prio) {
+		// Validate that priority is within acceptable range
 		if(prio > MAXIMUM_PRIORITY) prio = MAXIMUM_PRIORITY;
+		else if(prio < 1) prio = 1;
 		taskPriority = prio;
 		
 		// Show priority labels according to new priority
@@ -124,18 +146,33 @@ public class TaskItemView extends JPanel
 		}
 	}
 	
+	/**
+	 * Setter for displayed category
+	 * @param categoryName The new category name. Must match its icon name.
+	 */
 	public void setCategory(String categoryName) {
 		taskCategoryName = categoryName;
 		ImageIcon categoryIcon = new ImageIcon(iconLocation + taskCategoryName + "_s" + iconExtension);
 		categoryLabel.setIcon(categoryIcon);
 	}
 	
+	/**
+	 * Setter for the due date
+	 * @param date The new due date
+	 */
 	public void setDueDate(String date) {
 		dueDate = date;
 		dueDateLabel.setText(dueDate);
 	}
 	
+	/**
+	 * Setter for the progress
+	 * @param progress The new progress
+	 */
 	public void setProgress(int progress) {
+		// Validate that priority is within acceptable range
+		if(progress > 100) progress = 100;
+		else if(progress < 0) progress = 0;
 		taskProgress = progress;
 		progressbarre.setValue(taskProgress);
 	}

@@ -50,7 +50,7 @@ import javax.swing.SpinnerDateModel;
 
 
 /**
- * The view of the timemanager. The main frame and all panels are made here. 
+ * The view of the Time Manager. The main frame and all panels are made here. 
  * @author Kim, Pontus, Aries, Sercan
  *
  */
@@ -69,6 +69,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 	
 	private static String currentLanguage;
 	public boolean isShuttingDown = false;
+	JLabel CategoryAsTitle = new JLabel (" ",JLabel.CENTER);
 	
 	JRadioButtonMenuItem swedish;
 	JRadioButtonMenuItem english;
@@ -83,13 +84,17 @@ public class TimeManagerView extends Observable implements ActionListener {
 	JSpinner timeSpinner;
 	JComboBox dropdownCategory;
 	
+	/**
+	 * Creates a new Time Manager View
+	 */
 	TimeManagerView(){	
-		
+		// load language
 		currentLanguage = config.LanguageRepository.getCurrentLanguage();
+		
+		// On close: hide the view, notify observers to save variables etc, then close
 		mainFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		mainFrame.pack();
 		mainFrame.addComponentListener(new ComponentAdapter(){
-			
 
 			@Override
 			public void componentHidden(ComponentEvent e) {
@@ -101,13 +106,21 @@ public class TimeManagerView extends Observable implements ActionListener {
 			}
 		});
 		
+		/* This section creates the inner components of the view
+		 * Which mainly consists of
+		 *  - Menu Bar with different menu functionalities
+		 *  - Title Panel that shows that is currently active
+		 *  - Tab Panel containing category icons to select
+		 *  - Task Panel shows all the tasks in the selected category
+		 *  - Add Panel to add a new task
+		*/
+		
 		addMenuBar(mainFrame); 
 		
 		//Content titlePanel 
 		titelPanel.setBackground(Color.LIGHT_GRAY);		//this is a temporary backgroundcolor
 		titelPanel.setLayout(new GridLayout(2, 5));
 		titelPanel.add(new JLabel(config.LanguageRepository.getString("TITEL")));
-		
 		
 		makeCenterPanel();
 		JScrollPane centerScrollPanel = new JScrollPane();
@@ -130,6 +143,11 @@ public class TimeManagerView extends Observable implements ActionListener {
 		
 	}
 	
+	/**
+	 * Overriden close method, which will saves view-related config variables
+	 * before it closes
+	 * @return Returns JFrame.EXIT_ON_CLOSE after saving the config variables
+	 */
 	public int closeOperation(){
 		config.Config.saveInt("WindowHeight", mainFrame.getHeight());
 		config.Config.saveInt("WindowWidth", mainFrame.getWidth());
@@ -137,6 +155,10 @@ public class TimeManagerView extends Observable implements ActionListener {
 		return JFrame.EXIT_ON_CLOSE;
 	}
 	
+	/**
+	 * Add a menu bar on the JFrame
+	 * @param mainFrame JFrame to add the menu bar to
+	 */
 	private void addMenuBar(final JFrame mainFrame) {
 		// Make a menu bar
 		JMenuBar menuBar = new JMenuBar();
@@ -159,8 +181,8 @@ public class TimeManagerView extends Observable implements ActionListener {
 		JMenuItem helpAction = new JMenuItem(config.LanguageRepository.getString("HELP"));
 		
 		ButtonGroup rbgroup = new ButtonGroup();
-		JRadioButtonMenuItem swedish = new JRadioButtonMenuItem(config.LanguageRepository.getString("SWEDISH"));
-		JRadioButtonMenuItem english = new JRadioButtonMenuItem(config.LanguageRepository.getString("ENGLISH"));
+		swedish = new JRadioButtonMenuItem(config.LanguageRepository.getString("SWEDISH"));
+		english = new JRadioButtonMenuItem(config.LanguageRepository.getString("ENGLISH"));
 		if(currentLanguage.equals("English"))
 			english.setSelected(true);
 		else
@@ -187,7 +209,8 @@ public class TimeManagerView extends Observable implements ActionListener {
 		}
 
 	/**
-	 * makes a tabnedpane
+	 * Center panels contains the Tab Panel with the clickable category icons
+	 *  and the Task Panel that shows the Task Items
 	 * @return tabpane
 	 */
 	private void makeCenterPanel() {
@@ -203,12 +226,12 @@ public class TimeManagerView extends Observable implements ActionListener {
 		
 		centerPanel = new JPanel();
 		centerPanel.setBackground(Color.green);
-		centerPanel.add( taskPanel);
+		centerPanel.add(taskPanel);
 	}
 	
 	/**
-	 * loads categories
-	 * @param taskCategories list of categories
+	 * Remove existing categories and load all categories in the List.
+	 * @param taskCategories List of categories to load
 	 */
 	public void loadCategories(List<TaskCategory> taskCategories) {
 		// remove all existing tabs, then load everything
@@ -238,8 +261,13 @@ public class TimeManagerView extends Observable implements ActionListener {
 		// switch to last active category
 		switchTab(config.Config.loadProperty("currentCategory", "all_categories"));
 	}
-	JLabel CategoryAsTitle = new JLabel (" ",JLabel.CENTER);
+	
+	/**
+	 * Displays tab from the category.
+	 * @param selectedCategory Category that will be the active tab
+	 */
 	public void switchTab(String selectedCategory) {
+		// Record the newly actived tab
 		config.Config.saveProperty("currentCategory",selectedCategory);
 		
 		CategoryAsTitle.setText(selectedCategory);
@@ -273,8 +301,8 @@ public class TimeManagerView extends Observable implements ActionListener {
 	}
 	
 	/**
-	 * load tasks
-	 * @param taskItems list of taskItems
+	 * Remove existing tasks and load all tasks in the List.
+	 * @param taskItems List of items to load
 	 */
 	public void loadTasks(List<TaskItem> taskItems) {
 		// remove all existing tasks, then load everything

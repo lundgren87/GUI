@@ -78,7 +78,7 @@ public class Config {
 			
 			//save local properties to prop
 			prop.setProperty("DBFile", DBFile);
-			prop.setProperty("startupLanguage", startupLanguage);
+			//prop.setProperty("startupLanguage", startupLanguage);
 			
 			//store contents of prop to file
 			prop.store(output, null);

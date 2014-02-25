@@ -2,6 +2,11 @@ package TimeManager;
 
 import javax.swing.ImageIcon;
 
+/**
+ * 
+ * @author Aries
+ * Class to represent a Task Category
+ */
 public class TaskCategory {
 
 	public String categoryName;
@@ -11,7 +16,7 @@ public class TaskCategory {
 	public final String iconExtension = ".gif";
 	
 	/**
-	 * Sets the name and description of the category 
+	 * Create a new Task Category with the name and description of the category 
 	 * @param catName name of the category
 	 * @param catDesc description of the category
 	 */
