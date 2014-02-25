@@ -37,8 +37,8 @@ public class DBHandler {
 	 * Creates a new document containing only the skeleton structure
 	 * @return 
 	 */
-	static Document skeletonDoc(){
-		Document doc = new Document();
+	static void skeletonDoc(){
+		doc = new Document();
 		
 		Element dB = new Element("DB");
 		Element tasks = new Element("tasks");
@@ -48,7 +48,6 @@ public class DBHandler {
 		doc.setRootElement(dB);
 		dB.addContent(categories);
 		dB.addContent(tasks);
-		return doc;
 	}
 	
 	/**
@@ -84,7 +83,7 @@ public class DBHandler {
 		System.out.println("Saving DB state");
 		
 		//reset document to an empty one
-		Document doc = skeletonDoc();
+		skeletonDoc();
 		
 		//fill it with categories and tasks from model
 		storeCategories();
@@ -150,6 +149,7 @@ public class DBHandler {
 		
 		//Loop over the categories in categoryList
 		for (Iterator it = categoryList.iterator(); it.hasNext();) {
+			System.out.println("getting category ,");
 			TaskCategory ti = (TaskCategory) it.next();
 			
 			//Create new category element and create it's data elements
