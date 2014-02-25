@@ -24,8 +24,8 @@ import TimeManager.TimeManagerModel;
  * @author Pontus, Sven
  */
 public class DBHandler {
+	static Document doc;
 	static String DBFile;
-	static Document doc;   //Referred to as "the Document"
 	TimeManagerModel model;
 	
 	public DBHandler(TimeManagerModel m) {
@@ -33,6 +33,23 @@ public class DBHandler {
 		model = m;
 	}
 	
+	/**
+	 * Creates a new document containing only the skeleton structure
+	 * @return 
+	 */
+	static Document skeletonDoc(){
+		Document doc = new Document();
+		
+		Element dB = new Element("DB");
+		Element tasks = new Element("tasks");
+		Element categories = new Element("categories");
+		
+		//Set root element and add children to doc
+		doc.setRootElement(dB);
+		dB.addContent(categories);
+		dB.addContent(tasks);
+		return doc;
+	}
 	
 	/**
 	 * Initialize the data base from DBFile specified in config.java
@@ -40,47 +57,40 @@ public class DBHandler {
 	 * pre: If the DBFile exists, it has to have the correct format
 	 */
 	public void init() {
-		
 		//Create a new file object
 		File file = new File(DBFile);
 		
 		if(file.exists()) {
-			//Initialize a SAXBuilder to parse the file in to a document
+			//Initialize a SAXBuilder to parse the file into a document
 			SAXBuilder builder = new SAXBuilder();
 			try{
+				//build a new Document from the file
 				doc = builder.build(file);
+				
 			} catch (Exception e) {
 				System.out.println("Exception: " +e.getMessage());
 			}
-		}
-		else {
-			
-			//No file exists, create a new Document and manually add skeleton structure
-			doc = new Document();
-			
-			Element dB = new Element("DB");
-			Element tasks = new Element("tasks");
-			Element categories = new Element("categories");
-			
-			//Set root element and add children
-			doc.setRootElement(dB);
-			dB.addContent(categories);
-			dB.addContent(tasks);
-		}
-		readCategories();
-		readTasks();
+			//Read contents of doc and send it to the model
+			readCategories();
+			readTasks();
+		}	
 	}
 	
 	
 	/**
-	 * Exit saves the existing Document to the file DBFile specified in config.java
-	 * pre: init() has to be called prior to exit()
+	 * Exit gets the information in model to the file DBFile specified in config.java
 	 */
 	public void exit() {
 		System.out.println("Saving DB state");
+		
+		//reset document to an empty one
+		Document doc = skeletonDoc();
+		
+		//fill it with categories and tasks from model
 		storeCategories();
 		storeTasks();
-		//Output with pretty formatting
+		
+		//Output to file with pretty formatting
 		XMLOutputter xmlOutput = new XMLOutputter();
 		xmlOutput.setFormat(Format.getPrettyFormat());
 		try {

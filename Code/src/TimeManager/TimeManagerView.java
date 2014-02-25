@@ -21,7 +21,7 @@ import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale.Category;
+import java.util.Observable;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -35,6 +35,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -44,6 +45,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.SpinnerDateModel;
 
 
@@ -52,7 +54,7 @@ import javax.swing.SpinnerDateModel;
  * @author Kim, Pontus, Aries, Sercan
  *
  */
-public class TimeManagerView {
+public class TimeManagerView extends Observable implements ActionListener {
 	
 	public JFrame mainFrame = new JFrame(config.LanguageRepository.getString("TIME_MANAGER"));	//The main frame. 
 	private JPanel titelPanel = new JPanel(); 	//The panel which shows the title of the current tab
@@ -66,6 +68,20 @@ public class TimeManagerView {
 	private Calendar startDate = Calendar.getInstance();	//Selects today's date.
 	
 	private static String currentLanguage;
+	public boolean isShuttingDown = false;
+	
+	JRadioButtonMenuItem swedish;
+	JRadioButtonMenuItem english;
+	JTextArea nameActivity;
+	JRadioButton highPriority;
+	JRadioButton mediumPriority;
+	JRadioButton lowPriority;
+	JComboBox startYear;
+	JComboBox startMonth;
+	JComboBox startDay;
+	JSpinner.DateEditor timeEditor;
+	JSpinner timeSpinner;
+	JComboBox dropdownCategory;
 	
 	TimeManagerView(){	
 		
@@ -73,8 +89,14 @@ public class TimeManagerView {
 		mainFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		mainFrame.pack();
 		mainFrame.addComponentListener(new ComponentAdapter(){
+			
+
+			@Override
 			public void componentHidden(ComponentEvent e) {
-				close();
+				isShuttingDown = true;
+				setChanged();
+				notifyObservers();
+				
 				((JFrame)(e.getComponent())).dispose();
 			}
 		});
@@ -84,11 +106,12 @@ public class TimeManagerView {
 		//Content titlePanel 
 		titelPanel.setBackground(Color.LIGHT_GRAY);		//this is a temporary backgroundcolor
 		titelPanel.setLayout(new GridLayout(2, 5));
-
+		titelPanel.add(new JLabel(config.LanguageRepository.getString("TITEL")));
 		
 		
 		makeCenterPanel();
 		JScrollPane centerScrollPanel = new JScrollPane();
+		centerScrollPanel.getVerticalScrollBar().setUnitIncrement(16);
 		centerScrollPanel.getViewport().add(centerPanel);
 		MakeAddPanel(addPanel);
 		
@@ -107,19 +130,14 @@ public class TimeManagerView {
 		
 	}
 	
-	private int closeOperation(){
+	public int closeOperation(){
 		config.Config.saveInt("WindowHeight", mainFrame.getHeight());
 		config.Config.saveInt("WindowWidth", mainFrame.getWidth());
 		
 		return JFrame.EXIT_ON_CLOSE;
 	}
 	
-	private void close() {
-		closeOperation();
-		//TimeManagerModel.closeOperation();
-	}
-	
-	private static void addMenuBar(final JFrame mainFrame) {
+	private void addMenuBar(final JFrame mainFrame) {
 		// Make a menu bar
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -141,53 +159,21 @@ public class TimeManagerView {
 		JMenuItem helpAction = new JMenuItem(config.LanguageRepository.getString("HELP"));
 		
 		ButtonGroup rbgroup = new ButtonGroup();
-		final JRadioButtonMenuItem swedish = new JRadioButtonMenuItem(config.LanguageRepository.getString("SWEDISH"));
-		final JRadioButtonMenuItem english = new JRadioButtonMenuItem(config.LanguageRepository.getString("ENGLISH"));
+		JRadioButtonMenuItem swedish = new JRadioButtonMenuItem(config.LanguageRepository.getString("SWEDISH"));
+		JRadioButtonMenuItem english = new JRadioButtonMenuItem(config.LanguageRepository.getString("ENGLISH"));
 		if(currentLanguage.equals("English"))
 			english.setSelected(true);
 		else
 			swedish.setSelected(true);
 		
 		rbgroup.add(swedish);
-		
-		swedish.addActionListener((new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent s) {
-				if(swedish.isSelected()){
-					config.LanguageRepository.setCurrentLanguage("Swedish");
-					System.out.println("You choose Swedish");
-				}
-				mainFrame.revalidate();
-				mainFrame.repaint();
-			}
-		}));
-		
-		english.addActionListener((new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(english.isSelected()){
-					config.LanguageRepository.setCurrentLanguage("English");
-					System.out.println("you choose English");
-				}	
-				mainFrame.revalidate();
-				mainFrame.repaint();			
-			}
-		}));
-		
+		swedish.addActionListener(this);
+		english.addActionListener(this);
 		
 		rbgroup.add(english);
 		
 		languageAction.add(english);
 		languageAction.add(swedish);
-
-		
-		// Add action to newAction
-		newAction.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent h){
-				System.out.println("You have clicked new action");
-				}
-			}
-		);
 		
 		//Add actions to the menus
 		fileMenu.add(newAction);
@@ -240,14 +226,9 @@ public class TimeManagerView {
 			//btn.setOpaque(false);
 			//btn.setBorderPainted(false);
 			//btn.setBackground(null);
-			
-			//TODO: Move actionlistener code to somewhere else
-			btn.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e) {
-			    	JComponent b = (JComponent) e.getSource();
-			    	switchTab(b.getName());
-			    }
-			});   
+
+			btn.setActionCommand("CategoryButtons");
+			btn.addActionListener(this);
 			tabPanel.add(btn);
 		
 			// Generate panel to contain tasks for each category (right side)
@@ -312,6 +293,8 @@ public class TimeManagerView {
 				}
 			}
 		}
+		taskPanel.validate();
+		taskPanel.repaint();
 	}
 
 	private void MakeAddPanel(JPanel addPanel) {
@@ -320,7 +303,7 @@ public class TimeManagerView {
 		GridBagConstraints c = new GridBagConstraints();
 		
 		//Make and add NameActivity
-		final JTextArea nameActivity = new JTextArea(3,1); 		//TextArea to insert the name of the activity
+		nameActivity = new JTextArea(3,1); 		//TextArea to insert the name of the activity
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -340,33 +323,31 @@ public class TimeManagerView {
 		addPanel.add(datePanel,c);
 
 		datePanel.setLayout(new GridLayout(0,4));
-				//Make an date chooser, add this to the datePanel
-				final JComboBox startYear;
-				final JComboBox startMonth;
-				final JComboBox startDay;
-		       	startYear = new JComboBox();
-		        buildYearsList(startYear);
-		        startYear.setSelectedIndex(5);
-		        startMonth = new JComboBox();
-		        buildMonthsList(startMonth);
-		        startMonth.setSelectedIndex(startDate.get(Calendar.MONTH));
-		        startDay = new JComboBox();
-		        buildDaysList(startDate, startDay, startMonth);
-		        startDay.setSelectedItem(Integer.toString(startDate.get(Calendar.DATE)));
-		        datePanel.add(startDay);
-		        datePanel.add(startMonth);
-		        datePanel.add(startYear);
-			
-				//make an time spinner, add this to the datePanel
-				final JSpinner timeSpinner = new JSpinner( new SpinnerDateModel() );
-				final JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
-				timeSpinner.setEditor(timeEditor);
-				timeSpinner.setValue(new Date()); 
-				datePanel.add(timeSpinner);
+		//Make an date chooser, add this to the datePanel
+		
+       	startYear = new JComboBox();
+        buildYearsList(startYear);
+        startYear.setSelectedIndex(5);
+        startMonth = new JComboBox();
+        buildMonthsList(startMonth);
+        startMonth.setSelectedIndex(startDate.get(Calendar.MONTH));
+        startDay = new JComboBox();
+        buildDaysList(startDate, startDay, startMonth);
+        startDay.setSelectedItem(Integer.toString(startDate.get(Calendar.DATE)));
+        datePanel.add(startDay);
+        datePanel.add(startMonth);
+        datePanel.add(startYear);
+	
+		//make an time spinner, add this to the datePanel
+		timeSpinner = new JSpinner( new SpinnerDateModel() );
+		timeEditor = new JSpinner.DateEditor(timeSpinner, "HH:mm");
+		timeSpinner.setEditor(timeEditor);
+		timeSpinner.setValue(new Date()); 
+		datePanel.add(timeSpinner);
 		
 		//Make and add dropdown menu to choose category		
 		String[] categoryStrings= {"Home", "School", "Work"};			//This should request the list of the category's. 
-		final JComboBox dropdownCategory = new JComboBox(categoryStrings);
+		dropdownCategory = new JComboBox(categoryStrings);
 		c.fill = GridBagConstraints.BOTH;
 		c.gridx = 0;
 		c.gridy = 2;
@@ -377,20 +358,21 @@ public class TimeManagerView {
 		
 		//Make and add priorityPanel.
 		JPanel priorityPanel = new JPanel();
-			final JRadioButton highPriority = new JRadioButton(config.LanguageRepository.getString("HIGH"));
-			final JRadioButton mediumPriority = new JRadioButton(config.LanguageRepository.getString("MEDIUM"));
-			final JRadioButton lowPriority = new JRadioButton(config.LanguageRepository.getString("LOW"));
-				
-			final ButtonGroup bg = new ButtonGroup();			//Group the buttons
-			bg.add(highPriority);
-			bg.add(mediumPriority);
-			bg.add(lowPriority);
+		highPriority = new JRadioButton(config.LanguageRepository.getString("HIGH"));
+		mediumPriority = new JRadioButton(config.LanguageRepository.getString("MEDIUM"));
+		lowPriority = new JRadioButton(config.LanguageRepository.getString("LOW"));
 			
-			mediumPriority.setSelected(true);			//Default is medium
+		final ButtonGroup bg = new ButtonGroup();			//Group the buttons
+		bg.add(highPriority);
+		bg.add(mediumPriority);
+		bg.add(lowPriority);
+		
+		mediumPriority.setSelected(true);			//Default is medium
+		
+		priorityPanel.add(highPriority);
+		priorityPanel.add(mediumPriority);
+		priorityPanel.add(lowPriority);
 			
-			priorityPanel.add(highPriority);
-			priorityPanel.add(mediumPriority);
-			priorityPanel.add(lowPriority);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
@@ -411,45 +393,8 @@ public class TimeManagerView {
 		addPanel.add(addButton,c);
 		
 		//Get the name of the activity (should also get the date, category, and priority)
-		addButton.addActionListener(new ActionListener() {
-		      @Override
-		      public void actionPerformed(ActionEvent e) {
-		       String message;
-		       String priority;
-		       String date;
-		       String time;
-		    	 if(nameActivity.getText().length()>4){
-		    		if(highPriority.isSelected()){
-		        			priority = "***";
-		        			}
-		    		else if(lowPriority.isSelected()){
-		    			 priority = "*";
-		    			 }
-		        	else
-		        			priority = "**";
-		    		
-		    		date = startDay.getSelectedItem().toString() + " " +  
-		    				startMonth.getSelectedItem().toString() + " " +
-		    				startYear.getSelectedItem().toString();
-		    		
-		    		time = timeEditor.getFormat().format(timeSpinner.getValue());
-		    		
-		    		 
-		    		 message = String.format(
-		    			"Activity name = " + nameActivity.getText() + 
-		        		"\nCategory = " + dropdownCategory.getSelectedItem().toString() +
-		        		"\nPriority = " + priority +
-		        		"\nDate = " + date + 
-		        		"\nTime = "+ time + '\n'
-		    			);   	 
-		    	 }
-		    	 else 
-		    		 message = "Give a valid name to the task. \nIt should include at least 5 characters"; //one should actually give a popup	  
-		    	 
-		    	 System.out.println(message);}
-		    	 
-		      
-		    });
+		addButton.setActionCommand("AddButton");
+		addButton.addActionListener(this);
 
 	}
 	
@@ -500,5 +445,58 @@ public class TimeManagerView {
 	        for (int dayCount = 1; dayCount <= lastDay; dayCount++)
 	            daysList.addItem(Integer.toString(dayCount));
 	    }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() instanceof JRadioButtonMenuItem) {
+			if(e.getSource() == swedish) {
+				if(swedish.isSelected()) {
+					config.LanguageRepository.setCurrentLanguage("Swedish");
+				}
+				mainFrame.revalidate();
+				mainFrame.repaint();
+			}
+			else if(e.getSource() == english) {
+				if(english.isSelected()){
+					config.LanguageRepository.setCurrentLanguage("English");
+				}	
+				mainFrame.revalidate();
+				mainFrame.repaint();	
+			}
+		}
+
+		else if(e.getSource() instanceof JButton) {
+			JButton btn = (JButton) e.getSource();
+			if(btn.getActionCommand().equalsIgnoreCase("CategoryButtons")) {
+				switchTab(btn.getName());
+			}
+			else if(btn.getActionCommand().equalsIgnoreCase("AddButton")) {
+				String description, category, date, time;
+				int priority, progress;
+				
+				description = nameActivity.getText();
+
+				category = dropdownCategory.getSelectedItem().toString();
+				
+				date = startDay.getSelectedItem().toString() + " " +  
+						startMonth.getSelectedItem().toString() + " " +
+						startYear.getSelectedItem().toString();
+		    		
+				time = timeEditor.getFormat().format(timeSpinner.getValue());
+				
+				if(highPriority.isSelected()) priority = 1;
+				else if(lowPriority.isSelected()) priority = 2;
+				else priority = 2;
+		    		
+				progress = 0;
+ 	 
+				TaskItem taskItem = new TaskItem(description, category, date + " " + time, progress, priority);
+				setChanged();
+				notifyObservers(taskItem);
+			}
+		       
+		}
+	}
 }
 
