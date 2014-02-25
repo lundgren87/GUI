@@ -28,19 +28,27 @@ public class Config {
 	public static void loadConfig() {
 		prop = new Properties();
 		InputStream input = null;
+		//specify default values
+		DBFile = "assets/DBFile";
+		Images = "assets/images/";
+		startupLanguage = "English";
 		try {
 			//specify file to use
 			input = new FileInputStream(configFile);
 			prop.load(input);
 			
 			//get local property values from the file
-			DBFile 			= prop.getProperty("DBFile",          "assets/DBFile" );
-			Images 			= prop.getProperty("Images",          "assets/images/");
-			startupLanguage = prop.getProperty("startupLanguage", "English"       );
+			DBFile 			= prop.getProperty("DBFile", DBFile );
+			Images 			= prop.getProperty("Images", Images);
+			startupLanguage = prop.getProperty("startupLanguage", startupLanguage);
 			
 		}
 		catch (IOException e){
-			e.printStackTrace();
+			//File does not exist (or other error). Set default values to prop
+			System.out.println("Cannot access config.properties. Loading default values");
+			prop.setProperty("DBFile", DBFile );
+			prop.setProperty("Images", Images);
+			prop.setProperty("startupLanguage", startupLanguage);
 		}
 		finally {
 			if (input != null) {
@@ -60,17 +68,19 @@ public class Config {
 	 * Saves general properties to config file.
 	 */
 	public static void saveConfig() {
+		System.out.print("Saving config file...");
 		OutputStream output = null;
 		try {
 			//specify file to use
 			output = new FileOutputStream(configFile);
 			
-			//save local properties to the file
+			//save local properties to prop
 			prop.setProperty("DBFile", DBFile);
 			prop.setProperty("startupLanguage", startupLanguage);
 			
-			//apply changes to file
+			//store contents of prop to file
 			prop.store(output, null);
+			System.out.println("done");
 		}
 		catch (IOException e){
 			e.printStackTrace();
@@ -94,28 +104,8 @@ public class Config {
 	 * @return Value of key from config file or defaultValue if the key is not present
 	 */
 	public static String loadProperty(String key,String defaultValue) {
-		InputStream input = null;
-		try {
-			//specify file to use
-			input = new FileInputStream(configFile);
-			
-			//get the specified property value corresponding to key and return it
-			return prop.getProperty(key, defaultValue);
-		}
-		catch (IOException e){
-			e.printStackTrace();
-			return "Error";
-		}
-		finally {
-			if (input != null) {
-				try {
-					input.close();
-				}
-				catch (IOException e2){
-					e2.printStackTrace();
-				}
-			} 
-		}
+		//get the specified property value corresponding to key and return it
+		return prop.getProperty(key, defaultValue);
 	}
 	
 	/**
@@ -124,30 +114,7 @@ public class Config {
 	 * @param value
 	 */
 	public static void saveProperty(String key,String value) {
-		OutputStream output = null;
-		try {
-			//specify file to use
-			output = new FileOutputStream(configFile);
-		
-			//store the property
-			prop.setProperty(key, value);
-			
-			//apply changes
-			prop.store(output, null);
-		}
-		catch (IOException e){
-			e.printStackTrace();
-		}
-		finally {
-			if (output != null) {
-				try {
-					output.close();
-				}
-				catch (IOException e2){
-					e2.printStackTrace();
-				}
-			} 
-		}
+		prop.setProperty(key, value);
 	}
 	
 	/**
