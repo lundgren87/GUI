@@ -46,8 +46,9 @@ public class TimeManagerController implements Observer {
 			// View passes 
 			TimeManagerView view = (TimeManagerView) o;
 			if(view.isShuttingDown) {
-				//theModel.closeOperation();
+				theModel.closeOperation();
 				view.closeOperation();
+				config.Config.saveConfig();
 			}
 			else if(arg instanceof TaskItem) {
 				TaskItem item = (TaskItem) arg;

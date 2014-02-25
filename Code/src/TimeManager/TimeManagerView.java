@@ -235,12 +235,12 @@ public class TimeManagerView extends Observable implements ActionListener {
 			TaskPanel tp = new TaskPanel(category);
 			taskPanels.add(tp);
 		}
-		// when categories changed, switch back to all category
-		// TODO: switch to the new category or last active category instead
-		switchTab("all_categories");
+		// switch to last active category
+		switchTab(config.Config.loadProperty("currentCategory", "all_categories"));
 	}
 	JLabel CategoryAsTitle = new JLabel (" ",JLabel.CENTER);
 	public void switchTab(String selectedCategory) {
+		config.Config.saveProperty("currentCategory",selectedCategory);
 		
 		CategoryAsTitle.setText(selectedCategory);
 		titelPanel.add(CategoryAsTitle);

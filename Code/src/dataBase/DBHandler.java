@@ -37,8 +37,8 @@ public class DBHandler {
 	 * Creates a new document containing only the skeleton structure
 	 * @return 
 	 */
-	static Document skeletonDoc(){
-		Document doc = new Document();
+	static void skeletonDoc(){
+		doc = new Document();
 		
 		Element dB = new Element("DB");
 		Element tasks = new Element("tasks");
@@ -48,12 +48,10 @@ public class DBHandler {
 		doc.setRootElement(dB);
 		dB.addContent(categories);
 		dB.addContent(tasks);
-		return doc;
 	}
 	
 	/**
-	 * Initialize the data base from DBFile specified in config.java
-	 * If the file does not exist, creates a skeleton document
+	 * Initialize the database from DBFile specified in config.java
 	 * pre: If the DBFile exists, it has to have the correct format
 	 */
 	public void init() {
@@ -76,15 +74,14 @@ public class DBHandler {
 		}	
 	}
 	
-	
 	/**
-	 * Exit gets the information in model to the file DBFile specified in config.java
+	 * Exit saves the information in model to the file DBFile specified in config.java
 	 */
 	public void exit() {
 		System.out.println("Saving DB state");
 		
 		//reset document to an empty one
-		Document doc = skeletonDoc();
+		skeletonDoc();
 		
 		//fill it with categories and tasks from model
 		storeCategories();
@@ -99,7 +96,6 @@ public class DBHandler {
 			System.out.println("Exception: " +io.getMessage());
 		}
 	}
-	
 
 	/**
 	 * Stores all tasks present in the model to the Document.
@@ -133,7 +129,6 @@ public class DBHandler {
 		}
 	}
 	
-	
 	/**
 	 * Stores all categories present in the model to the Document.
 	 * pre: init() has to be called prior to storeCategories()
@@ -163,8 +158,7 @@ public class DBHandler {
 			categories.addContent(category);
 		}
 	}
-	
-	
+		
 	/**
 	 * Reads all categories present in the Document and adds them to the model.
 	 * pre: init() has to be called prior to readCategories()
@@ -187,8 +181,6 @@ public class DBHandler {
 			model.addNewCategory(categoryName, categoryDescription);
 		}
 	}
-	
-	
 	
 	/**
 	 * Reads all categories present in the Document and adds them to the model.
@@ -213,47 +205,4 @@ public class DBHandler {
 			model.addNewTask(taskDescription, taskCategory, Integer.parseInt(taskPriority));
 		}
 	}
-	
-	/*
-	// DUMMY SHIT
-	public static List<TaskItem> dummyItem(){
-		TaskItem t1 = new TaskItem( "Do stuff at home", "Home", 3);
-		TaskItem t2 = new TaskItem("Do stuff at work", "Work", 2);
-		TaskItem t3 = new TaskItem("Do other stuff at home", "Home", 1);
-		List<TaskItem> taskList = new ArrayList<TaskItem>();
-		taskList.add(t1);
-		taskList.add(t2);
-		taskList.add(t3);
-		
-		return taskList;
-	}
-	
-	
-	// DUMMY SHIT
-	public static List<TaskCategory> dummyCategory(){
-		TaskCategory t1 = new TaskCategory("Home", "stuff at home");
-		TaskCategory t2 = new TaskCategory("Work", "stuff at work");
-		List<TaskCategory> categoryList = new ArrayList<TaskCategory>();
-		categoryList.add(t1);
-		categoryList.add(t2);
-		
-		return categoryList;
-	}
-	
-	
-	// PRINT SHIT
-	public void print() {
-		//Output with pretty formatting
-		XMLOutputter xmlOutput = new XMLOutputter();
-		xmlOutput.setFormat(Format.getPrettyFormat());
-		
-		//Output to console
-		try {
-			xmlOutput.output(doc, System.out);
-		} catch (IOException e) {
-			System.out.println("Exception: " + e + " Stacktrace:");
-			e.printStackTrace();
-		}
-	}
-	*/
 }

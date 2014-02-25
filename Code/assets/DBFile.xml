@@ -27,141 +27,101 @@
       <taskCategory>home</taskCategory>
       <taskDescription>Clean the garage!</taskDescription>
       <taskPriority>2</taskPriority>
-      <taskProgress>67</taskProgress>
-      <taskDuedate>10 Mar 2014 20:00</taskDuedate>
     </task>
     <task>
       <taskCategory>work</taskCategory>
       <taskDescription>Remember to add your hours to the list</taskDescription>
       <taskPriority>3</taskPriority>
-      <taskProgress>58</taskProgress>
-      <taskDuedate>28 Feb 2014 17:00</taskDuedate>
     </task>
     <task>
       <taskCategory>home</taskCategory>
       <taskDescription>Remember Henry's Birthday</taskDescription>
       <taskPriority>2</taskPriority>
-      <taskProgress>100</taskProgress>
-      <taskDuedate>15 Mar 2014 19:00</taskDuedate>
     </task>
     <task>
       <taskCategory>work</taskCategory>
       <taskDescription>Trip to Helsinki office</taskDescription>
       <taskPriority>3</taskPriority>
-      <taskProgress>100</taskProgress>
-      <taskDuedate>17 Mar 2014 08:00</taskDuedate>
     </task>
     <task>
       <taskCategory>school</taskCategory>
       <taskDescription>USCD paper</taskDescription>
       <taskPriority>1</taskPriority>
-      <taskProgress>23</taskProgress>
-      <taskDuedate>24 Mar 2014 23:00</taskDuedate>
     </task>
     <task>
       <taskCategory>school</taskCategory>
       <taskDescription>Programming exam!</taskDescription>
       <taskPriority>3</taskPriority>
-      <taskProgress>0</taskProgress>
-      <taskDuedate>28 Mar 2014 08:00</taskDuedate>
     </task>
     <task>
       <taskCategory>work</taskCategory>
       <taskDescription>Team meeting</taskDescription>
       <taskPriority>2</taskPriority>
-      <taskProgress>33</taskProgress>
-      <taskDuedate>4 Mar 2014 10:00</taskDuedate>
     </task>
     <task>
       <taskCategory>work</taskCategory>
       <taskDescription>Team meeting</taskDescription>
       <taskPriority>2</taskPriority>
-      <taskProgress>0</taskProgress>
-      <taskDuedate>11 Mar 2014 09:00</taskDuedate>
     </task>
     <task>
       <taskCategory>work</taskCategory>
       <taskDescription>Do stuff at work</taskDescription>
       <taskPriority>1</taskPriority>
-      <taskProgress>100</taskProgress>
-      <taskDuedate>17 Mar 2014 08:00</taskDuedate>
     </task>
     <task>
       <taskCategory>school</taskCategory>
       <taskDescription>Remember take the skates!</taskDescription>
       <taskPriority>1</taskPriority>
-      <taskProgress>0</taskProgress>
-      <taskDuedate>18 Mar 2014 08:00</taskDuedate>
     </task>
     <task>
       <taskCategory>home</taskCategory>
       <taskDescription>Chimney sweeper</taskDescription>
       <taskPriority>2</taskPriority>
-      <taskProgress>0</taskProgress>
-      <taskDuedate>4 Apr 2014 13:00</taskDuedate>
     </task>
     <task>
       <taskCategory>home</taskCategory>
       <taskDescription>Svensson's visiting</taskDescription>
       <taskPriority>2</taskPriority>
-      <taskProgress>64</taskProgress>
-      <taskDuedate>7 Mar 2014 14:00</taskDuedate>
     </task>
     <task>
       <taskCategory>work</taskCategory>
       <taskDescription>Give feedback</taskDescription>
       <taskPriority>1</taskPriority>
-      <taskProgress>44</taskProgress>
-      <taskDuedate>20 Mar 2014 12:00</taskDuedate>
     </task>
     <task>
       <taskCategory>school</taskCategory>
       <taskDescription>Sketching done</taskDescription>
       <taskPriority>3</taskPriority>
-      <taskProgress>83</taskProgress>
-      <taskDuedate>6 Mar 2014 11:00</taskDuedate>
     </task>
     <task>
       <taskCategory>home</taskCategory>
       <taskDescription>Movie night!</taskDescription>
       <taskPriority>1</taskPriority>
-      <taskProgress>100</taskProgress>
-      <taskDuedate>30 Mar 2014 20:00</taskDuedate>
     </task>
     <task>
       <taskCategory>school</taskCategory>
       <taskDescription>Group work</taskDescription>
       <taskPriority>2</taskPriority>
-      <taskProgress>74</taskProgress>
-      <taskDuedate>12 Mar 2014 08:00</taskDuedate>
     </task>
     <task>
       <taskCategory>work</taskCategory>
       <taskDescription>Fika with Jimmy</taskDescription>
       <taskPriority>1</taskPriority>
-      <taskProgress>100</taskProgress>
-      <taskDuedate>20 Mar 2014 13:00</taskDuedate>
     </task>
     <task>
       <taskCategory>school</taskCategory>
       <taskDescription>Return the book</taskDescription>
       <taskPriority>2</taskPriority>
-      <taskProgress>100</taskProgress>
-      <taskDuedate>5 Apr 2014 08:00</taskDuedate>
     </task>
     <task>
       <taskCategory>home</taskCategory>
       <taskDescription>Buy the paint</taskDescription>
       <taskPriority>3</taskPriority>
-      <taskProgress>100</taskProgress>
-      <taskDuedate>5 Apr 2014 17:00</taskDuedate>
     </task>
     <task>
       <taskCategory>home</taskCategory>
       <taskDescription>Paint the wall</taskDescription>
       <taskPriority>3</taskPriority>
-      <taskProgress>100</taskProgress>
-      <taskDuedate>7 Apr 2014 20:00</taskDuedate>
     </task>
   </tasks>
 </DB>
