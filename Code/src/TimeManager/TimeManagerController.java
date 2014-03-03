@@ -4,12 +4,21 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Main controller for the application. Serves as an observer in the observer pattern.
+ * @author Sven, Pontus, Sercan, Kim, Aries
+ *
+ */
 public class TimeManagerController implements Observer {
 
 	private TimeManagerView theView;
 	private TimeManagerModel theModel;
 	
+	/**
+	 * Creates a new TimeManagerController
+	 */
 	public TimeManagerController() {		
+		// The controller observes both view and model
 		theView = new TimeManagerView();
 		theView.addObserver(this);
 		
@@ -40,10 +49,13 @@ public class TimeManagerController implements Observer {
 	}
 
 	@Override
+	/**
+	 * Implementation of the update method from the Observer base class.
+	 * Handles events from both model and view.
+	 */
 	public void update(Observable o, Object arg) {
 		// TODO: should check to a more generic view object if there are multiple view
 		if(o instanceof TimeManagerView) {
-			// View passes 
 			TimeManagerView view = (TimeManagerView) o;
 			if(view.isShuttingDown) {
 				theModel.closeOperation();
@@ -66,10 +78,5 @@ public class TimeManagerController implements Observer {
 			}
 		}
 	}
-	
-	//add a listener to the view
-		//actionperformed
-			//do something in the model ->observable
-			//set the new value in the view
 
 }

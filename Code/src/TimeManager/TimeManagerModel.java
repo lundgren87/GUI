@@ -7,7 +7,8 @@ import java.util.Observable;
 import dataBase.DBHandler;
 
 /**
- * Model contains all the information about taskitems and taskcategory
+ * Class as a Model in the MVC.
+ * It contains data structure (a list) of Task Items and Task Category
  * @author Aries, Sercan
  *
  */
@@ -18,13 +19,16 @@ public class TimeManagerModel extends Observable {
 	DBHandler dataBase;
 	
 	/**
-	 * Makes a new list of taskItems and Categories
+	 * Creates a new, blank model
 	 */
 	public TimeManagerModel() {
 		taskItems = new ArrayList<TaskItem>();
 		taskCategories = new ArrayList<TaskCategory>();
 	}
 	
+	/**
+	 * Initialize database handler to access database
+	 */
 	public void initDatabase() {
 		dataBase = new DBHandler(this);
 		dataBase.init();
@@ -32,8 +36,20 @@ public class TimeManagerModel extends Observable {
 		//dataBase.readTasks();
 	}
 	
+	
 	/**
-	 * Add new task to the taskItems list
+	 * Add the Task Item task to the list and notify observers
+	 * @param item TaskItem object containing all the task information
+	 */
+	public void addNewTask(TaskItem item) {
+		taskItems.add(item);
+		setChanged();
+		notifyObservers(taskItems);
+	}
+	
+	/**
+	 * [TOBE DEPRECATED] Creates a new Task Item with Task description, Task category, and TaskPriority
+	 * Add it to the list then notify observers.
 	 * @param taskDesc String taskDescription
 	 * @param taskCat String task category
 	 * @param taskPrio int task priotiry
@@ -43,11 +59,16 @@ public class TimeManagerModel extends Observable {
 		setChanged();
 		notifyObservers(taskItems);
 	}
-	public void addNewTask(TaskItem item) {
-		taskItems.add(item);
-		setChanged();
-		notifyObservers(taskItems);
-	}
+	
+	/**
+	 * Creates a new Task Item with Task description, Task category, Task Due Date, Task Progress, and Task Priority
+	 * Add the task to to the list then notify observers.
+	 * @param taskDesc Description of the task
+	 * @param taskCat Category that this task belongs to.
+	 * @param dueDate Due date of the task
+	 * @param progress Progress of the task
+	 * @param taskPrio Priority of the task
+	 */
 	public void addNewTask(String taskDesc, String taskCat, String dueDate, int progress, int taskPrio) {
 		taskItems.add(new TaskItem(taskDesc, taskCat, dueDate, progress, taskPrio));
 		setChanged();
@@ -55,8 +76,8 @@ public class TimeManagerModel extends Observable {
 	}
 	/**
 	 * Add new category to category list
-	 * @param categoryName Sting Name of category
-	 * @param categoryDescription String of category description
+	 * @param categoryName Name of category. Must match its icon name.
+	 * @param categoryDescription Description of category
 	 */
 	public void addNewCategory(String categoryName, String categoryDescription) {
 		taskCategories.add(new TaskCategory(categoryName, categoryDescription));
@@ -65,19 +86,22 @@ public class TimeManagerModel extends Observable {
 	}
 	
 	/**
-	 * Get list of tasks
+	 * Getter for list of tasks
 	 */
 	public List<TaskItem> getTasks() {
 		return taskItems;
 	}
 	
 	/**
-	 * Get list of categories
+	 * Getter list of categories
 	 */
 	public List<TaskCategory> getCategories() {
 		return taskCategories;
 	}
 	
+	/**
+	 * Close methods that is executed when the application exits
+	 */
 	public void closeOperation() {
 		dataBase.exit();
 	}

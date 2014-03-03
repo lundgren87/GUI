@@ -12,6 +12,11 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Class that holds the 3 Task Panels together in each categiory.
+ * @author Aries
+ *
+ */
 public class TaskPanel extends JPanel{
 	
 	public TaskCategory taskCategory;
@@ -20,15 +25,25 @@ public class TaskPanel extends JPanel{
     JPanel panelEast;
     GridBagConstraints c;
     
+    /**
+     * Creates a new Task Panel that does not belong to any category yet
+     */
     public TaskPanel() {
     	init();
     }
     
+    /**
+     * Creates a new Task Panel that belongs to a category
+     * @param cat Category that the Task Panel belongs to
+     */
 	public TaskPanel(TaskCategory cat) {
 		taskCategory = cat;
 		init();
 	}
     
+	/**
+	 * Initialize all inner components
+	 */
 	private void init() {
 		//this.setPreferredSize(new Dimension(800,500));
 		
@@ -37,7 +52,7 @@ public class TaskPanel extends JPanel{
 		c.fill = GridBagConstraints.HORIZONTAL;
 		this.setLayout(new GridBagLayout());
 		
-		// initialization of the 3 panels inside TaskPanel
+		// initialization of the 3 subpanels inside TaskPanel (panelNorth, panelEast, panelWest)
 	    panelNorth = new JPanel();
 	    panelNorth.setLayout(new BoxLayout(panelNorth, BoxLayout.Y_AXIS));
 	    panelNorth.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -66,12 +81,19 @@ public class TaskPanel extends JPanel{
 		this.add(panelEast, c);
 	}
 	
+	/**
+	 * Removes all tasks inside this TaskPanel contains
+	 */
 	void removeAllTasks() {
 		panelNorth.removeAll();
 		panelEast.removeAll();
 		panelWest.removeAll();
 	}
 	
+	/**
+	 * Add a new TaskItem to the TaskPanel.
+	 * @param item TaskItem to be added
+	 */
 	void addTask(TaskItem item) {
 		TaskItemView customComponent = new TaskItemView();
 		customComponent.setDescription(item.taskDescripton);
@@ -81,6 +103,8 @@ public class TaskPanel extends JPanel{
 		customComponent.setDueDate("Tomorrow");
 		//JLabel taskDescription = new JLabel(item.taskDescripton + ". Priority : " + item.taskPriority);
 		//customComponent.add(taskDescription);
+		
+		// A TaskItem will be displayed in one of the 3 sub panels, depending on its priority
 		switch(item.taskPriority) {
 			case 1:
 				panelNorth.add(customComponent);

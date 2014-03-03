@@ -1,4 +1,4 @@
-package TimeManager;
+/*package TimeManager;
 
 import java.awt.*;
 
@@ -93,12 +93,12 @@ class mainPanel extends JFrame
 	}
 
     // Main method to get things started
-	/*
+	
 	public static void main( String args[] )
 	{
 		// Create an instance of the test application
 		mainPanel mainFrame	= new mainPanel();
 		mainFrame.setVisible( true );
 	}
-	*/
-}
+	
+}*/
