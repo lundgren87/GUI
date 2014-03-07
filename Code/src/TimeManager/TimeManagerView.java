@@ -303,7 +303,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 		
 		// Create empty taskPanel and its list
 		taskPanels = new ArrayList<TaskPanel>();
-		taskPanel = new TaskPanel();
+		taskPanel = new TaskPanel(this);
 		
 		centerPanel = new JPanel();
 		//centerPanel.setBackground(Color.green);
@@ -336,7 +336,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 			tabPanel.add(btn);
 		
 			// Generate panel to contain tasks for each category (right side)
-			TaskPanel tp = new TaskPanel(category);
+			TaskPanel tp = new TaskPanel(this, category);
 			taskPanels.add(tp);
 		}
 		// switch to last active category

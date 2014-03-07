@@ -24,11 +24,104 @@
   </categories>
   <tasks>
     <task>
-      <taskDescription>Assignment 3 Deadline</taskDescription>
-      <taskCategory>School</taskCategory>
-      <taskDueDate>12 March 2014 21:00</taskDueDate>
-      <taskProgress>0</taskProgress>
+      <taskCategory>home</taskCategory>
+      <taskDescription>Clean the garage!</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Remember to add your hours to the list</taskDescription>
+      <taskPriority>3</taskPriority>
+    </task>
+    <task>
+      <taskCategory>home</taskCategory>
+      <taskDescription>Remember Henry's Birthday</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Trip to Helsinki office</taskDescription>
+      <taskPriority>3</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>USCD paper</taskDescription>
       <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>Programming exam!</taskDescription>
+      <taskPriority>3</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Team meeting</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Team meeting</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Do stuff at work</taskDescription>
+      <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>Remember take the skates!</taskDescription>
+      <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>home</taskCategory>
+      <taskDescription>Chimney sweeper</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>home</taskCategory>
+      <taskDescription>Svensson's visiting</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Give feedback</taskDescription>
+      <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>Sketching done</taskDescription>
+      <taskPriority>3</taskPriority>
+    </task>
+    <task>
+      <taskCategory>home</taskCategory>
+      <taskDescription>Movie night!</taskDescription>
+      <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>Group work</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>work</taskCategory>
+      <taskDescription>Fika with Jimmy</taskDescription>
+      <taskPriority>1</taskPriority>
+    </task>
+    <task>
+      <taskCategory>school</taskCategory>
+      <taskDescription>Return the book</taskDescription>
+      <taskPriority>2</taskPriority>
+    </task>
+    <task>
+      <taskCategory>home</taskCategory>
+      <taskDescription>Buy the paint</taskDescription>
+      <taskPriority>3</taskPriority>
+    </task>
+    <task>
+      <taskCategory>home</taskCategory>
+      <taskDescription>Paint the wall</taskDescription>
+      <taskPriority>3</taskPriority>
     </task>
   </tasks>
 </DB>

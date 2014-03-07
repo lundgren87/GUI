@@ -1,4 +1,4 @@
-/*package TimeManager;
+package TimeManager;
 
 import java.awt.*;
 
@@ -101,4 +101,4 @@ class mainPanel extends JFrame
 		mainFrame.setVisible( true );
 	}
 	
-}*/
+}
