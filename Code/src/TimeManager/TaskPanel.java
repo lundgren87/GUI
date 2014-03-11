@@ -55,7 +55,7 @@ public class TaskPanel extends JPanel{
 		// initialization of the 3 subpanels inside TaskPanel (panelNorth, panelEast, panelWest)
 	    panelNorth = new JPanel();
 	    panelNorth.setLayout(new BoxLayout(panelNorth, BoxLayout.Y_AXIS));
-	    panelNorth.setBorder(BorderFactory.createLineBorder(Color.black));
+	    //panelNorth.setBorder(BorderFactory.createLineBorder(Color.black));
 	   
 		c.gridwidth = 2;
 		c.gridx = 0;
@@ -64,7 +64,7 @@ public class TaskPanel extends JPanel{
 		
 	    panelWest = new JPanel();
 	    panelWest.setLayout(new BoxLayout(panelWest, BoxLayout.Y_AXIS));
-	    panelWest.setBorder(BorderFactory.createLineBorder(Color.black));
+	    //panelWest.setBorder(BorderFactory.createLineBorder(Color.black));
 		c.gridwidth = 1;
 		c.weightx = 0.5;
 		c.gridx = 0;
@@ -73,7 +73,7 @@ public class TaskPanel extends JPanel{
 	    
 	    panelEast = new JPanel();
 	    panelEast.setLayout(new BoxLayout(panelEast, BoxLayout.Y_AXIS));
-	    panelEast.setBorder(BorderFactory.createLineBorder(Color.black));
+	    //panelEast.setBorder(BorderFactory.createLineBorder(Color.black));
 		c.gridwidth = 1;
 		c.weightx = 0.5;
 		c.gridx = 1;

@@ -34,6 +34,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
@@ -51,7 +52,7 @@ import javax.swing.SpinnerDateModel;
 
 /**
  * The view of the Time Manager. The main frame and all panels are made here. 
- * @author Kim, Pontus, Aries, Sercan
+ * @author Kim, Pontus, Aries, Sercan, Sven
  *
  */
 public class TimeManagerView extends Observable implements ActionListener {
@@ -68,11 +69,16 @@ public class TimeManagerView extends Observable implements ActionListener {
 	private Calendar startDate = Calendar.getInstance();	//Selects today's date.
 	
 	private static String currentLanguage;
+	private static String currentTheme;
 	public boolean isShuttingDown = false;
 	JLabel CategoryAsTitle = new JLabel (" ",JLabel.CENTER);
 	
 	JRadioButtonMenuItem swedish;
 	JRadioButtonMenuItem english;
+	JRadioButtonMenuItem oceanTheme;
+	JRadioButtonMenuItem metalTheme;
+	JRadioButtonMenuItem redTheme;
+	JRadioButtonMenuItem blueTheme;
 	JTextArea nameActivity;
 	JRadioButton highPriority;
 	JRadioButton mediumPriority;
@@ -88,12 +94,21 @@ public class TimeManagerView extends Observable implements ActionListener {
 	 * Creates a new Time Manager View
 	 */
 	TimeManagerView(){	
+		
 		// load language
 		currentLanguage = config.LanguageRepository.getCurrentLanguage();
 		
+		// Load theme with Ocean as default if property isn't stored
+		currentTheme = config.Config.loadProperty("theme", "Ocean");
+		
 		// On close: hide the view, notify observers to save variables etc, then close
 		mainFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		
+		//Initialize look and feel and update the mainFrame
+		lookAndFeel.initLookAndFeel();
+		SwingUtilities.updateComponentTreeUI(mainFrame);
 		mainFrame.pack();
+		
 		mainFrame.addComponentListener(new ComponentAdapter(){
 
 			@Override
@@ -118,7 +133,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 		addMenuBar(mainFrame); 
 		
 		//Content titlePanel 
-		titelPanel.setBackground(Color.LIGHT_GRAY);		//this is a temporary backgroundcolor
+		//titelPanel.setBackground(Color.LIGHT_GRAY);		//this is a temporary backgroundcolor
 		titelPanel.setLayout(new GridLayout(2, 5));
 		titelPanel.add(new JLabel(config.LanguageRepository.getString("TITEL")));
 		
@@ -178,6 +193,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 		JMenuItem loadAction = new JMenuItem(config.LanguageRepository.getString("LOAD"));
 		JMenuItem exitAction = new JMenuItem(config.LanguageRepository.getString("EXIT"));
 		JMenu languageAction = new JMenu(config.LanguageRepository.getString("LANGUAGE"));
+		JMenu themeAction = new JMenu(config.LanguageRepository.getString("THEME"));
 		JMenuItem helpAction = new JMenuItem(config.LanguageRepository.getString("HELP"));
 		
 		ButtonGroup rbgroup = new ButtonGroup();
@@ -197,11 +213,53 @@ public class TimeManagerView extends Observable implements ActionListener {
 		languageAction.add(english);
 		languageAction.add(swedish);
 		
+		
+		
+		/* 
+		 * SET UP THEME MENU
+		 * */
+		oceanTheme = new JRadioButtonMenuItem(config.LanguageRepository.getString("OCEAN"));
+		metalTheme = new JRadioButtonMenuItem(config.LanguageRepository.getString("METAL"));
+		redTheme = new JRadioButtonMenuItem(config.LanguageRepository.getString("RED"));
+		blueTheme = new JRadioButtonMenuItem(config.LanguageRepository.getString("BLUE"));
+		
+		// Add a button group, only one selectable
+		ButtonGroup themeButtonGroup = new ButtonGroup();
+		themeButtonGroup.add(oceanTheme);
+		themeButtonGroup.add(metalTheme);
+		themeButtonGroup.add(redTheme);
+		themeButtonGroup.add(blueTheme);
+		
+		// Decide which is selected on startup
+		if(currentTheme.equals("Ocean"))
+			oceanTheme.setSelected(true);
+		else if(currentTheme.equals("Metal"))
+			metalTheme.setSelected(true);
+		else if(currentTheme.equals("Red"))
+			redTheme.setSelected(true);
+		else if(currentTheme.equals("Blue"))
+			blueTheme.setSelected(true);
+		
+		// Add action listeners to all themes
+		oceanTheme.addActionListener(this);
+		metalTheme.addActionListener(this);
+		redTheme.addActionListener(this);
+		blueTheme.addActionListener(this);
+		
+		themeAction.add(oceanTheme);
+		themeAction.add(metalTheme);
+		themeAction.add(redTheme);
+		themeAction.add(blueTheme);
+		
+		
+
+		
 		//Add actions to the menus
 		fileMenu.add(newAction);
 		fileMenu.add(loadAction);
 		fileMenu.add(exitAction);
 		editMenu.add(languageAction);
+		editMenu.add(themeAction);
 		
 		helpMenu.add(helpAction);
 		
@@ -217,7 +275,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 		// Create empty tabPanel
 		tabPanel = new JPanel();
 		tabPanel.setLayout(new BoxLayout(tabPanel, BoxLayout.Y_AXIS));
-		tabPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		//tabPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		tabPanel.setPreferredSize(new Dimension(88,500));
 		
 		// Create empty taskPanel and its list
@@ -225,7 +283,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 		taskPanel = new TaskPanel();
 		
 		centerPanel = new JPanel();
-		centerPanel.setBackground(Color.green);
+		//centerPanel.setBackground(Color.green);
 		centerPanel.add(taskPanel);
 	}
 	
@@ -477,7 +535,10 @@ public class TimeManagerView extends Observable implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		//If a radio button is pressed
 		if(e.getSource() instanceof JRadioButtonMenuItem) {
+			
+			//If the radio button is a language button
 			if(e.getSource() == swedish) {
 				if(swedish.isSelected()) {
 					config.LanguageRepository.setCurrentLanguage("Swedish");
@@ -492,6 +553,33 @@ public class TimeManagerView extends Observable implements ActionListener {
 				mainFrame.revalidate();
 				mainFrame.repaint();	
 			}
+			
+			//If the radio button is a theme button, store theme property and display restart required popup
+			if(e.getSource() == oceanTheme) {
+				if(oceanTheme.isSelected()) {
+					config.Config.saveProperty("theme", "Ocean");
+					JOptionPane.showMessageDialog(mainFrame, config.LanguageRepository.getString("THEMERESTART"));
+				}
+			}
+			else if(e.getSource() == metalTheme) {
+				if(metalTheme.isSelected()) {
+					config.Config.saveProperty("theme", "Metal");
+					JOptionPane.showMessageDialog(mainFrame, config.LanguageRepository.getString("THEMERESTART"));
+				}
+			}
+			else if(e.getSource() == redTheme) {
+				if(redTheme.isSelected()) {
+					config.Config.saveProperty("theme", "Red");
+					JOptionPane.showMessageDialog(mainFrame, config.LanguageRepository.getString("THEMERESTART"));
+				}
+			}
+			else if(e.getSource() == blueTheme) {
+				if(blueTheme.isSelected()) {
+					config.Config.saveProperty("theme", "Blue");
+					JOptionPane.showMessageDialog(mainFrame, config.LanguageRepository.getString("THEMERESTART"));
+				}
+			}
+			
 		}
 
 		else if(e.getSource() instanceof JButton) {
