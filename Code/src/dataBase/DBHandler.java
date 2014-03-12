@@ -119,8 +119,8 @@ public class DBHandler {
 			Element task = new Element("task");
 			Element taskDescription = new Element("taskDescription").setText(ti.taskDescripton);
 			Element taskCategory = new Element("taskCategory").setText(ti.taskCategory);
-			Element taskDueDate = new Element("taskCategory").setText(ti.taskDueDate);
-			Element taskProgress = new Element("taskCategory").setText(Integer.toString(ti.taskProgress));
+			Element taskDueDate = new Element("taskDueDate").setText(ti.taskDueDate);
+			Element taskProgress = new Element("taskProgress").setText(Integer.toString(ti.taskProgress));
 			Element taskPriority = new Element("taskPriority").setText(Integer.toString(ti.taskPriority));
 			
 			//Add the data elements to the created task, and add the created task to the Document

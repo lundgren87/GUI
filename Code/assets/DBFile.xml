@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DB>
+  <categories>
+    <category>
+      <categoryName>all_categories</categoryName>
+      <categoryDescription>All Categories</categoryDescription>
+    </category>
+    <category>
+      <categoryName>home</categoryName>
+      <categoryDescription>House</categoryDescription>
+    </category>
+    <category>
+      <categoryName>work</categoryName>
+      <categoryDescription>Work</categoryDescription>
+    </category>
+    <category>
+      <categoryName>school</categoryName>
+      <categoryDescription>School</categoryDescription>
+    </category>
+    <category>
+      <categoryName>add_new</categoryName>
+      <categoryDescription>Add New Category</categoryDescription>
+    </category>
+  </categories>
+  <tasks>
+    <task>
+      <taskDescription>Assignment 3 Deadline</taskDescription>
+      <taskCategory>School</taskCategory>
+      <taskDueDate>12 March 2014 21:00</taskDueDate>
+      <taskProgress>0</taskProgress>
+      <taskPriority>1</taskPriority>
+    </task>
+  </tasks>
+</DB>
