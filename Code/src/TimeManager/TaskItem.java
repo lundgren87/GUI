@@ -39,5 +39,16 @@ public class TaskItem {
 		taskDueDate = dueDate;
 		taskProgress = progress;
 	}
+	
+	/**
+	 * Duplicate method
+	 */
+	public TaskItem(TaskItem item) {
+		taskDescripton = item.taskDescripton;
+		taskPriority = item.taskPriority;
+		taskCategory = item.taskCategory;
+		taskDueDate = item.taskDueDate;
+		taskProgress = item.taskProgress;
+	}
 
 }

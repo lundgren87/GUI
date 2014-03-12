@@ -99,14 +99,7 @@ public class TaskPanel extends JPanel{
 	 * @param item TaskItem to be added
 	 */
 	void addTask(TaskItem item) {
-		TaskItemView customComponent = new TaskItemView();
-		customComponent.setDescription(item.taskDescripton);
-		customComponent.setCategory(item.taskCategory);
-		customComponent.setPriority(item.taskPriority);
-		customComponent.setProgress(32);
-		customComponent.setDueDate("Tomorrow");
-		//JLabel taskDescription = new JLabel(item.taskDescripton + ". Priority : " + item.taskPriority);
-		//customComponent.add(taskDescription);
+		TaskItemView customComponent = new TaskItemView(viewListener, item);
 		
 		// A TaskItem will be displayed in one of the 3 sub panels, depending on its priority
 		switch(item.taskPriority) {
