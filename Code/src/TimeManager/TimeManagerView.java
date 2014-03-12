@@ -108,9 +108,11 @@ public class TimeManagerView extends Observable implements ActionListener {
 		// On close: hide the view, notify observers to save variables etc, then close
 		mainFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
-		//Initialize look and feel and update the mainFrame
+		//Initialize look and feel and update the mainFrame, titelPanel and addButton
 		lookAndFeel.initLookAndFeel();
 		SwingUtilities.updateComponentTreeUI(mainFrame);
+		SwingUtilities.updateComponentTreeUI(titelPanel);
+		SwingUtilities.updateComponentTreeUI(addButton);
 		mainFrame.pack();
 		
 		mainFrame.addComponentListener(new ComponentAdapter(){
