@@ -20,6 +20,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -47,6 +49,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
@@ -74,6 +77,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 	private static String currentLanguage;
 	private static String currentTheme;
 	public boolean isShuttingDown = false;
+	public Message message = Message.NONE;
 	JLabel CategoryAsTitle = new JLabel (" ",JLabel.CENTER);
 	
 	JRadioButtonMenuItem swedish;
@@ -92,7 +96,12 @@ public class TimeManagerView extends Observable implements ActionListener {
 	JSpinner.DateEditor timeEditor;
 	JSpinner timeSpinner;
 	JComboBox dropdownCategory;
+
 	private JLabel timeLabel;
+
+	JMenuItem saveAction;
+	JMenuItem loadAction;
+
 	
 	/**
 	 * Creates a new Time Manager View
@@ -214,8 +223,12 @@ public class TimeManagerView extends Observable implements ActionListener {
 		menuBar.add(helpMenu);
 		
 		// Make subMenus
-		JMenuItem newAction = new JMenuItem(config.LanguageRepository.getString("SAVE"));
-		JMenuItem loadAction = new JMenuItem(config.LanguageRepository.getString("LOAD"));
+		saveAction = new JMenuItem(config.LanguageRepository.getString("SAVE"));
+		saveAction.addActionListener(this);
+		
+		loadAction = new JMenuItem(config.LanguageRepository.getString("LOAD"));
+		loadAction.addActionListener(this);
+		
 		JMenuItem exitAction = new JMenuItem(config.LanguageRepository.getString("EXIT"));
 		JMenu languageAction = new JMenu(config.LanguageRepository.getString("LANGUAGE"));
 		JMenu themeAction = new JMenu(config.LanguageRepository.getString("THEME"));
@@ -280,7 +293,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 
 		
 		//Add actions to the menus
-		fileMenu.add(newAction);
+		fileMenu.add(saveAction);
 		fileMenu.add(loadAction);
 		fileMenu.add(exitAction);
 		editMenu.add(languageAction);
@@ -559,9 +572,8 @@ public class TimeManagerView extends Observable implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		//If a radio button is pressed
-		if(e.getSource() instanceof JRadioButtonMenuItem) {
+		// Changed JRadioButtonMenuItem to JMenuItem to be more general
+		if(e.getSource() instanceof JMenuItem) {
 			
 			//If the radio button is a language button
 			if(e.getSource() == swedish) {
@@ -582,7 +594,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 			}
 			
 			//If the radio button is a theme button, store theme property and display restart required popup
-			if(e.getSource() == oceanTheme) {
+			else if(e.getSource() == oceanTheme) {
 				if(oceanTheme.isSelected()) {
 					config.Config.saveProperty("theme", "Ocean");
 					JOptionPane.showMessageDialog(mainFrame, config.LanguageRepository.getString("THEMERESTART"));
@@ -606,7 +618,40 @@ public class TimeManagerView extends Observable implements ActionListener {
 					JOptionPane.showMessageDialog(mainFrame, config.LanguageRepository.getString("THEMERESTART"));
 				}
 			}
-			
+
+			//
+			else if(e.getSource() == saveAction) {
+				String folder = new File(config.Config.loadProperty("DBFile","assets/DBFile.xml")).getParent();
+				JFileChooser chooser = new JFileChooser(folder);
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("XML file", "xml");
+				chooser.setFileFilter(filter);
+				
+				int returnVal = chooser.showSaveDialog(mainFrame);
+				if(returnVal == JFileChooser.APPROVE_OPTION) {
+					String file = chooser.getSelectedFile().getPath();
+					config.Config.saveProperty("DBFile", file);
+					message = Message.SAVE;
+					setChanged();
+					notifyObservers();
+					System.out.println("You chose to save this file: " + file);
+				}
+			}
+			else if(e.getSource() == loadAction) {
+				String folder = new File(config.Config.loadProperty("DBFile","assets/DBFile.xml")).getParent();
+				JFileChooser chooser = new JFileChooser(folder);
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("XML file", "xml");
+				chooser.setFileFilter(filter);
+				
+				int returnVal = chooser.showOpenDialog(mainFrame);
+				if(returnVal == JFileChooser.APPROVE_OPTION) {
+					String file = chooser.getSelectedFile().getPath();
+					config.Config.saveProperty("DBFile", file);
+					message = Message.LOAD;
+					setChanged();
+					notifyObservers();
+					System.out.println("You chose to open this file: " + file);
+				}
+			}
 		}
 
 		else if(e.getSource() instanceof JButton) {

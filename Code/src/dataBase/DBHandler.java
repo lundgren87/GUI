@@ -25,11 +25,9 @@ import TimeManager.TimeManagerModel;
  */
 public class DBHandler {
 	static Document doc;
-	static String DBFile;
 	TimeManagerModel model;
 	
 	public DBHandler(TimeManagerModel m) {
-		DBFile = config.Config.DBFile + ".xml";
 		model = m;
 	}
 	
@@ -55,6 +53,7 @@ public class DBHandler {
 	 * pre: If the DBFile exists, it has to have the correct format
 	 */
 	public void init() {
+		String DBFile = config.Config.loadProperty("DBFile","assets/DBFile.xml");
 		//Create a new file object
 		File file = new File(DBFile);
 		
@@ -78,6 +77,7 @@ public class DBHandler {
 	 * Exit saves the information in model to the file DBFile specified in config.java
 	 */
 	public void exit() {
+		String DBFile = config.Config.loadProperty("DBFile","assets/DBFile.xml");
 		System.out.println("Saving DB state");
 		
 		//reset document to an empty one

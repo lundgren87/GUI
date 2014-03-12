@@ -55,6 +55,7 @@ public class TimeManagerModel extends Observable {
 	 * @param taskPrio int task priotiry
 	 */
 	public void addNewTask(String taskDesc, String taskCat, int taskPrio) {
+		System.out.println("Added new task");
 		taskItems.add(new TaskItem(taskDesc, taskCat, taskPrio));
 		setChanged();
 		notifyObservers(taskItems);
@@ -70,6 +71,7 @@ public class TimeManagerModel extends Observable {
 	 * @param taskPrio Priority of the task
 	 */
 	public void addNewTask(String taskDesc, String taskCat, String dueDate, int progress, int taskPrio) {
+		System.out.println("Added new task2");
 		taskItems.add(new TaskItem(taskDesc, taskCat, dueDate, progress, taskPrio));
 		setChanged();
 		notifyObservers(taskItems);
@@ -80,6 +82,7 @@ public class TimeManagerModel extends Observable {
 	 * @param categoryDescription Description of category
 	 */
 	public void addNewCategory(String categoryName, String categoryDescription) {
+		System.out.println("Added new category");
 		taskCategories.add(new TaskCategory(categoryName, categoryDescription));
 		setChanged();
 		notifyObservers(taskCategories);
@@ -104,6 +107,16 @@ public class TimeManagerModel extends Observable {
 	 */
 	public void closeOperation() {
 		dataBase.exit();
+	}
+
+	public void save() {
+		dataBase.exit();
+	}
+
+	public void load() {
+		taskItems = new ArrayList<TaskItem>();
+		taskCategories = new ArrayList<TaskCategory>();
+		dataBase.init();
 	}
 	
 		
