@@ -303,7 +303,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 		
 		// Create empty taskPanel and its list
 		taskPanels = new ArrayList<TaskPanel>();
-		taskPanel = new TaskPanel();
+		taskPanel = new TaskPanel(this);
 		
 		centerPanel = new JPanel();
 		//centerPanel.setBackground(Color.green);
@@ -336,7 +336,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 			tabPanel.add(btn);
 		
 			// Generate panel to contain tasks for each category (right side)
-			TaskPanel tp = new TaskPanel(category);
+			TaskPanel tp = new TaskPanel(this, category);
 			taskPanels.add(tp);
 		}
 		// switch to last active category
@@ -613,6 +613,9 @@ public class TimeManagerView extends Observable implements ActionListener {
 				switchTab(btn.getName());
 			}
 			else if(btn.getActionCommand().equalsIgnoreCase("AddButton")) {
+			// New task is added
+				
+				// Get all the parameters from the view panel
 				String description, category, date, time;
 				int priority, progress;
 				
@@ -631,12 +634,32 @@ public class TimeManagerView extends Observable implements ActionListener {
 				else priority = 2;
 		    		
 				progress = 0;
- 	 
+				
+				// Notify all observers that are interested in this TaskItem update
 				TaskItem taskItem = new TaskItem(description, category, date + " " + time, progress, priority);
 				setChanged();
 				notifyObservers(taskItem);
 			}
-		       
+			else if(btn.getActionCommand().equalsIgnoreCase("EditTask")) {
+			// Edit button is clicked
+				// Get the TaskItem object that is being edited
+				TaskItemView view = (TaskItemView) btn.getParent();
+				TaskItem taskToEdit = view.taskItem;
+				// Display an editable Task Item View
+				TaskItemViewEdit editTaskDialog = new TaskItemViewEdit(this, taskToEdit);
+			}
+			else if(btn.getActionCommand().equalsIgnoreCase("SaveTask")) {
+			// Edit button is clicked
+				// Get the TaskItem object that is being edited
+				//JPanel tempContainer = (JPanel) btn.getParent();
+				//TaskItemViewEdit view = (TaskItemViewEdit) tempContainer.getParent();
+				//TaskItem editedTask = view.editedTaskItem;
+				//view.originalTaskItem = view.editedTaskItem;
+				//view.dispose();
+				// Display an editable Task Item View
+				//TaskItemViewEdit editTaskDialog = new TaskItemViewEdit(this, taskToEdit);
+				//TaskItem taskAfterEdit = .getEditedTask();
+			}
 		}
 	}
 }

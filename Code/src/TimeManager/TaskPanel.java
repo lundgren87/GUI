@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
 import java.util.Locale.Category;
 
 import javax.swing.BorderFactory;
@@ -24,11 +25,13 @@ public class TaskPanel extends JPanel{
     JPanel panelWest;
     JPanel panelEast;
     GridBagConstraints c;
+    ActionListener viewListener;
     
     /**
      * Creates a new Task Panel that does not belong to any category yet
      */
-    public TaskPanel() {
+    public TaskPanel(ActionListener listener) {
+    	viewListener = listener;
     	init();
     }
     
@@ -36,8 +39,9 @@ public class TaskPanel extends JPanel{
      * Creates a new Task Panel that belongs to a category
      * @param cat Category that the Task Panel belongs to
      */
-	public TaskPanel(TaskCategory cat) {
+	public TaskPanel(ActionListener listener, TaskCategory cat) {
 		taskCategory = cat;
+		viewListener = listener;
 		init();
 	}
     
@@ -95,14 +99,7 @@ public class TaskPanel extends JPanel{
 	 * @param item TaskItem to be added
 	 */
 	void addTask(TaskItem item) {
-		TaskItemView customComponent = new TaskItemView();
-		customComponent.setDescription(item.taskDescripton);
-		customComponent.setCategory(item.taskCategory);
-		customComponent.setPriority(item.taskPriority);
-		customComponent.setProgress(32);
-		customComponent.setDueDate("Tomorrow");
-		//JLabel taskDescription = new JLabel(item.taskDescripton + ". Priority : " + item.taskPriority);
-		//customComponent.add(taskDescription);
+		TaskItemView customComponent = new TaskItemView(viewListener, item);
 		
 		// A TaskItem will be displayed in one of the 3 sub panels, depending on its priority
 		switch(item.taskPriority) {

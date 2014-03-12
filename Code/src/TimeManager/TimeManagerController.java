@@ -70,9 +70,11 @@ public class TimeManagerController implements Observer {
 		else if(o instanceof TimeManagerModel) {
 			// Model passes either list of categories or list of tasks
 			List list = (List) arg;
+			// A Task Category update
 			if(list.get(0) instanceof TaskCategory) {
 				theView.loadCategories(list);
 			}
+			// A Task Item update
 			else {
 				theView.loadTasks(list);
 			}
