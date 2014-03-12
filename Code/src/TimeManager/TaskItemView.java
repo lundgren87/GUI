@@ -5,6 +5,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -14,7 +19,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JProgressBar;
 
 /**
@@ -22,8 +29,7 @@ import javax.swing.JProgressBar;
  * @author Aries, Sercan
  *
  */
-public class TaskItemView extends JPanel
-{
+public class TaskItemView extends JPanel implements ActionListener {
 	String taskCategoryName;
 	public String taskDescripton;
 	public int taskPriority;
@@ -36,6 +42,7 @@ public class TaskItemView extends JPanel
 	public JCheckBox isDoneCheckBox;
 	public JProgressBar progressbarre;
 	public JButton editButton;
+	public JPopupMenu popup;
 	
 	private final String iconLocation = config.Config.loadProperty("Images", "assets/images/");
 	private final String iconExtension = ".gif";
@@ -50,8 +57,23 @@ public class TaskItemView extends JPanel
 		// TODO: Consider to make a constructor with a TaskItem argument
 		// that sets variables accordingly
 		initComponents();
+		makePopUpMenu();			
 	}	
 	
+	private void makePopUpMenu() {
+		popup = new JPopupMenu();
+		JMenuItem popmenuItem = new JMenuItem("Edit");
+		popmenuItem.addActionListener(this);
+		popup.add(popmenuItem);
+		popmenuItem = new JMenuItem("Delete");
+		popmenuItem.addActionListener(this);
+		popup.add(popmenuItem);
+
+		//Add listener to components that can bring up popup menus.
+		MouseListener popupListener = new PopupListener();
+		this.addMouseListener(popupListener);
+	}
+
 	/**
 	 * Initialize all inner components. Executed once in initialization.
 	 */
@@ -119,6 +141,8 @@ public class TaskItemView extends JPanel
 		this.add(editButton, gbc);
 	}
 	
+	
+	
 	/**
 	 * Setter for displayed Task Description
 	 * @param desc
@@ -176,4 +200,38 @@ public class TaskItemView extends JPanel
 		taskProgress = progress;
 		progressbarre.setValue(taskProgress);
 	}
+	
+	public class PopupListener extends MouseAdapter {
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if(e.isPopupTrigger()){
+				doPop(e);
+			}
+
+		}
+
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if(e.isPopupTrigger()){
+				doPop(e);
+			}
+
+		}
+		
+		private void doPop(MouseEvent e) {
+	        popup.show(e.getComponent(), e.getX(), e.getY());
+			
+		}
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 }
