@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -22,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Observable;
+import javax.swing.Timer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -83,6 +86,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 	JSpinner.DateEditor timeEditor;
 	JSpinner timeSpinner;
 	JComboBox dropdownCategory;
+	private JLabel timeLabel;
 	
 	/**
 	 * Creates a new Time Manager View
@@ -121,7 +125,26 @@ public class TimeManagerView extends Observable implements ActionListener {
 		titelPanel.setBackground(Color.LIGHT_GRAY);		//this is a temporary backgroundcolor
 		titelPanel.setLayout(new GridLayout(2, 5));
 		titelPanel.add(new JLabel(config.LanguageRepository.getString("TITEL")));
+		titelPanel.add(new JLabel (""));
+		titelPanel.add(new JLabel (""));
+		titelPanel.add(new JLabel (""));
+		timeLabel = new JLabel ("Time");
+		titelPanel.add(timeLabel);                  // Adds date and time to titelPanel
+		titelPanel.add(new JLabel (""));
+		titelPanel.add(new JLabel (""));
+		titelPanel.add(new JLabel (""));
+		//titelPanel.add(new JLabel (""));
 		
+		// Generates the current weekday, date and time
+	    new Timer(1000, new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	    		DateFormat dateFormat = new SimpleDateFormat("EEEE dd/MM/yyyy HH:mm:ss");
+	        	Calendar now = Calendar.getInstance();
+	            timeLabel.setText(dateFormat.format(now.getTime()));
+	        }
+	    }).start();
+	    
 		makeCenterPanel();
 		JScrollPane centerScrollPanel = new JScrollPane();
 		centerScrollPanel.getVerticalScrollBar().setUnitIncrement(16);
