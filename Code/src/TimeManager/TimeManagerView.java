@@ -542,6 +542,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 			if(e.getSource() == swedish) {
 				if(swedish.isSelected()) {
 					config.LanguageRepository.setCurrentLanguage("Swedish");
+					JOptionPane.showMessageDialog(mainFrame, config.LanguageRepository.getString("LANGUAGERESTART"));
 				}
 				mainFrame.revalidate();
 				mainFrame.repaint();
@@ -549,6 +550,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 			else if(e.getSource() == english) {
 				if(english.isSelected()){
 					config.LanguageRepository.setCurrentLanguage("English");
+					JOptionPane.showMessageDialog(mainFrame, config.LanguageRepository.getString("LANGUAGERESTART"));
 				}	
 				mainFrame.revalidate();
 				mainFrame.repaint();	

@@ -87,6 +87,8 @@ public class LanguageRepository {
 				languageMap.put("RED", "Red");
 				languageMap.put("BLUE", "Blue");
 				languageMap.put("THEMERESTART", "Change of theme takes effect after restart.");
+				languageMap.put("LANGUAGERESTART", "Change of language takes effect after restart.");
+				
 
 				isInitialized = true;
 				break;
@@ -131,6 +133,7 @@ public class LanguageRepository {
 				languageMap.put("RED", "Röd");
 				languageMap.put("BLUE", "Blå");
 				languageMap.put("THEMERESTART", "Byte av tema sker vid omstart.");
+				languageMap.put("LANGUAGERESTART", "Byte av språk sker vid omstart.");
 				isInitialized = true;
 				break;
 				

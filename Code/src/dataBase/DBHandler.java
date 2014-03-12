@@ -117,13 +117,17 @@ public class DBHandler {
 			
 			//Create new task element and create it's data elements
 			Element task = new Element("task");
-			Element taskCategory = new Element("taskCategory").setText(ti.taskCategory);
 			Element taskDescription = new Element("taskDescription").setText(ti.taskDescripton);
+			Element taskCategory = new Element("taskCategory").setText(ti.taskCategory);
+			Element taskDueDate = new Element("taskCategory").setText(ti.taskDueDate);
+			Element taskProgress = new Element("taskCategory").setText(Integer.toString(ti.taskProgress));
 			Element taskPriority = new Element("taskPriority").setText(Integer.toString(ti.taskPriority));
 			
 			//Add the data elements to the created task, and add the created task to the Document
-			task.addContent(taskCategory);
 			task.addContent(taskDescription);
+			task.addContent(taskCategory);
+			task.addContent(taskDueDate);
+			task.addContent(taskProgress);
 			task.addContent(taskPriority);
 			tasks.addContent(task);
 		}
@@ -197,12 +201,14 @@ public class DBHandler {
 			Element task = (Element) it.next();
 			
 			//Get the contents of the text fields
-			String taskCategory = task.getChild("taskCategory").getText();
 			String taskDescription = task.getChild("taskDescription").getText();
+			String taskCategory = task.getChild("taskCategory").getText();
+			String taskDueDate = task.getChild("taskDueDate").getText();
+			String taskProgress = task.getChild("taskProgress").getText();
 			String taskPriority = task.getChild("taskPriority").getText();
 			
 			//Add a new task to the model with the retrieved text fields as parameters
-			model.addNewTask(taskDescription, taskCategory, Integer.parseInt(taskPriority));
+			model.addNewTask(taskDescription, taskCategory, taskDueDate, Integer.parseInt(taskProgress), Integer.parseInt(taskPriority));
 		}
 	}
 }
