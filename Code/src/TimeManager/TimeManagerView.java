@@ -98,6 +98,7 @@ public class TimeManagerView extends Observable implements ActionListener {
 	JComboBox dropdownCategory;
 
 	private JLabel timeLabel;
+	private JLabel categoryLabel;
 
 	JMenuItem saveAction;
 	JMenuItem loadAction;
@@ -149,17 +150,16 @@ public class TimeManagerView extends Observable implements ActionListener {
 		
 		//Content titlePanel 
 		//titelPanel.setBackground(Color.LIGHT_GRAY);		//this is a temporary backgroundcolor
-		titelPanel.setLayout(new GridLayout(2, 5));
-		titelPanel.add(new JLabel(config.LanguageRepository.getString("TITEL")));
+		titelPanel.setLayout(new GridLayout(1, 3));
+		//titelPanel.add(new JLabel(config.LanguageRepository.getString("TITEL")));
 		titelPanel.add(new JLabel (""));
-		titelPanel.add(new JLabel (""));
-		titelPanel.add(new JLabel (""));
+		categoryLabel = new JLabel ("Category_Name");
+		categoryLabel.setHorizontalAlignment(categoryLabel.CENTER);
+		titelPanel.add(categoryLabel);
 		timeLabel = new JLabel ("Time");
+		timeLabel.setHorizontalAlignment(timeLabel.RIGHT);
 		titelPanel.add(timeLabel);                  // Adds date and time to titelPanel
-		titelPanel.add(new JLabel (""));
-		titelPanel.add(new JLabel (""));
-		titelPanel.add(new JLabel (""));
-		//titelPanel.add(new JLabel (""));
+		
 		
 		// Generates the current weekday, date and time
 	    new Timer(1000, new ActionListener() {
@@ -366,8 +366,9 @@ public class TimeManagerView extends Observable implements ActionListener {
 		// Record the newly actived tab
 		config.Config.saveProperty("currentCategory",selectedCategory);
 		
-		CategoryAsTitle.setText(selectedCategory);
-		titelPanel.add(CategoryAsTitle);
+		categoryLabel.setText(selectedCategory);
+		//titelPanel.add(categoryLabel);
+		titelPanel.repaint();
 		
 		try {
 			centerPanel.remove(taskPanel);
