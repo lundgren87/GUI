@@ -17,7 +17,6 @@ public class Config {
 	static String configFile = "config.properties";
 	static Properties prop;
 	
-	public static String DBFile;
 	public static String Images;
 	public static String startupLanguage;
 	
@@ -30,7 +29,6 @@ public class Config {
 		InputStream input = null;
 		
 		//set default values
-		DBFile = "assets/DBFile";
 		Images = "assets/images/";
 		startupLanguage = "English";
 		
@@ -40,7 +38,6 @@ public class Config {
 			prop.load(input);
 			
 			//get local property values from the file
-			DBFile 			= prop.getProperty("DBFile", DBFile );
 			Images 			= prop.getProperty("Images", Images);
 			startupLanguage = prop.getProperty("startupLanguage", startupLanguage);
 			
@@ -48,7 +45,6 @@ public class Config {
 		catch (IOException e){
 			//File does not exist (or other error). Set default values to prop
 			System.out.println("Cannot access config.properties, it might not exist. Loading default values");
-			prop.setProperty("DBFile", DBFile );
 			prop.setProperty("Images", Images);
 			prop.setProperty("startupLanguage", startupLanguage);
 		}
@@ -62,7 +58,7 @@ public class Config {
 				}
 			} 
 		}
-		System.out.println(DBFile + Images + startupLanguage);
+		//System.out.println(DBFile + Images + startupLanguage);
 	}
 	
 
@@ -76,8 +72,6 @@ public class Config {
 			//specify file to use
 			output = new FileOutputStream(configFile);
 			
-			//save local properties to prop
-			prop.setProperty("DBFile", DBFile);
 			//prop.setProperty("startupLanguage", startupLanguage);
 			
 			//store contents of prop to file
@@ -116,6 +110,7 @@ public class Config {
 	 * @param value
 	 */
 	public static void saveProperty(String key,String value) {
+		System.out.println("Saved property: "+key+", "+value);
 		prop.setProperty(key, value);
 	}
 	

@@ -52,7 +52,7 @@ public class LanguageRepository {
 				languageMap.put("EXAMPLE_LABLE","Example_text");
 				languageMap.put("TIME_MANAGER", "Time Manager");
 				languageMap.put("ADD", "Add");
-				languageMap.put("TITEL", "titel");
+				languageMap.put("TITEL", "Titel");
 				languageMap.put("FILE", "File");
 				languageMap.put("EDIT", "Edit");
 				languageMap.put("HELP", "Help");

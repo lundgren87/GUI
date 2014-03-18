@@ -56,6 +56,7 @@ public class TimeManagerController implements Observer {
 	public void update(Observable o, Object arg) {
 		// TODO: should check to a more generic view object if there are multiple view
 		if(o instanceof TimeManagerView) {
+			System.out.println("HAHAHA");
 			TimeManagerView view = (TimeManagerView) o;
 			if(view.isShuttingDown) {
 				theModel.closeOperation();
@@ -66,13 +67,25 @@ public class TimeManagerController implements Observer {
 				TaskItem item = (TaskItem) arg;
 				theModel.addNewTask(item);
 			}
+			else if(view.message == Message.SAVE){
+				System.out.println("SASASA");
+				view.message = Message.NONE;
+				theModel.save();
+			}
+			else if(view.message == Message.LOAD){
+				System.out.println("LALALA");
+				view.message = Message.NONE;
+				theModel.load();
+			}
 		}
 		else if(o instanceof TimeManagerModel) {
 			// Model passes either list of categories or list of tasks
 			List list = (List) arg;
+			// A Task Category update
 			if(list.get(0) instanceof TaskCategory) {
 				theView.loadCategories(list);
 			}
+			// A Task Item update
 			else {
 				theView.loadTasks(list);
 			}

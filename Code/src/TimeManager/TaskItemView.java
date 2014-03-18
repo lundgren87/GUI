@@ -30,6 +30,9 @@ import javax.swing.JProgressBar;
  *
  */
 public class TaskItemView extends JPanel implements ActionListener {
+	
+	public TaskItem taskItem;
+	public ActionListener viewListener;
 	String taskCategoryName;
 	public String taskDescripton;
 	public int taskPriority;
@@ -58,6 +61,21 @@ public class TaskItemView extends JPanel implements ActionListener {
 		// that sets variables accordingly
 		initComponents();
 		makePopUpMenu();			
+	}	
+	
+	public TaskItemView(ActionListener listener, TaskItem item) {
+		// TODO: Consider to make a constructor with a TaskItem argument
+		// that sets variables accordingly
+		
+		viewListener = listener;
+		taskItem = item;
+		initComponents();
+		makePopUpMenu();			
+		setDescription(taskItem.taskDescripton);
+		setCategory(taskItem.taskCategory);
+		setPriority(taskItem.taskPriority);
+		setDueDate(taskItem.taskDueDate);
+		setProgress(taskItem.taskProgress);
 	}	
 	
 	private void makePopUpMenu() {

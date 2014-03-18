@@ -30,5 +30,12 @@
       <taskProgress>0</taskProgress>
       <taskPriority>1</taskPriority>
     </task>
+    <task>
+      <taskDescription>Assignment 4</taskDescription>
+      <taskCategory>Work</taskCategory>
+      <taskDueDate>18 March 2014 10:30</taskDueDate>
+      <taskProgress>0</taskProgress>
+      <taskPriority>1</taskPriority>
+    </task>
   </tasks>
 </DB>
